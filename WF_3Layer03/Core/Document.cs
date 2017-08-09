@@ -11,36 +11,65 @@ namespace Core
 {
     public class Document
     {
-        public string SaveText(string contents, string path, string fileName, string extention)
+        /// <summary>
+        /// save string to file with extention
+        /// </summary>
+        /// <param name="contents"></param>
+        /// <param name="path"></param>
+        /// <param name="fileName"></param>
+        /// <param name="extention"></param>
+        /// <returns></returns>
+        public string SaveText(List<string> contents, string path, string fileName, string extention)
         {
-            string myPath = Path.Combine(path, fileName + extention);
-            File.WriteAllText(myPath, contents);
+            string myPath = Path.Combine(path, fileName + (string.IsNullOrWhiteSpace(extention) ? "" : extention));
+            File.WriteAllLines(myPath, contents);
             return myPath;
         }
 
+        public List<string> ReadText(string path)
+        {
+            if (!File.Exists(path)) return new List<string>();
+            return File.ReadAllLines(path).ToList();
+        }
+
+        /// <summary>
+        /// save object T => xml
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <param name="path"></param>
         public void SaveObject<T>(T data, string path)
         {
-            using (FileStream stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write))
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            using (StreamWriter writer = new StreamWriter(path))
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-                xmlSerializer.Serialize(stream, data);
-                stream.Close();
+                serializer.Serialize(writer, data);
             }
         }
 
+        /// <summary>
+        /// Read file xml.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public T GetObject<T>(string path)
         {
-            using (FileStream stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            object o = null;
+            if (File.Exists(path))
             {
-                object o = null;
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-                if (xmlSerializer.CanDeserialize(new XmlTextReader(stream)))
+                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
-                    o = xmlSerializer.Deserialize(stream);
-                };
-                stream.Close();
-                return (T)o;
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+                    var reader = new XmlTextReader(stream);
+                    if (xmlSerializer.CanDeserialize(reader))
+                    {
+                        o = xmlSerializer.Deserialize(reader);
+                    };
+                    stream.Close();
+                }
             }
+            return (T)o;
         }
     }
 }

@@ -15,17 +15,23 @@ namespace Core
 
         public void Save(string path)
         {
+            Security security = new Security();
+            this.Username = security.MaHoa(this.Username);
+            this.Password = security.MaHoa(security.MaHoa(this.Password));
             new Document().SaveObject<InfoServer>(this, path);
         }
 
         public InfoServer Read(string path)
         {
             var ob = new Document().GetObject<InfoServer>(path);
-            this.NameServer = ob.NameServer;
-            this.UseAccount = ob.UseAccount;
-            this.Username = ob.Username;
-            this.Password = ob.Password;
-            return this;
+            if (ob != null)
+            {
+                Security security = new Security();
+                ob.Username = security.GiaiMa(ob.Username);
+                ob.Password = security.GiaiMa(security.GiaiMa(ob.Password));
+                return ob;
+            }
+            return null;
         }
     }
 }

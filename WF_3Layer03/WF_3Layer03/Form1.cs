@@ -15,6 +15,8 @@ namespace WF_3Layer03
 {
     public partial class Form1 : Form
     {
+        Document document = new Document();
+
         public Form1()
         {
             InitializeComponent();
@@ -49,6 +51,19 @@ namespace WF_3Layer03
                     con.Open();
                     con.Close();
                     Common.ChaneConnection(sConnect: sConnect);
+                    var lstServer = document.ReadText(Common.FILE_SERVER);
+                    if (lstServer.Count == 0 || !lstServer.Any(q => q.Trim().ToLower().Equals(cmbServer.Text.Trim().ToLower())))
+                    {
+                        lstServer.Add(cmbServer.Text);
+                        document.SaveText(lstServer, "/", Common.FILE_SERVER, "");
+                    }
+                    new InfoServer()
+                    {
+                        NameServer = cmbServer.Text,
+                        UseAccount = cbAccount.Checked,
+                        Username = txtUsername.Text,
+                        Password = txtPassword.Text
+                    }.Save(Common.FILE_INFOSERVER);
                 }
                 catch (Exception ex)
                 {

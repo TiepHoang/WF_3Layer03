@@ -14,12 +14,12 @@ namespace Core
             for (int i = 0; i < input.Length; i++)
             {
                 char c = input[i];
-                result = (((int)c) + i * 7) + " ";
+                result += (((int)c) + i * 7) + " ";
             }
             return result;
         }
 
-        public string Giaima(string input)
+        public string GiaiMa(string input)
         {
             string result = "";
             string[] lst = input.Split(' ');
@@ -27,7 +27,7 @@ namespace Core
             {
                 try
                 {
-                    result += int.Parse(lst[i]) - i * 7;
+                    result += (char)(int.Parse(lst[i]) - i * 7);
                 }
                 catch { }
             }
