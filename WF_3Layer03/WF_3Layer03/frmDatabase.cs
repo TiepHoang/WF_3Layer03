@@ -28,8 +28,9 @@ namespace WF_3Layer03
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            new Document().SaveObject(Common.InfoServer, Common.FILE_INFOSERVER);
-
+            var o = Common.InfoServer;
+            o.Database = cmbDatabase.Text;
+            Common.SaveInfoServer(o);
         }
 
         private void cmbDatabase_SelectedIndexChanged(object sender, EventArgs e)

@@ -16,7 +16,7 @@ namespace WF_3Layer03
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmConnect());
+            Application.Run(new frmWellcome());
         }
     }
 }

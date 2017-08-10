@@ -52,26 +52,24 @@ namespace WF_3Layer03
                     con.Close();
                     Common.ChaneConnection(new InfoServer()
                     {
-                        Database = null,
+                        Database = Common.InfoServer.Database,
                         NameServer = cmbServer.Text,
                         Username = txtUsername.Text,
                         Password = txtPassword.Text,
                         UseAccount = cbAccount.Checked
                     });
-                    var lstServer = document.ReadText(Common.FILE_SERVER);
-                    if (lstServer.Count == 0 || !lstServer.Any(q => q.Trim().ToLower().Equals(cmbServer.Text.Trim().ToLower())))
+                    if (Common.LstServer.Count == 0 || !Common.LstServer.Any(q => q.Trim().ToLower().Equals(cmbServer.Text.Trim().ToLower())))
                     {
-                        lstServer.Add(cmbServer.Text);
-                        document.SaveText(lstServer, "/", Common.FILE_SERVER, "");
+                        Common.AddListServer(cmbServer.Text);
                     }
-                    new InfoServer()
+                    Common.SaveInfoServer(new InfoServer()
                     {
                         NameServer = cmbServer.Text,
                         UseAccount = cbAccount.Checked,
                         Username = txtUsername.Text,
                         Password = txtPassword.Text,
-                        Database = null
-                    }.Save(Common.FILE_INFOSERVER);
+                        Database = Common.InfoServer.Database
+                    });
                     this.Cursor = Cursors.Default;
 
                     this.Hide();
@@ -109,19 +107,13 @@ namespace WF_3Layer03
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (File.Exists(Common.FILE_SERVER))
+            if (Common.LstServer.Count > 0) cmbServer.Text = Common.LstServer[0];
+            if (Common.InfoServer != null)
             {
-                string[] lst = File.ReadAllLines(Common.FILE_SERVER);
-                cmbServer.DataSource = lst;
-                if (lst.Length > 0) cmbServer.Text = lst[0];
-            }
-            var info = new InfoServer().Read(Common.FILE_INFOSERVER);
-            if (info != null)
-            {
-                cbAccount.Checked = info.UseAccount;
-                txtUsername.Text = info.Username;
-                txtPassword.Text = info.Password;
-                cmbServer.Text = info.NameServer;
+                cbAccount.Checked = Common.InfoServer.UseAccount;
+                txtUsername.Text = Common.InfoServer.Username;
+                txtPassword.Text = Common.InfoServer.Password;
+                cmbServer.Text = Common.InfoServer.NameServer;
             }
         }
     }
