@@ -12,11 +12,13 @@ namespace Core
         public bool UseAccount { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string Database { get; set; }
 
         public void Save(string path)
         {
             Security security = new Security();
             this.Username = security.MaHoa(this.Username);
+            this.Database = security.MaHoa(this.Database);
             this.Password = security.MaHoa(security.MaHoa(this.Password));
             new Document().SaveObject<InfoServer>(this, path);
         }
@@ -28,6 +30,7 @@ namespace Core
             {
                 Security security = new Security();
                 ob.Username = security.GiaiMa(ob.Username);
+                ob.Database = security.GiaiMa(ob.Database);
                 ob.Password = security.GiaiMa(security.GiaiMa(ob.Password));
                 return ob;
             }

@@ -11,7 +11,7 @@ namespace Core
         public string MaHoa(string input)
         {
             string result = "";
-            for (int i = 0; i < input.Length; i++)
+            if (input!=null)for (int i = 0; i < input.Length; i++)
             {
                 char c = input[i];
                 result += (((int)c) + i * 7) + " ";
@@ -22,14 +22,18 @@ namespace Core
         public string GiaiMa(string input)
         {
             string result = "";
-            string[] lst = input.Split(' ');
-            for (int i = 0; i < lst.Length; i++)
+            if (input != null)
             {
-                try
+
+                string[] lst = input.Split(' ');
+                for (int i = 0; i < lst.Length; i++)
                 {
-                    result += (char)(int.Parse(lst[i]) - i * 7);
+                    try
+                    {
+                        result += (char)(int.Parse(lst[i]) - i * 7);
+                    }
+                    catch { }
                 }
-                catch { }
             }
             return result;
         }

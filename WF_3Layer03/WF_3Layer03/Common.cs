@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -9,11 +10,15 @@ namespace WF_3Layer03
 {
     public static class Common
     {
+        public static InfoServer InfoServer { get; private set; }
+
         public static SqlConnection connection { get; private set; }
 
-        public static SqlConnection ChaneConnection(string sConnect)
+        public static SqlConnection ChaneConnection(InfoServer infoServer)
         {
-            connection = new SqlConnection(sConnect);
+            InfoServer = infoServer;
+            connection = new SqlConnection(new SqlProvider().CreatConnectString(InfoServer.NameServer, InfoServer.Database,
+                InfoServer.UseAccount ? InfoServer.Username : null, InfoServer.UseAccount ? InfoServer.Password : null));
             return connection;
         }
 

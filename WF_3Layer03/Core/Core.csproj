@@ -42,8 +42,10 @@
   <ItemGroup>
     <Compile Include="Document.cs" />
     <Compile Include="InfoServer.cs" />
+    <Compile Include="InfoTableObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security.cs" />
+    <Compile Include="SqlDatabaseConext.cs" />
     <Compile Include="SqlProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

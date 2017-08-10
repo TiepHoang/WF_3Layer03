@@ -1,6 +1,6 @@
 ﻿namespace WF_3Layer03
 {
-    partial class Form1
+    partial class frmConnect
     {
         /// <summary>
         /// Required designer variable.
@@ -43,11 +43,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(133, 34);
+            this.label1.Location = new System.Drawing.Point(129, 34);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 13);
+            this.label1.Size = new System.Drawing.Size(115, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Login to Server SQL";
+            this.label1.Text = "1. Login to Server SQL";
             // 
             // cmbServer
             // 
@@ -136,7 +136,7 @@
             this.btnShow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnShow_MouseDown);
             this.btnShow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnShow_MouseUp);
             // 
-            // Form1
+            // frmConnect
             // 
             this.AcceptButton = this.btnNext;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -154,9 +154,9 @@
             this.Controls.Add(this.cmbServer);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "Form1";
+            this.Name = "frmConnect";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Connect";
+            this.Text = "1. Connect SQL SERVER";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

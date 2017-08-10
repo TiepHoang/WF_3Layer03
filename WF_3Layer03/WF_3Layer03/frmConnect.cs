@@ -13,11 +13,11 @@ using System.IO;
 
 namespace WF_3Layer03
 {
-    public partial class Form1 : Form
+    public partial class frmConnect : Form
     {
         Document document = new Document();
 
-        public Form1()
+        public frmConnect()
         {
             InitializeComponent();
         }
@@ -50,7 +50,14 @@ namespace WF_3Layer03
                     this.Cursor = Cursors.WaitCursor;
                     con.Open();
                     con.Close();
-                    Common.ChaneConnection(sConnect: sConnect);
+                    Common.ChaneConnection(new InfoServer()
+                    {
+                        Database = null,
+                        NameServer = cmbServer.Text,
+                        Username = txtUsername.Text,
+                        Password = txtPassword.Text,
+                        UseAccount = cbAccount.Checked
+                    });
                     var lstServer = document.ReadText(Common.FILE_SERVER);
                     if (lstServer.Count == 0 || !lstServer.Any(q => q.Trim().ToLower().Equals(cmbServer.Text.Trim().ToLower())))
                     {
@@ -62,14 +69,26 @@ namespace WF_3Layer03
                         NameServer = cmbServer.Text,
                         UseAccount = cbAccount.Checked,
                         Username = txtUsername.Text,
-                        Password = txtPassword.Text
+                        Password = txtPassword.Text,
+                        Database = null
                     }.Save(Common.FILE_INFOSERVER);
+                    this.Cursor = Cursors.Default;
+
+                    this.Hide();
+                    if (new frmDatabase().ShowDialog() == DialogResult.Yes)
+                    {
+                        this.Show();
+                    }
+                    else
+                    {
+                        this.Close();
+                    }
                 }
                 catch (Exception ex)
                 {
+                    this.Cursor = Cursors.Default;
                     MessageBox.Show("Error: " + ex.Message, "Lỗi kết nối", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                 }
-                this.Cursor = Cursors.Default;
             }
         }
 
