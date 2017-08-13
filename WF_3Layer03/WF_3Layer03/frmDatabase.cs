@@ -31,6 +31,12 @@ namespace WF_3Layer03
             var o = Common.InfoServer;
             o.Database = cmbDatabase.Text;
             Common.SaveInfoServer(o);
+            this.Hide();
+            if (new frmSetting().ShowDialog() == DialogResult.Yes)
+            {
+                this.Show();
+            }
+            else this.Close();
         }
 
         private void cmbDatabase_SelectedIndexChanged(object sender, EventArgs e)
@@ -60,6 +66,11 @@ namespace WF_3Layer03
             cmbDatabase.DataSource = sql.GetAllDatatable();
             isEndLoad = true;
             if (!string.IsNullOrWhiteSpace(Common.InfoServer.Database)) cmbDatabase.Text = Common.InfoServer.Database;
+        }
+
+        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+
         }
     }
 }

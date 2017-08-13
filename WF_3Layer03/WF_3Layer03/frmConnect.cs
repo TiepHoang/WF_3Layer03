@@ -50,26 +50,23 @@ namespace WF_3Layer03
                     this.Cursor = Cursors.WaitCursor;
                     con.Open();
                     con.Close();
-                    Common.ChaneConnection(new InfoServer()
+                    var info = new InfoServer()
                     {
-                        Database = Common.InfoServer.Database,
                         NameServer = cmbServer.Text,
                         Username = txtUsername.Text,
                         Password = txtPassword.Text,
-                        UseAccount = cbAccount.Checked
-                    });
+                        UseAccount = cbAccount.Checked,
+                        Database = null
+                    };
+                    string tmp = null;
+                    if (Common.InfoServer != null) tmp = Common.InfoServer.Database;
+                    Common.ChaneConnection(info);
+                    info.Database = tmp;
+                    Common.SaveInfoServer(info);
                     if (Common.LstServer.Count == 0 || !Common.LstServer.Any(q => q.Trim().ToLower().Equals(cmbServer.Text.Trim().ToLower())))
                     {
                         Common.AddListServer(cmbServer.Text);
                     }
-                    Common.SaveInfoServer(new InfoServer()
-                    {
-                        NameServer = cmbServer.Text,
-                        UseAccount = cbAccount.Checked,
-                        Username = txtUsername.Text,
-                        Password = txtPassword.Text,
-                        Database = Common.InfoServer.Database
-                    });
                     this.Cursor = Cursors.Default;
 
                     this.Hide();

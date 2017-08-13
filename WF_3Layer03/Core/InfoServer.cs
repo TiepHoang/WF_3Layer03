@@ -17,10 +17,15 @@ namespace Core
         public void Save(string path)
         {
             Security security = new Security();
-            this.Username = security.MaHoa(this.Username);
-            this.Database = security.MaHoa(this.Database);
-            this.Password = security.MaHoa(security.MaHoa(this.Password));
-            new Document().SaveObject<InfoServer>(this, path);
+            InfoServer info = new InfoServer()
+            {
+                Username = security.MaHoa(this.Username),
+                Database = security.MaHoa(this.Database),
+                Password = security.MaHoa(security.MaHoa(this.Password)),
+                NameServer = this.NameServer,
+                UseAccount = this.UseAccount
+            };
+            new Document().SaveObject<InfoServer>(info, path);
         }
 
         public InfoServer Read(string path)
@@ -29,10 +34,12 @@ namespace Core
             if (ob != null)
             {
                 Security security = new Security();
-                ob.Username = security.GiaiMa(ob.Username);
-                ob.Database = security.GiaiMa(ob.Database);
-                ob.Password = security.GiaiMa(security.GiaiMa(ob.Password));
-                return ob;
+                this.Username = security.GiaiMa(ob.Username);
+                this.Database = security.GiaiMa(ob.Database);
+                this.Password = security.GiaiMa(security.GiaiMa(ob.Password));
+                this.NameServer = ob.NameServer;
+                this.UseAccount = ob.UseAccount;
+                return this;
             }
             return null;
         }

@@ -14,7 +14,7 @@ namespace WF_3Layer03
         const string FILE_SERVER = "system.server.txt";
         const string FILE_SETTING = "system.setting.xml";
 
-        public static InfoServer InfoServer { get; private set; } = new InfoServer().Read(FILE_INFOSERVER);
+        public static InfoServer InfoServer { get; private set; }
 
         public static SqlConnection connection { get; private set; }
 
