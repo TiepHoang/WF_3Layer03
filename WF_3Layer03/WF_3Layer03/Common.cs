@@ -56,5 +56,10 @@ namespace WF_3Layer03
             LstServer.Add(text);
             new Document().SaveText(LstServer, "/", FILE_SERVER, null);
         }
+
+        internal static void SaveSetting()
+        {
+            Setting.Save(FILE_SETTING);
+        }
     }
 }

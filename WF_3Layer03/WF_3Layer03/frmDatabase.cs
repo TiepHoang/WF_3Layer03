@@ -51,7 +51,7 @@ namespace WF_3Layer03
                     UseAccount = Common.InfoServer.UseAccount,
                     NameServer = Common.InfoServer.NameServer,
                 });
-                cmbTable.DataSource = new SqlDatabaseConext(Common.connection).GetTable(cmbDatabase.SelectedText);
+                cmbTable.DataSource = new SqlDatabaseConext(Common.connection).GetTable();
             }
         }
 

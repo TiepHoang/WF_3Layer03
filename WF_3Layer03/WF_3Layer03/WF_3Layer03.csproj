@@ -59,6 +59,12 @@
     <Compile Include="frmDatabase.Designer.cs">
       <DependentUpon>frmDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSetting.cs">
       <SubType>Form</SubType>
     </Compile>

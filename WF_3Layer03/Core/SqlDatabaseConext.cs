@@ -32,7 +32,7 @@ namespace Core
             return lst;
         }
 
-        public List<string> GetTable(string selectedText)
+        public List<string> GetTable()
         {
             List<string> lst = new List<string>();
             var dt = new SqlProvider().GetData("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES", Connection);
