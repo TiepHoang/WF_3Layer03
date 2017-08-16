@@ -82,7 +82,7 @@ namespace WF_3Layer03
                 catch (Exception ex)
                 {
                     this.Cursor = Cursors.Default;
-                    MessageBox.Show("Error: " + ex.Message, "Lỗi kết nối", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    MessageBox.Show("Error: " + ex.Message, "Lỗi", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                 }
             }
         }
