@@ -311,6 +311,8 @@ namespace WF_3Layer03
             if (!string.IsNullOrWhiteSpace(txtFolderDal.Text)) lst.Add(txtFolderDal.Text.Replace("\\", "."));
             if (!string.IsNullOrWhiteSpace(txtFolderDto.Text)) lst.Add(txtFolderDto.Text.Replace("\\", "."));
             if (lst.Count < 2) return;
+            int im = lst.Max(q => q.Length);
+            string max = lst.First(q => q.Length == im);
 
         }
 
