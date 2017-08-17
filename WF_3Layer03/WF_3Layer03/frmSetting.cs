@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Core;
 using System.Collections;
+using System.IO;
 
 namespace WF_3Layer03
 {
@@ -128,7 +129,7 @@ namespace WF_3Layer03
                 listView.Items.Clear();
                 foreach (string item in Common.Setting.Replace_Table.Keys)
                 {
-                    listView.Items.Add(new ListViewItem(new string[] { item , Common.Setting.Replace_Table[item].ToString() }));
+                    listView.Items.Add(new ListViewItem(new string[] { item, Common.Setting.Replace_Table[item].ToString() }));
                 }
                 Table = Common.Setting.GetNameTable(lblTable.Text);
                 txtNew.Clear();
@@ -274,7 +275,7 @@ namespace WF_3Layer03
             {
                 txtNew.Focus();
                 btnAdd.Enabled = true;
-                txtNew.ReadOnly= false;
+                txtNew.ReadOnly = false;
             }
             else
             {
@@ -287,6 +288,58 @@ namespace WF_3Layer03
         {
             if (e.KeyCode != Keys.Enter) return;
             btnAdd_Click(sender, e);
+        }
+
+        private void txtFolderBus_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter) return;
+            if (Directory.Exists(txtFolderBus.Text))
+            {
+                GetNameSpace();
+            }
+            else
+            {
+                MessageBox.Show("Chọn lại folder Bus, folder hiện tại không tồn tại!", "Lỗi", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                txtFolderBus.Focus();
+            }
+        }
+
+        private void GetNameSpace()
+        {
+            List<string> lst = new List<string>();
+            if (!string.IsNullOrWhiteSpace(txtFolderBus.Text)) lst.Add(txtFolderBus.Text.Replace("\\", "."));
+            if (!string.IsNullOrWhiteSpace(txtFolderDal.Text)) lst.Add(txtFolderDal.Text.Replace("\\", "."));
+            if (!string.IsNullOrWhiteSpace(txtFolderDto.Text)) lst.Add(txtFolderDto.Text.Replace("\\", "."));
+            if (lst.Count < 2) return;
+
+        }
+
+        private void txtFolderDal_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter) return;
+            if (Directory.Exists(txtFolderDal.Text))
+            {
+                GetNameSpace();
+            }
+            else
+            {
+                MessageBox.Show("Chọn lại folder Dal, folder hiện tại không tồn tại!", "Lỗi", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                txtFolderDal.Focus();
+            }
+        }
+
+        private void txtFolderDto_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter) return;
+            if (Directory.Exists(txtFolderDto.Text))
+            {
+                GetNameSpace();
+            }
+            else
+            {
+                MessageBox.Show("Chọn lại folder Dto, folder hiện tại không tồn tại!", "Lỗi", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                txtFolderDto.Focus();
+            }
         }
     }
 }

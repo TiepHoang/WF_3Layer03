@@ -37,13 +37,21 @@
             this.txtServer = new System.Windows.Forms.TextBox();
             this.txtDatabase = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.txtNamespace_Dto = new System.Windows.Forms.TextBox();
             this.txtNamespace_Dal = new System.Windows.Forms.TextBox();
             this.txtNamespace_Bus = new System.Windows.Forms.TextBox();
+            this.lblNamespaceDto = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.lblNamespaceDal = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.lblNamespaceBus = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.listView = new System.Windows.Forms.ListView();
             this.btnAdd = new System.Windows.Forms.Button();
             this.txtNew = new System.Windows.Forms.TextBox();
             this.txtOld = new System.Windows.Forms.TextBox();
@@ -67,16 +75,16 @@
             this.lbl = new System.Windows.Forms.Label();
             this.lblTable = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.lblNamespaceBus = new System.Windows.Forms.Label();
-            this.lblNamespaceDal = new System.Windows.Forms.Label();
-            this.lblNamespaceDto = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.listView = new System.Windows.Forms.ListView();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtFolderBus = new System.Windows.Forms.TextBox();
+            this.txtFolderDal = new System.Windows.Forms.TextBox();
+            this.txtFolderDto = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -162,6 +170,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.groupBox4);
             this.groupBox2.Controls.Add(this.txtNamespace_Dto);
             this.groupBox2.Controls.Add(this.txtNamespace_Dal);
             this.groupBox2.Controls.Add(this.txtNamespace_Bus);
@@ -183,9 +192,25 @@
             this.groupBox2.Tag = "";
             this.groupBox2.Text = "NAMESPACE";
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.txtFolderDto);
+            this.groupBox4.Controls.Add(this.txtFolderDal);
+            this.groupBox4.Controls.Add(this.txtFolderBus);
+            this.groupBox4.Controls.Add(this.label16);
+            this.groupBox4.Controls.Add(this.label15);
+            this.groupBox4.Controls.Add(this.label11);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBox4.Location = new System.Drawing.Point(3, 16);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(326, 118);
+            this.groupBox4.TabIndex = 21;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Fordel save code";
+            // 
             // txtNamespace_Dto
             // 
-            this.txtNamespace_Dto.Location = new System.Drawing.Point(291, 104);
+            this.txtNamespace_Dto.Location = new System.Drawing.Point(453, 107);
             this.txtNamespace_Dto.Name = "txtNamespace_Dto";
             this.txtNamespace_Dto.Size = new System.Drawing.Size(208, 20);
             this.txtNamespace_Dto.TabIndex = 12;
@@ -194,7 +219,7 @@
             // 
             // txtNamespace_Dal
             // 
-            this.txtNamespace_Dal.Location = new System.Drawing.Point(291, 64);
+            this.txtNamespace_Dal.Location = new System.Drawing.Point(453, 67);
             this.txtNamespace_Dal.Name = "txtNamespace_Dal";
             this.txtNamespace_Dal.Size = new System.Drawing.Size(208, 20);
             this.txtNamespace_Dal.TabIndex = 13;
@@ -203,35 +228,89 @@
             // 
             // txtNamespace_Bus
             // 
-            this.txtNamespace_Bus.Location = new System.Drawing.Point(291, 24);
+            this.txtNamespace_Bus.Location = new System.Drawing.Point(453, 27);
             this.txtNamespace_Bus.Name = "txtNamespace_Bus";
             this.txtNamespace_Bus.Size = new System.Drawing.Size(208, 20);
             this.txtNamespace_Bus.TabIndex = 14;
             this.txtNamespace_Bus.Text = "BCL";
             this.txtNamespace_Bus.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNamespace_Bus_KeyUp);
             // 
+            // lblNamespaceDto
+            // 
+            this.lblNamespaceDto.AutoSize = true;
+            this.lblNamespaceDto.Location = new System.Drawing.Point(692, 110);
+            this.lblNamespaceDto.Name = "lblNamespaceDto";
+            this.lblNamespaceDto.Size = new System.Drawing.Size(90, 13);
+            this.lblNamespaceDto.TabIndex = 9;
+            this.lblNamespaceDto.Text = "Namespace DTO";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(190, 107);
+            this.label3.Location = new System.Drawing.Point(352, 110);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(90, 13);
             this.label3.TabIndex = 9;
             this.label3.Text = "Namespace DTO";
             // 
+            // lblNamespaceDal
+            // 
+            this.lblNamespaceDal.AutoSize = true;
+            this.lblNamespaceDal.Location = new System.Drawing.Point(692, 70);
+            this.lblNamespaceDal.Name = "lblNamespaceDal";
+            this.lblNamespaceDal.Size = new System.Drawing.Size(88, 13);
+            this.lblNamespaceDal.TabIndex = 10;
+            this.lblNamespaceDal.Text = "Namespace DAL";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(667, 110);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(21, 13);
+            this.label20.TabIndex = 19;
+            this.label20.Text = "ex:";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(667, 70);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(21, 13);
+            this.label19.TabIndex = 19;
+            this.label19.Text = "ex:";
+            // 
+            // lblNamespaceBus
+            // 
+            this.lblNamespaceBus.AutoSize = true;
+            this.lblNamespaceBus.Location = new System.Drawing.Point(692, 30);
+            this.lblNamespaceBus.Name = "lblNamespaceBus";
+            this.lblNamespaceBus.Size = new System.Drawing.Size(89, 13);
+            this.lblNamespaceBus.TabIndex = 11;
+            this.lblNamespaceBus.Text = "Namespace BUS";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(190, 67);
+            this.label2.Location = new System.Drawing.Point(352, 70);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(88, 13);
             this.label2.TabIndex = 10;
             this.label2.Text = "Namespace DAL";
             // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(665, 30);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(21, 13);
+            this.label18.TabIndex = 20;
+            this.label18.Text = "ex:";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(190, 27);
+            this.label1.Location = new System.Drawing.Point(352, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 13);
             this.label1.TabIndex = 11;
@@ -270,6 +349,17 @@
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "FORMAT-NAME";
+            // 
+            // listView
+            // 
+            this.listView.CheckBoxes = true;
+            this.listView.Location = new System.Drawing.Point(387, 91);
+            this.listView.Name = "listView";
+            this.listView.Size = new System.Drawing.Size(351, 158);
+            this.listView.TabIndex = 24;
+            this.listView.UseCompatibleStateImageBehavior = false;
+            this.listView.View = System.Windows.Forms.View.Details;
+            this.listView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listView_KeyUp);
             // 
             // btnAdd
             // 
@@ -473,70 +563,56 @@
             this.label5.TabIndex = 12;
             this.label5.Text = "Fomat BUS";
             // 
-            // lblNamespaceBus
+            // label11
             // 
-            this.lblNamespaceBus.AutoSize = true;
-            this.lblNamespaceBus.Location = new System.Drawing.Point(530, 27);
-            this.lblNamespaceBus.Name = "lblNamespaceBus";
-            this.lblNamespaceBus.Size = new System.Drawing.Size(89, 13);
-            this.lblNamespaceBus.TabIndex = 11;
-            this.lblNamespaceBus.Text = "Namespace BUS";
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(18, 22);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(25, 13);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Bus";
             // 
-            // lblNamespaceDal
+            // label15
             // 
-            this.lblNamespaceDal.AutoSize = true;
-            this.lblNamespaceDal.Location = new System.Drawing.Point(530, 67);
-            this.lblNamespaceDal.Name = "lblNamespaceDal";
-            this.lblNamespaceDal.Size = new System.Drawing.Size(88, 13);
-            this.lblNamespaceDal.TabIndex = 10;
-            this.lblNamespaceDal.Text = "Namespace DAL";
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(18, 54);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(23, 13);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "Dal";
             // 
-            // lblNamespaceDto
+            // label16
             // 
-            this.lblNamespaceDto.AutoSize = true;
-            this.lblNamespaceDto.Location = new System.Drawing.Point(530, 107);
-            this.lblNamespaceDto.Name = "lblNamespaceDto";
-            this.lblNamespaceDto.Size = new System.Drawing.Size(90, 13);
-            this.lblNamespaceDto.TabIndex = 9;
-            this.lblNamespaceDto.Text = "Namespace DTO";
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(18, 86);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(24, 13);
+            this.label16.TabIndex = 0;
+            this.label16.Text = "Dto";
             // 
-            // label18
+            // txtFolderBus
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(503, 27);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(21, 13);
-            this.label18.TabIndex = 20;
-            this.label18.Text = "ex:";
+            this.txtFolderBus.Location = new System.Drawing.Point(48, 19);
+            this.txtFolderBus.Name = "txtFolderBus";
+            this.txtFolderBus.Size = new System.Drawing.Size(269, 20);
+            this.txtFolderBus.TabIndex = 1;
+            this.txtFolderBus.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFolderBus_KeyUp);
             // 
-            // label19
+            // txtFolderDal
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(505, 67);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(21, 13);
-            this.label19.TabIndex = 19;
-            this.label19.Text = "ex:";
+            this.txtFolderDal.Location = new System.Drawing.Point(48, 51);
+            this.txtFolderDal.Name = "txtFolderDal";
+            this.txtFolderDal.Size = new System.Drawing.Size(269, 20);
+            this.txtFolderDal.TabIndex = 1;
+            this.txtFolderDal.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFolderDal_KeyUp);
             // 
-            // label20
+            // txtFolderDto
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(505, 107);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(21, 13);
-            this.label20.TabIndex = 19;
-            this.label20.Text = "ex:";
-            // 
-            // listView
-            // 
-            this.listView.CheckBoxes = true;
-            this.listView.Location = new System.Drawing.Point(387, 91);
-            this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(351, 158);
-            this.listView.TabIndex = 24;
-            this.listView.UseCompatibleStateImageBehavior = false;
-            this.listView.View = System.Windows.Forms.View.Details;
-            this.listView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listView_KeyUp);
+            this.txtFolderDto.Location = new System.Drawing.Point(48, 83);
+            this.txtFolderDto.Name = "txtFolderDto";
+            this.txtFolderDto.Size = new System.Drawing.Size(269, 20);
+            this.txtFolderDto.TabIndex = 1;
+            this.txtFolderDto.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFolderDto_KeyUp);
             // 
             // frmSetting
             // 
@@ -556,6 +632,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
@@ -569,12 +647,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblDababase;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox txtNamespace_Dto;
-        private System.Windows.Forms.TextBox txtNamespace_Dal;
-        private System.Windows.Forms.TextBox txtNamespace_Bus;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label9;
@@ -602,12 +674,25 @@
         private System.Windows.Forms.Label lblResultTable;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtServer;
+        private System.Windows.Forms.ListView listView;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TextBox txtNamespace_Dto;
+        private System.Windows.Forms.TextBox txtNamespace_Dal;
+        private System.Windows.Forms.TextBox txtNamespace_Bus;
         private System.Windows.Forms.Label lblNamespaceDto;
+        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblNamespaceDal;
-        private System.Windows.Forms.Label lblNamespaceBus;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label lblNamespaceBus;
+        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.ListView listView;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtFolderDto;
+        private System.Windows.Forms.TextBox txtFolderDal;
+        private System.Windows.Forms.TextBox txtFolderBus;
     }
 }
