@@ -26,5 +26,7 @@ namespace WF_3Layer03.Properties
                 return defaultInstance;
             }
         }
+
+        public string LastPath { get; internal set; }
     }
 }

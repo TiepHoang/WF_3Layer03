@@ -51,7 +51,7 @@ namespace WF_3Layer03
                     UseAccount = Common.InfoServer.UseAccount,
                     NameServer = Common.InfoServer.NameServer,
                 });
-                cmbTable.DataSource = new SqlDatabaseConext(Common.connection).GetTable();
+                cmbTable.DataSource = new SqlDatabaseContext(Common.connection).GetTable();
             }
         }
 
@@ -62,7 +62,7 @@ namespace WF_3Layer03
 
         private void frmDatabase_Load(object sender, EventArgs e)
         {
-            var sql = new SqlDatabaseConext(Common.connection);
+            var sql = new SqlDatabaseContext(Common.connection);
             cmbDatabase.DataSource = sql.GetAllDatatable();
             isEndLoad = true;
             if (!string.IsNullOrWhiteSpace(Common.InfoServer.Database)) cmbDatabase.Text = Common.InfoServer.Database;

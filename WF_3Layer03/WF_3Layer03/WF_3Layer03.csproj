@@ -79,6 +79,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ucItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucItem.Designer.cs">
+      <DependentUpon>ucItem.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="frmConnect.resx">
       <DependentUpon>frmConnect.cs</DependentUpon>
     </EmbeddedResource>
@@ -103,6 +109,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ucItem.resx">
+      <DependentUpon>ucItem.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

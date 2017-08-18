@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnRun = new System.Windows.Forms.Button();
-            this.btnLoad = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.rtbLog = new System.Windows.Forms.RichTextBox();
-            this.fpnCode = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnBack = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.cbProc = new System.Windows.Forms.CheckBox();
             this.cbDto = new System.Windows.Forms.CheckBox();
             this.cbBus = new System.Windows.Forms.CheckBox();
             this.cbDal = new System.Windows.Forms.CheckBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnBack = new System.Windows.Forms.Button();
+            this.btnLoad = new System.Windows.Forms.Button();
+            this.btnRun = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.rtbLog = new System.Windows.Forms.RichTextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.fpnCode = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -63,87 +63,6 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Option";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.rtbLog);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox2.Location = new System.Drawing.Point(0, 378);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(880, 127);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Log";
-            // 
-            // btnRun
-            // 
-            this.btnRun.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRun.Location = new System.Drawing.Point(802, 16);
-            this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(75, 28);
-            this.btnRun.TabIndex = 3;
-            this.btnRun.Text = "Run";
-            this.btnRun.UseVisualStyleBackColor = true;
-            // 
-            // btnLoad
-            // 
-            this.btnLoad.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnLoad.Location = new System.Drawing.Point(727, 16);
-            this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(75, 28);
-            this.btnLoad.TabIndex = 2;
-            this.btnLoad.Text = "Load";
-            this.btnLoad.UseVisualStyleBackColor = true;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.fpnCode);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(0, 47);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(880, 331);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Code";
-            // 
-            // rtbLog
-            // 
-            this.rtbLog.BackColor = System.Drawing.SystemColors.WindowText;
-            this.rtbLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbLog.ForeColor = System.Drawing.Color.Green;
-            this.rtbLog.Location = new System.Drawing.Point(3, 16);
-            this.rtbLog.Name = "rtbLog";
-            this.rtbLog.Size = new System.Drawing.Size(874, 108);
-            this.rtbLog.TabIndex = 0;
-            this.rtbLog.Text = "This is Log";
-            // 
-            // fpnCode
-            // 
-            this.fpnCode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fpnCode.Location = new System.Drawing.Point(3, 16);
-            this.fpnCode.Name = "fpnCode";
-            this.fpnCode.Size = new System.Drawing.Size(874, 312);
-            this.fpnCode.TabIndex = 0;
-            // 
-            // btnBack
-            // 
-            this.btnBack.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnBack.Location = new System.Drawing.Point(652, 16);
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(75, 28);
-            this.btnBack.TabIndex = 4;
-            this.btnBack.Text = "Back";
-            this.btnBack.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox1.Location = new System.Drawing.Point(3, 16);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(164, 20);
-            this.textBox1.TabIndex = 5;
-            this.textBox1.Text = "Database";
             // 
             // cbProc
             // 
@@ -177,6 +96,7 @@
             this.cbBus.Checked = true;
             this.cbBus.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbBus.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cbBus.ForeColor = System.Drawing.SystemColors.ControlText;
             this.cbBus.Location = new System.Drawing.Point(209, 16);
             this.cbBus.Name = "cbBus";
             this.cbBus.Size = new System.Drawing.Size(44, 28);
@@ -197,6 +117,89 @@
             this.cbDal.Text = "Dal";
             this.cbDal.UseVisualStyleBackColor = true;
             // 
+            // textBox1
+            // 
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.textBox1.Location = new System.Drawing.Point(3, 16);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(164, 20);
+            this.textBox1.TabIndex = 5;
+            this.textBox1.Text = "Database";
+            // 
+            // btnBack
+            // 
+            this.btnBack.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnBack.Location = new System.Drawing.Point(652, 16);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(75, 28);
+            this.btnBack.TabIndex = 4;
+            this.btnBack.Text = "Back";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
+            // btnLoad
+            // 
+            this.btnLoad.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnLoad.Location = new System.Drawing.Point(727, 16);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(75, 28);
+            this.btnLoad.TabIndex = 2;
+            this.btnLoad.Text = "Load";
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
+            // 
+            // btnRun
+            // 
+            this.btnRun.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnRun.Location = new System.Drawing.Point(802, 16);
+            this.btnRun.Name = "btnRun";
+            this.btnRun.Size = new System.Drawing.Size(75, 28);
+            this.btnRun.TabIndex = 3;
+            this.btnRun.Text = "Run";
+            this.btnRun.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.rtbLog);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBox2.Location = new System.Drawing.Point(0, 378);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(880, 127);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Log";
+            // 
+            // rtbLog
+            // 
+            this.rtbLog.BackColor = System.Drawing.SystemColors.WindowText;
+            this.rtbLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbLog.ForeColor = System.Drawing.Color.Green;
+            this.rtbLog.Location = new System.Drawing.Point(3, 16);
+            this.rtbLog.Name = "rtbLog";
+            this.rtbLog.Size = new System.Drawing.Size(874, 108);
+            this.rtbLog.TabIndex = 0;
+            this.rtbLog.Text = "This is Log";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.fpnCode);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Location = new System.Drawing.Point(0, 47);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(880, 331);
+            this.groupBox3.TabIndex = 2;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Code";
+            // 
+            // fpnCode
+            // 
+            this.fpnCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fpnCode.Location = new System.Drawing.Point(3, 16);
+            this.fpnCode.Name = "fpnCode";
+            this.fpnCode.Size = new System.Drawing.Size(874, 312);
+            this.fpnCode.TabIndex = 0;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -210,6 +213,7 @@
             this.Name = "frmMain";
             this.Text = "ThreeLayer";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

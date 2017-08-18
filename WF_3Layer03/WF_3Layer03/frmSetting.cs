@@ -49,6 +49,18 @@ namespace WF_3Layer03
             hashtable = new Hashtable();
         }
 
+        bool getFolderSave()
+        {
+            folderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyDocuments;
+            if (folderBrowserDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Properties.Settings.Default.LastPath = folderBrowserDialog1.SelectedPath;
+                Properties.Settings.Default.Save();
+                return true;
+            }
+            return false;
+        }
+
         private void frmSetting_Load(object sender, EventArgs e)
         {
             if (Common.Setting != null)
@@ -61,13 +73,16 @@ namespace WF_3Layer03
                 this.txtFomat_Bus.Text = Common.Setting.Format_Basic.Format_class_BUS;
                 this.txtFomat_Dal.Text = Common.Setting.Format_Basic.Format_class_DAL;
                 this.txtFomat_Dto.Text = Common.Setting.Format_Basic.Format_class_DTO;
+                this.txtFolderBus.Text = Common.Setting.Format_Basic.FolderSave_Bus;
+                this.txtFolderDal.Text = Common.Setting.Format_Basic.FolderSave_Dal;
+                this.txtFolderDto.Text = Common.Setting.Format_Basic.FolderSave_Dto;
                 this.txtFomat_Proc.Text = Common.Setting.Format_Basic.Format_PROC;
             }
             else
             {
                 Common.Setting = new Setting();
             }
-            lblTable.Text = new SqlDatabaseConext(Common.connection).GetTable().FirstOrDefault(q => !q.Contains("sys"));
+            lblTable.Text = new SqlDatabaseContext(Common.connection).GetTable().FirstOrDefault(q => !q.Contains("sys"));
             Table = lblTable.Text;
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(Common.connection.ConnectionString);
             txtDatabase.Text = builder.InitialCatalog;
@@ -95,6 +110,9 @@ namespace WF_3Layer03
 
         private void btnNext_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtFolderBus.Text) || string.IsNullOrWhiteSpace(txtFolderDal.Text) || string.IsNullOrWhiteSpace(txtFolderDto.Text) ||
+                string.IsNullOrWhiteSpace(txtNamespace_Bus.Text) || string.IsNullOrWhiteSpace(txtNamespace_Dal.Text) || string.IsNullOrWhiteSpace(txtNamespace_Dto.Text))
+                if (MessageBox.Show("Bạn không nhập đủ tên hoặc không hợp lệ namespace, folder save code! Bỏ qua?", "Chú ý", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) != DialogResult.Yes) return;
             Common.Setting = new Setting()
             {
                 Format_Basic = new Setting.Basic()
@@ -106,6 +124,9 @@ namespace WF_3Layer03
                     Format_NameSpace_BUS = txtNamespace_Bus.Text,
                     Format_NameSpace_DAL = txtNamespace_Dal.Text,
                     Format_NameSpace_DTO = txtNamespace_Dto.Text,
+                    FolderSave_Bus = txtFolderBus.Text,
+                    FolderSave_Dal = txtFolderDal.Text,
+                    FolderSave_Dto = txtFolderDto.Text
                 },
                 Replace_Table = hashtable
             };
@@ -307,13 +328,39 @@ namespace WF_3Layer03
         private void GetNameSpace()
         {
             List<string> lst = new List<string>();
-            if (!string.IsNullOrWhiteSpace(txtFolderBus.Text)) lst.Add(txtFolderBus.Text.Replace("\\", "."));
-            if (!string.IsNullOrWhiteSpace(txtFolderDal.Text)) lst.Add(txtFolderDal.Text.Replace("\\", "."));
-            if (!string.IsNullOrWhiteSpace(txtFolderDto.Text)) lst.Add(txtFolderDto.Text.Replace("\\", "."));
+            if (!string.IsNullOrWhiteSpace(txtFolderBus.Text)) lst.Add(txtFolderBus.Text);
+            if (!string.IsNullOrWhiteSpace(txtFolderDal.Text)) lst.Add(txtFolderDal.Text);
+            if (!string.IsNullOrWhiteSpace(txtFolderDto.Text)) lst.Add(txtFolderDto.Text);
             if (lst.Count < 2) return;
-            int im = lst.Max(q => q.Length);
-            string max = lst.First(q => q.Length == im);
+            lst = lst.OrderByDescending(q => q.Length).ToList();
+            string r = "";
+            int length = lst[0].Length;
+            for (int i = 0; i < length; i++)
+            {
+                if (lst[0][i] != lst[1][i]) break;
+                r += lst[0][i];
+            }
+            if (string.IsNullOrEmpty(r)) return;
+            txtNamespace_Bus.Text = txtFolderBus.Text.Replace(r, "").Replace("\\", ".");
+            if (txtNamespace_Bus.Text.Length > 0)
+            {
+                Common.Setting.Format_Basic.Format_NameSpace_BUS = txtNamespace_Bus.Text;
+                lblNamespaceBus.Text = Common.Setting.GetNamespaceBus(Table);
+            }
 
+            txtNamespace_Dal.Text = txtFolderDal.Text.Replace(r, "").Replace("\\", ".");
+            if (txtNamespace_Dal.Text.Length > 0)
+            {
+                Common.Setting.Format_Basic.Format_NameSpace_DAL = txtNamespace_Dal.Text;
+                txtNamespace_Dal.Text = Common.Setting.GetNamespaceDal(Table);
+            }
+
+            txtNamespace_Dto.Text = txtFolderDto.Text.Replace(r, "").Replace("\\", ".");
+            if (txtNamespace_Dto.Text.Length > 0)
+            {
+                Common.Setting.Format_Basic.Format_NameSpace_DTO = txtNamespace_Dto.Text;
+                txtNamespace_Dto.Text = Common.Setting.GetNamespaceDto(Table);
+            }
         }
 
         private void txtFolderDal_KeyUp(object sender, KeyEventArgs e)
@@ -341,6 +388,36 @@ namespace WF_3Layer03
             {
                 MessageBox.Show("Chọn lại folder Dto, folder hiện tại không tồn tại!", "Lỗi", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                 txtFolderDto.Focus();
+            }
+        }
+
+        private void txtFolderBus_DoubleClick(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtFolderBus.Text) && Directory.Exists(txtFolderBus.Text)) folderBrowserDialog1.SelectedPath = txtFolderBus.Text;
+            if (getFolderSave())
+            {
+                txtFolderBus.Text = folderBrowserDialog1.SelectedPath;
+                GetNameSpace();
+            }
+        }
+
+        private void txtFolderDal_DoubleClick(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtFolderDal.Text) && Directory.Exists(txtFolderDal.Text)) folderBrowserDialog1.SelectedPath = txtFolderDal.Text;
+            if (getFolderSave())
+            {
+                txtFolderDal.Text = folderBrowserDialog1.SelectedPath;
+                GetNameSpace();
+            }
+        }
+
+        private void txtFolderDto_DoubleClick(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtFolderDto.Text) && Directory.Exists(txtFolderDto.Text)) folderBrowserDialog1.SelectedPath = txtFolderDto.Text;
+            if (getFolderSave())
+            {
+                txtFolderDto.Text = folderBrowserDialog1.SelectedPath;
+                GetNameSpace();
             }
         }
     }

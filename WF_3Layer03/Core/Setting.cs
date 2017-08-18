@@ -21,6 +21,10 @@ namespace Core
 
             public string Format_PROC { get; set; }
 
+            public string FolderSave_Bus { get; set; }
+            public string FolderSave_Dal { get; set; }
+            public string FolderSave_Dto { get; set; }
+
             public Basic()
             {
                 Format_class_BUS = "{0}BCL";
@@ -30,6 +34,9 @@ namespace Core
                 Format_NameSpace_DAL = "{0}Dao";
                 Format_NameSpace_DTO = "{0}Object";
                 Format_PROC = "WEB_01_sp_{0}_GetAll";
+                FolderSave_Bus = "";
+                FolderSave_Dal = "";
+                FolderSave_Dto = "";
             }
         }
 

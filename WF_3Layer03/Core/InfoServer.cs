@@ -44,19 +44,19 @@ namespace Core
             return null;
         }
 
-        public Setting ReadSetting()
-        {
-            throw new NotImplementedException();
-        }
+        //public Setting ReadSetting()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public List<string> ReadServer()
-        {
-            throw new NotImplementedException();
-        }
+        //public List<string> ReadServer()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public InfoServer ReadInfoServer()
-        {
-            throw new NotImplementedException();
-        }
+        //public InfoServer ReadInfoServer()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

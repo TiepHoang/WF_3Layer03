@@ -8,5 +8,10 @@ namespace Core
 {
     public class InfoTableObject
     {
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string Length { get; set; }
+        public bool isKey { get; set; }
+        public bool isIdentity { get; set; }
     }
 }

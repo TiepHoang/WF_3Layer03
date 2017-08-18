@@ -38,6 +38,12 @@
             this.txtDatabase = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.txtFolderDto = new System.Windows.Forms.TextBox();
+            this.txtFolderDal = new System.Windows.Forms.TextBox();
+            this.txtFolderBus = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.txtNamespace_Dto = new System.Windows.Forms.TextBox();
             this.txtNamespace_Dal = new System.Windows.Forms.TextBox();
             this.txtNamespace_Bus = new System.Windows.Forms.TextBox();
@@ -75,12 +81,7 @@
             this.lbl = new System.Windows.Forms.Label();
             this.lblTable = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.txtFolderBus = new System.Windows.Forms.TextBox();
-            this.txtFolderDal = new System.Windows.Forms.TextBox();
-            this.txtFolderDto = new System.Windows.Forms.TextBox();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -95,7 +96,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 446);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(792, 43);
+            this.panel1.Size = new System.Drawing.Size(863, 43);
             this.panel1.TabIndex = 3;
             // 
             // btnBack
@@ -112,7 +113,7 @@
             // btnNext
             // 
             this.btnNext.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnNext.Location = new System.Drawing.Point(679, 0);
+            this.btnNext.Location = new System.Drawing.Point(750, 0);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(113, 43);
             this.btnNext.TabIndex = 1;
@@ -129,7 +130,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(792, 47);
+            this.groupBox1.Size = new System.Drawing.Size(863, 47);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "DATABASE";
@@ -186,7 +187,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox2.Location = new System.Drawing.Point(0, 47);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(792, 137);
+            this.groupBox2.Size = new System.Drawing.Size(863, 137);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Tag = "";
@@ -207,6 +208,60 @@
             this.groupBox4.TabIndex = 21;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Fordel save code";
+            // 
+            // txtFolderDto
+            // 
+            this.txtFolderDto.Location = new System.Drawing.Point(48, 83);
+            this.txtFolderDto.Name = "txtFolderDto";
+            this.txtFolderDto.Size = new System.Drawing.Size(269, 20);
+            this.txtFolderDto.TabIndex = 1;
+            this.txtFolderDto.DoubleClick += new System.EventHandler(this.txtFolderDto_DoubleClick);
+            this.txtFolderDto.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFolderDto_KeyUp);
+            // 
+            // txtFolderDal
+            // 
+            this.txtFolderDal.Location = new System.Drawing.Point(48, 51);
+            this.txtFolderDal.Name = "txtFolderDal";
+            this.txtFolderDal.Size = new System.Drawing.Size(269, 20);
+            this.txtFolderDal.TabIndex = 1;
+            this.txtFolderDal.DoubleClick += new System.EventHandler(this.txtFolderDal_DoubleClick);
+            this.txtFolderDal.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFolderDal_KeyUp);
+            // 
+            // txtFolderBus
+            // 
+            this.txtFolderBus.Location = new System.Drawing.Point(48, 19);
+            this.txtFolderBus.Name = "txtFolderBus";
+            this.txtFolderBus.Size = new System.Drawing.Size(269, 20);
+            this.txtFolderBus.TabIndex = 1;
+            this.txtFolderBus.DoubleClick += new System.EventHandler(this.txtFolderBus_DoubleClick);
+            this.txtFolderBus.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFolderBus_KeyUp);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(18, 86);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(24, 13);
+            this.label16.TabIndex = 0;
+            this.label16.Text = "Dto";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(18, 54);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(23, 13);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "Dal";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(18, 22);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(25, 13);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Bus";
             // 
             // txtNamespace_Dto
             // 
@@ -345,7 +400,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(0, 184);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(792, 262);
+            this.groupBox3.Size = new System.Drawing.Size(863, 262);
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "FORMAT-NAME";
@@ -563,62 +618,11 @@
             this.label5.TabIndex = 12;
             this.label5.Text = "Fomat BUS";
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(18, 22);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(25, 13);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "Bus";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(18, 54);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(23, 13);
-            this.label15.TabIndex = 0;
-            this.label15.Text = "Dal";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(18, 86);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(24, 13);
-            this.label16.TabIndex = 0;
-            this.label16.Text = "Dto";
-            // 
-            // txtFolderBus
-            // 
-            this.txtFolderBus.Location = new System.Drawing.Point(48, 19);
-            this.txtFolderBus.Name = "txtFolderBus";
-            this.txtFolderBus.Size = new System.Drawing.Size(269, 20);
-            this.txtFolderBus.TabIndex = 1;
-            this.txtFolderBus.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFolderBus_KeyUp);
-            // 
-            // txtFolderDal
-            // 
-            this.txtFolderDal.Location = new System.Drawing.Point(48, 51);
-            this.txtFolderDal.Name = "txtFolderDal";
-            this.txtFolderDal.Size = new System.Drawing.Size(269, 20);
-            this.txtFolderDal.TabIndex = 1;
-            this.txtFolderDal.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFolderDal_KeyUp);
-            // 
-            // txtFolderDto
-            // 
-            this.txtFolderDto.Location = new System.Drawing.Point(48, 83);
-            this.txtFolderDto.Name = "txtFolderDto";
-            this.txtFolderDto.Size = new System.Drawing.Size(269, 20);
-            this.txtFolderDto.TabIndex = 1;
-            this.txtFolderDto.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFolderDto_KeyUp);
-            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(792, 489);
+            this.ClientSize = new System.Drawing.Size(863, 489);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -694,5 +698,6 @@
         private System.Windows.Forms.TextBox txtFolderDto;
         private System.Windows.Forms.TextBox txtFolderDal;
         private System.Windows.Forms.TextBox txtFolderBus;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }
