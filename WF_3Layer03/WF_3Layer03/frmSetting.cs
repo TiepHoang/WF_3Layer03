@@ -77,6 +77,7 @@ namespace WF_3Layer03
                 this.txtFolderDal.Text = Common.Setting.Format_Basic.FolderSave_Dal;
                 this.txtFolderDto.Text = Common.Setting.Format_Basic.FolderSave_Dto;
                 this.txtFomat_Proc.Text = Common.Setting.Format_Basic.Format_PROC;
+                this.txtEntity.Text = Common.Setting.Format_Basic.Namespace_Entity;
             }
             else
             {
@@ -126,7 +127,8 @@ namespace WF_3Layer03
                     Format_NameSpace_DTO = txtNamespace_Dto.Text,
                     FolderSave_Bus = txtFolderBus.Text,
                     FolderSave_Dal = txtFolderDal.Text,
-                    FolderSave_Dto = txtFolderDto.Text
+                    FolderSave_Dto = txtFolderDto.Text,
+                    Namespace_Entity = txtEntity.Text
                 },
                 Replace_Table = hashtable
             };

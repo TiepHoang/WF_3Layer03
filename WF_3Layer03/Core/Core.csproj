@@ -40,11 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bus.cs" />
     <Compile Include="Bussiness.cs" />
+    <Compile Include="Dal.cs" />
     <Compile Include="Document.cs" />
+    <Compile Include="Dto.cs" />
     <Compile Include="IAction.cs" />
     <Compile Include="InfoServer.cs" />
     <Compile Include="InfoTableObject.cs" />
+    <Compile Include="Proc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultRunCode.cs" />
     <Compile Include="Security.cs" />

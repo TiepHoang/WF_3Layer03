@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public interface IAction
+    public class Proc
     {
-        ResultRunCode Run();
-        void Save(string path);
     }
-
 }

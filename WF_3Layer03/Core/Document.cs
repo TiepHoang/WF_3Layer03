@@ -26,6 +26,13 @@ namespace Core
             return myPath;
         }
 
+        public string SaveAllText(string content, string path, string fileName, string extention)
+        {
+            string myPath = Path.Combine(path, fileName + (string.IsNullOrWhiteSpace(extention) ? "" : extention));
+            File.WriteAllText(myPath, content);
+            return myPath;
+        }
+
         public List<string> ReadText(string path)
         {
             if (!File.Exists(path)) return new List<string>();

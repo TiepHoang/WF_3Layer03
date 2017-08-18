@@ -14,6 +14,7 @@ namespace Core
             public string Format_NameSpace_BUS { get; set; }
             public string Format_NameSpace_DAL { get; set; }
             public string Format_NameSpace_DTO { get; set; }
+            public string Namespace_Entity { get; set; }
 
             public string Format_class_BUS { get; set; }
             public string Format_class_DAL { get; set; }
@@ -33,6 +34,7 @@ namespace Core
                 Format_NameSpace_BUS = "{0}BCL";
                 Format_NameSpace_DAL = "{0}Dao";
                 Format_NameSpace_DTO = "{0}Object";
+                Namespace_Entity = "";
                 Format_PROC = "WEB_01_sp_{0}_GetAll";
                 FolderSave_Bus = "";
                 FolderSave_Dal = "";

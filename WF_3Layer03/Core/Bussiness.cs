@@ -9,8 +9,10 @@ namespace Core
 {
     public abstract class Bussiness : IAction
     {
-        public List<InfoTableObject> ListInfoTable { get; protected set; }
-        public string NameTable { get; set; }
+        public List<InfoTableObject> LstInfoTable { get; protected set; }
+        public string NameTable { get; protected set; }
+        public Setting Setting { get; protected set; }
+        public Dictionary<string,string> Map { get; protected set; }
 
         public enum eMethod
         {
@@ -22,25 +24,27 @@ namespace Core
             DeleteBy
         }
 
-        public Bussiness(string nameTable,SqlConnection connection)
+        public Bussiness(string nameTable, SqlConnection connection, Setting setting)
         {
             NameTable = NameTable;
-            ListInfoTable = new SqlDatabaseContext(connection).GetInfoTable(nameTable);
+            Setting = setting;
+            LstInfoTable = new SqlDatabaseContext(connection).GetInfoTable(nameTable);
+            Map = new Dictionary<string, string>();
         }
 
-        public ResultRunCode Run()
+        public abstract ResultRunCode Run();
+
+        public virtual void Save(string path)
         {
-            throw new NotImplementedException();
+            string s = GetNameClass();
+            if (!string.IsNullOrEmpty(s))
+                new Document().SaveAllText(GetCode(), path, s, ".cs");
         }
 
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract string GetCode();
 
-        public virtual string GetName(eMethod method)
-        {
-            return "";
-        }
+        public abstract string GetNameClass();
+
+        public abstract string GetNameMethod(eMethod method);
     }
 }

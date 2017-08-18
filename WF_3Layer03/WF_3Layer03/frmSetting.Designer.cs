@@ -82,6 +82,8 @@
             this.lblTable = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txtEntity = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -172,10 +174,12 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.groupBox4);
+            this.groupBox2.Controls.Add(this.txtEntity);
             this.groupBox2.Controls.Add(this.txtNamespace_Dto);
             this.groupBox2.Controls.Add(this.txtNamespace_Dal);
             this.groupBox2.Controls.Add(this.txtNamespace_Bus);
             this.groupBox2.Controls.Add(this.lblNamespaceDto);
+            this.groupBox2.Controls.Add(this.label17);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.lblNamespaceDal);
             this.groupBox2.Controls.Add(this.label20);
@@ -187,7 +191,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox2.Location = new System.Drawing.Point(0, 47);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(863, 137);
+            this.groupBox2.Size = new System.Drawing.Size(863, 173);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Tag = "";
@@ -204,7 +208,7 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox4.Location = new System.Drawing.Point(3, 16);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(326, 118);
+            this.groupBox4.Size = new System.Drawing.Size(326, 154);
             this.groupBox4.TabIndex = 21;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Fordel save code";
@@ -398,9 +402,9 @@
             this.groupBox3.Controls.Add(this.lblTable);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(0, 184);
+            this.groupBox3.Location = new System.Drawing.Point(0, 220);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(863, 262);
+            this.groupBox3.Size = new System.Drawing.Size(863, 226);
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "FORMAT-NAME";
@@ -618,6 +622,24 @@
             this.label5.TabIndex = 12;
             this.label5.Text = "Fomat BUS";
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(352, 147);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(93, 13);
+            this.label17.TabIndex = 9;
+            this.label17.Text = "Namespace Entity";
+            // 
+            // txtEntity
+            // 
+            this.txtEntity.Location = new System.Drawing.Point(453, 144);
+            this.txtEntity.Name = "txtEntity";
+            this.txtEntity.Size = new System.Drawing.Size(208, 20);
+            this.txtEntity.TabIndex = 12;
+            this.txtEntity.Text = "Entity";
+            this.txtEntity.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNamespace_Dto_KeyUp);
+            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -699,5 +721,7 @@
         private System.Windows.Forms.TextBox txtFolderDal;
         private System.Windows.Forms.TextBox txtFolderBus;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.TextBox txtEntity;
+        private System.Windows.Forms.Label label17;
     }
 }
