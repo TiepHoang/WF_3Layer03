@@ -20,12 +20,12 @@ namespace Core
         public List<string> GetAllDatatable()
         {
             List<string> lst = new List<string>();
-            var dt = new SqlProvider().GetData("EXEC sp_databases", Connection);
+            var dt = new SqlProvider().GetData("SELECT name FROM master.dbo.sysdatabases", Connection);
             if (dt != null || dt.Rows.Count > 0)
             {
                 foreach (DataRow item in dt.Rows)
                 {
-                    lst.Add((string)item["DATABASE_NAME"]);
+                    lst.Add((string)item["name"]);
                 }
                 lst = lst.OrderBy(q => q).ToList();
             }
