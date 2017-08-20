@@ -44,7 +44,7 @@ namespace {Setting.GetNamespaceBus(NameTable)}
             return $@"
 public List<{cDto}> {GetNameMethod(eMethod.GetAll)}()
 {'{'}
-    return new {cDal}().{GetNameMethod(eMethod.GetAll)[0]}();
+    return new {cDal}().{GetNameMethod(eMethod.GetAll)}();
 {'}'}
 ";
         }
@@ -129,7 +129,7 @@ public bool {GetNameMethod(eMethod.Delete)}({param})
             return $@"
 public bool Update({cDto} ob)
 {'{'}
-    return new {cDal}().Update(ob);
+    return new {cDal}().{GetNameMethod(eMethod.Update)}(ob);
 {'}'}
 ";
         }

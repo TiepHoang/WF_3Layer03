@@ -45,6 +45,7 @@ namespace WF_3Layer03
             }
 
             btnRun.BackColor = oke ? Color.LightGreen : Color.Red;
+            btnRun.Visible = oke;
         }
 
         Form fOpen;
