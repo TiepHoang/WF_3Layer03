@@ -262,7 +262,8 @@
             this.txtEntity.Size = new System.Drawing.Size(208, 20);
             this.txtEntity.TabIndex = 12;
             this.txtEntity.Text = "Entity";
-            this.txtEntity.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNamespace_Dto_KeyUp);
+            this.txtEntity.DoubleClick += new System.EventHandler(this.txtEntity_DoubleClick);
+            this.txtEntity.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtEntity_KeyUp);
             // 
             // txtNamespace_Dto
             // 
@@ -271,6 +272,7 @@
             this.txtNamespace_Dto.Size = new System.Drawing.Size(208, 20);
             this.txtNamespace_Dto.TabIndex = 12;
             this.txtNamespace_Dto.Text = "Object";
+            this.txtNamespace_Dto.TextChanged += new System.EventHandler(this.txtNamespace_Dto_TextChanged);
             this.txtNamespace_Dto.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNamespace_Dto_KeyUp);
             // 
             // txtNamespace_Dal
@@ -280,6 +282,7 @@
             this.txtNamespace_Dal.Size = new System.Drawing.Size(208, 20);
             this.txtNamespace_Dal.TabIndex = 13;
             this.txtNamespace_Dal.Text = "Dao";
+            this.txtNamespace_Dal.TextChanged += new System.EventHandler(this.txtNamespace_Dal_TextChanged);
             this.txtNamespace_Dal.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNamespace_Dal_KeyUp);
             // 
             // txtNamespace_Bus
@@ -289,6 +292,7 @@
             this.txtNamespace_Bus.Size = new System.Drawing.Size(208, 20);
             this.txtNamespace_Bus.TabIndex = 14;
             this.txtNamespace_Bus.Text = "BCL";
+            this.txtNamespace_Bus.TextChanged += new System.EventHandler(this.txtNamespace_Bus_TextChanged);
             this.txtNamespace_Bus.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNamespace_Bus_KeyUp);
             // 
             // lblNamespaceDto

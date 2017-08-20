@@ -18,10 +18,8 @@ namespace Core
             return $@"
 using System;
 using System.Collections.Generic;
-using {Setting.GetNamespaceDto(NameTable)};
-using {Setting.Format_Basic.Namespace_Entity};
 
-namespace {Setting.GetNamespaceBus(NameTable)}
+namespace {Setting.GetNamespaceDto(NameTable)}
 {'{'}
     public class {Setting.GetClassDto(NameTable)}
     {'{'}
@@ -37,7 +35,7 @@ namespace {Setting.GetNamespaceBus(NameTable)}
             foreach (var item in LstInfoTable)
             {
                 s += $@"
-public {item.GetTypeCs()} {item.Name} {'{'} get; set; {'}'};";
+public {item.GetTypeCs()} {item.Name} {'{'} get; set; {'}'}";
             }
             return s;
         }

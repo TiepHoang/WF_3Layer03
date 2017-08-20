@@ -51,8 +51,7 @@ namespace WF_3Layer03
 
         bool getFolderSave()
         {
-            folderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyDocuments;
-            if (folderBrowserDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
                 Properties.Settings.Default.LastPath = folderBrowserDialog1.SelectedPath;
                 Properties.Settings.Default.Save();
@@ -65,19 +64,7 @@ namespace WF_3Layer03
         {
             if (Common.Setting != null)
             {
-                this.txtDatabase.Text = Common.InfoServer.Database;
-
-                this.txtNamespace_Bus.Text = Common.Setting.Format_Basic.Format_NameSpace_BUS;
-                this.txtNamespace_Dal.Text = Common.Setting.Format_Basic.Format_NameSpace_DAL;
-                this.txtNamespace_Dto.Text = Common.Setting.Format_Basic.Format_NameSpace_DTO;
-                this.txtFomat_Bus.Text = Common.Setting.Format_Basic.Format_class_BUS;
-                this.txtFomat_Dal.Text = Common.Setting.Format_Basic.Format_class_DAL;
-                this.txtFomat_Dto.Text = Common.Setting.Format_Basic.Format_class_DTO;
-                this.txtFolderBus.Text = Common.Setting.Format_Basic.FolderSave_Bus;
-                this.txtFolderDal.Text = Common.Setting.Format_Basic.FolderSave_Dal;
-                this.txtFolderDto.Text = Common.Setting.Format_Basic.FolderSave_Dto;
-                this.txtFomat_Proc.Text = Common.Setting.Format_Basic.Format_PROC;
-                this.txtEntity.Text = Common.Setting.Format_Basic.Namespace_Entity;
+                _loadSetting();
             }
             else
             {
@@ -90,6 +77,23 @@ namespace WF_3Layer03
             txtServer.Text = builder.DataSource;
 
             loadListView();
+        }
+
+        private void _loadSetting()
+        {
+            this.txtDatabase.Text = Common.InfoServer.Database;
+
+            this.txtNamespace_Bus.Text = Common.Setting.Format_Basic.Format_NameSpace_BUS;
+            this.txtNamespace_Dal.Text = Common.Setting.Format_Basic.Format_NameSpace_DAL;
+            this.txtNamespace_Dto.Text = Common.Setting.Format_Basic.Format_NameSpace_DTO;
+            this.txtFomat_Bus.Text = Common.Setting.Format_Basic.Format_class_BUS;
+            this.txtFomat_Dal.Text = Common.Setting.Format_Basic.Format_class_DAL;
+            this.txtFomat_Dto.Text = Common.Setting.Format_Basic.Format_class_DTO;
+            this.txtFolderBus.Text = Common.Setting.Format_Basic.FolderSave_Bus;
+            this.txtFolderDal.Text = Common.Setting.Format_Basic.FolderSave_Dal;
+            this.txtFolderDto.Text = Common.Setting.Format_Basic.FolderSave_Dto;
+            this.txtFomat_Proc.Text = Common.Setting.Format_Basic.Format_PROC;
+            this.txtEntity.Text = Common.Setting.Format_Basic.Namespace_Entity;
         }
 
         private void loadListView()
@@ -326,19 +330,25 @@ namespace WF_3Layer03
             if (!string.IsNullOrWhiteSpace(txtFolderDal.Text)) lst.Add(txtFolderDal.Text);
             if (!string.IsNullOrWhiteSpace(txtFolderDto.Text)) lst.Add(txtFolderDto.Text);
             if (lst.Count < 2) return;
+
             lst = lst.OrderByDescending(q => q.Length).ToList();
             string r = "";
-            int length = lst[0].Length;
+            var a1 = lst[0].Split('\\');
+            var a2 = lst[1].Split('\\');
+            int length = a1.Length;
             for (int i = 0; i < length; i++)
             {
-                if (lst[0][i] != lst[1][i]) break;
-                r += lst[0][i];
+                if (a1[i] != a2[i]) break;
+                r += a1[i] + '\\';
             }
+
             if (string.IsNullOrEmpty(r)) return;
+
             txtNamespace_Bus.Text = txtFolderBus.Text.Replace(r, "").Replace("\\", ".");
             if (txtNamespace_Bus.Text.Length > 0)
             {
                 Common.Setting.Format_Basic.Format_NameSpace_BUS = txtNamespace_Bus.Text;
+                Common.Setting.Format_Basic.FolderSave_Bus = txtFolderBus.Text;
                 lblNamespaceBus.Text = Common.Setting.GetNamespaceBus(Table);
             }
 
@@ -346,6 +356,7 @@ namespace WF_3Layer03
             if (txtNamespace_Dal.Text.Length > 0)
             {
                 Common.Setting.Format_Basic.Format_NameSpace_DAL = txtNamespace_Dal.Text;
+                Common.Setting.Format_Basic.FolderSave_Dal = txtFolderDal.Text;
                 txtNamespace_Dal.Text = Common.Setting.GetNamespaceDal(Table);
             }
 
@@ -353,8 +364,11 @@ namespace WF_3Layer03
             if (txtNamespace_Dto.Text.Length > 0)
             {
                 Common.Setting.Format_Basic.Format_NameSpace_DTO = txtNamespace_Dto.Text;
+                Common.Setting.Format_Basic.FolderSave_Dto = txtFolderDto.Text;
                 txtNamespace_Dto.Text = Common.Setting.GetNamespaceDto(Table);
             }
+
+            _loadSetting();
         }
 
         private void txtFolderDal_KeyUp(object sender, KeyEventArgs e)
@@ -412,6 +426,79 @@ namespace WF_3Layer03
             {
                 txtFolderDto.Text = folderBrowserDialog1.SelectedPath;
                 GetNameSpace();
+            }
+        }
+
+        private void txtEntity_KeyUp(object sender, KeyEventArgs e)
+        {
+            txtEntity.Text = GetEntity(txtEntity.Text);
+        }
+
+        private void txtEntity_DoubleClick(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtEntity.Text = GetEntity(folderBrowserDialog1.SelectedPath);
+            }
+        }
+
+        private string GetEntity(string selectedPath)
+        {
+            string r = "";
+
+            var a1 = selectedPath.Split('\\');
+            var a2 = txtFolderDal.Text.Split('\\');
+            var a3 = txtFolderDto.Text.Split('\\');
+            if (a3.Length < 1) a3 = txtFolderBus.Text.Split('\\');
+            if (a1.Length < 1 || a2.Length < 1) return selectedPath;
+            List<string> lst = new List<string>();
+            for (int i = 0; i < a1.Length; i++)
+            {
+                if (a1[i] != a2[i]) break;
+                lst.Add(a1[i]);
+            }
+            for (int i = 0; i < lst.Count; i++)
+            {
+                if (a3.Length <= i || a3[i] != lst[i]) break;
+                r += a3[i] + '\\';
+            }
+            return r == "" ? selectedPath : selectedPath.Replace(r, "").Replace('\\', '.');
+        }
+
+        private void txtNamespace_Bus_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Common.Setting.Format_Basic.Format_NameSpace_BUS = txtNamespace_Bus.Text;
+                lblNamespaceBus.Text = Common.Setting.GetNamespaceBus(Table);
+
+            }
+            catch
+            {
+            }
+        }
+
+        private void txtNamespace_Dal_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Common.Setting.Format_Basic.Format_NameSpace_DAL = txtNamespace_Dal.Text;
+                lblNamespaceDal.Text = Common.Setting.GetNamespaceDal(Table);
+            }
+            catch
+            {
+            }
+        }
+
+        private void txtNamespace_Dto_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Common.Setting.Format_Basic.Format_NameSpace_DTO = txtNamespace_Dto.Text;
+                lblNamespaceDto.Text = Common.Setting.GetNamespaceDto(Table);
+            }
+            catch
+            {
             }
         }
     }

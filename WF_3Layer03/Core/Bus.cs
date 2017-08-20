@@ -44,7 +44,7 @@ namespace {Setting.GetNamespaceBus(NameTable)}
             return $@"
 public List<{cDto}> {GetNameMethod(eMethod.GetAll)}()
 {'{'}
-    return new {cDal}().{GetNameMethod(eMethod.GetAll)}();
+    return new {cDal}().{GetNameMethod(eMethod.GetAll)[0]}();
 {'}'}
 ";
         }
@@ -102,30 +102,30 @@ public bool {GetNameMethod(eMethod.Delete)}({param})
 ";
         }
 
-//        private string Get_DeleteBy()
-//        {
-//            if (LstInfoTable.Count(q => q.isKey) < 2) return string.Empty;
-//            var lstKey = LstInfoTable.Where(q => q.isKey).ToList();
-//            string param = null;
-//            string value = null;
-//            string result = "";
-//            foreach (var item in lstKey)
-//            {
-//                value = item.Name;
-//                param = $"{item.GetTypeCs()} {item.Name}";
-//                result += $@"
-//public bool {GetNameMethod(eMethod.DeleteBy)}{item.Name}({param})
-//{'{'}
-//    return new {cDal}().{GetNameMethod(eMethod.DeleteBy)}{item.Name}({value});
-//{'}'}
-//";
-//            }
-//            return result;
-//        }
+        //        private string Get_DeleteBy()
+        //        {
+        //            if (LstInfoTable.Count(q => q.isKey) < 2) return string.Empty;
+        //            var lstKey = LstInfoTable.Where(q => q.isKey).ToList();
+        //            string param = null;
+        //            string value = null;
+        //            string result = "";
+        //            foreach (var item in lstKey)
+        //            {
+        //                value = item.Name;
+        //                param = $"{item.GetTypeCs()} {item.Name}";
+        //                result += $@"
+        //public bool {GetNameMethod(eMethod.DeleteBy)}{item.Name}({param})
+        //{'{'}
+        //    return new {cDal}().{GetNameMethod(eMethod.DeleteBy)}{item.Name}({value});
+        //{'}'}
+        //";
+        //            }
+        //            return result;
+        //        }
 
         private string Get_Update()
         {
-            if (!LstInfoTable.Any(q => q.isKey)) return string.Empty;
+            if (!LstInfoTable.Any(q => q.isKey) || LstInfoTable.Count == LstInfoTable.Count(q => q.isKey)) return string.Empty;
             return $@"
 public bool Update({cDto} ob)
 {'{'}

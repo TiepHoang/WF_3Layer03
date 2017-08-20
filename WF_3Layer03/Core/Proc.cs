@@ -107,7 +107,7 @@ END;
         private string GetUpdate()
         {
             var lsKey = LstInfoTable.Where(q => q.isKey).ToList();
-            if (lsKey.Count < 1) return "";
+            if (lsKey.Count < 1 || LstInfoTable.Count == lsKey.Count) return "";
             string param = "";
             string value = "";
             string where = "";

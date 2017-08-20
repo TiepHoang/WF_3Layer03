@@ -49,5 +49,28 @@ namespace Core
                 return k;
             }
         }
+
+        public DataTable GetAllProc(string nameDatabase, SqlConnection connection)
+        {
+            return GetData($@"select SPECIFIC_NAME from {nameDatabase}.information_schema.routines 
+ where routine_type = 'PROCEDURE' AND SPECIFIC_NAME NOT like 'sp_%diagram%'", connection);
+        }
+
+        public void DropAllProc(string nameDatabase, SqlConnection connection)
+        {
+            ExecuteQuery($@"declare @procName varchar(500)
+declare cur cursor for select SPECIFIC_NAME from {nameDatabase}.information_schema.routines 
+	where routine_type = 'PROCEDURE' AND SPECIFIC_NAME NOT like 'sp_%diagram%'
+open cur
+fetch next from cur into @procName
+while @@fetch_status = 0
+begin
+    exec('drop procedure [' + @procName + ']')
+    fetch next from cur into @procName
+end
+close cur
+deallocate cur
+", connection);
+        }
     }
 }

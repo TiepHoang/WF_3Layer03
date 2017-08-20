@@ -20,6 +20,9 @@ namespace Core
             string s = "";
             switch (Type)
             {
+                case "int":
+                    s = typeof(int).ToString();
+                    break;
                 case "uniqueidentifier":
                     s = typeof(Guid).ToString();
                     break;
@@ -49,7 +52,7 @@ namespace Core
 
         public override string ToString()
         {
-            return $"Name: {Name}     \t\tType: {Type}      \tLength: {Length}      \tKey: {isKey}       \tIsIdentity: {isIdentity}";
+            return $"Name: {Name}     \t\t\tType: {Type}      \t\tLength: {Length}      \tKey: {isKey}       \tIsIdentity: {isIdentity}";
         }
     }
 }

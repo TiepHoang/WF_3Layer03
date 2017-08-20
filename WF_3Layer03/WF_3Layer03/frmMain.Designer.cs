@@ -40,6 +40,7 @@
             this.rtbLog = new System.Windows.Forms.RichTextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.fpnCode = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnDeleteAllProc = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -47,6 +48,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnDeleteAllProc);
             this.groupBox1.Controls.Add(this.cbProc);
             this.groupBox1.Controls.Add(this.cbDto);
             this.groupBox1.Controls.Add(this.cbBus);
@@ -67,9 +69,10 @@
             this.cbProc.AutoSize = true;
             this.cbProc.Checked = true;
             this.cbProc.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbProc.Location = new System.Drawing.Point(340, 21);
+            this.cbProc.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cbProc.Location = new System.Drawing.Point(296, 16);
             this.cbProc.Name = "cbProc";
-            this.cbProc.Size = new System.Drawing.Size(48, 17);
+            this.cbProc.Size = new System.Drawing.Size(48, 32);
             this.cbProc.TabIndex = 6;
             this.cbProc.Text = "Proc";
             this.cbProc.UseVisualStyleBackColor = true;
@@ -79,9 +82,10 @@
             this.cbDto.AutoSize = true;
             this.cbDto.Checked = true;
             this.cbDto.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbDto.Location = new System.Drawing.Point(291, 21);
+            this.cbDto.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cbDto.Location = new System.Drawing.Point(253, 16);
             this.cbDto.Name = "cbDto";
-            this.cbDto.Size = new System.Drawing.Size(43, 17);
+            this.cbDto.Size = new System.Drawing.Size(43, 32);
             this.cbDto.TabIndex = 7;
             this.cbDto.Text = "Dto";
             this.cbDto.UseVisualStyleBackColor = true;
@@ -91,10 +95,11 @@
             this.cbBus.AutoSize = true;
             this.cbBus.Checked = true;
             this.cbBus.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbBus.Dock = System.Windows.Forms.DockStyle.Left;
             this.cbBus.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cbBus.Location = new System.Drawing.Point(241, 21);
+            this.cbBus.Location = new System.Drawing.Point(209, 16);
             this.cbBus.Name = "cbBus";
-            this.cbBus.Size = new System.Drawing.Size(44, 17);
+            this.cbBus.Size = new System.Drawing.Size(44, 32);
             this.cbBus.TabIndex = 8;
             this.cbBus.Text = "Bus";
             this.cbBus.UseVisualStyleBackColor = true;
@@ -104,16 +109,18 @@
             this.cbDal.AutoSize = true;
             this.cbDal.Checked = true;
             this.cbDal.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbDal.Location = new System.Drawing.Point(193, 22);
+            this.cbDal.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cbDal.Location = new System.Drawing.Point(167, 16);
             this.cbDal.Name = "cbDal";
-            this.cbDal.Size = new System.Drawing.Size(42, 17);
+            this.cbDal.Size = new System.Drawing.Size(42, 32);
             this.cbDal.TabIndex = 9;
             this.cbDal.Text = "Dal";
             this.cbDal.UseVisualStyleBackColor = true;
             // 
             // txtDatabase
             // 
-            this.txtDatabase.Location = new System.Drawing.Point(12, 19);
+            this.txtDatabase.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtDatabase.Location = new System.Drawing.Point(3, 16);
             this.txtDatabase.Name = "txtDatabase";
             this.txtDatabase.ReadOnly = true;
             this.txtDatabase.Size = new System.Drawing.Size(164, 20);
@@ -187,6 +194,18 @@
             this.fpnCode.Size = new System.Drawing.Size(874, 308);
             this.fpnCode.TabIndex = 0;
             // 
+            // btnDeleteAllProc
+            // 
+            this.btnDeleteAllProc.BackColor = System.Drawing.Color.OrangeRed;
+            this.btnDeleteAllProc.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnDeleteAllProc.Location = new System.Drawing.Point(344, 16);
+            this.btnDeleteAllProc.Name = "btnDeleteAllProc";
+            this.btnDeleteAllProc.Size = new System.Drawing.Size(75, 32);
+            this.btnDeleteAllProc.TabIndex = 10;
+            this.btnDeleteAllProc.Text = "Del Proc";
+            this.btnDeleteAllProc.UseVisualStyleBackColor = false;
+            this.btnDeleteAllProc.Click += new System.EventHandler(this.btnDeleteAllProc_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -223,5 +242,6 @@
         private System.Windows.Forms.CheckBox cbBus;
         private System.Windows.Forms.CheckBox cbDal;
         private System.Windows.Forms.TextBox txtDatabase;
+        private System.Windows.Forms.Button btnDeleteAllProc;
     }
 }

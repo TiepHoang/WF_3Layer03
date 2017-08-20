@@ -35,7 +35,7 @@ namespace Core
                 Format_NameSpace_DAL = "{0}Dao";
                 Format_NameSpace_DTO = "{0}Object";
                 Namespace_Entity = "";
-                Format_PROC = "WEB_01_sp_{0}_GetAll";
+                Format_PROC = "WEB_01_sp_{0}";
                 FolderSave_Bus = "";
                 FolderSave_Dal = "";
                 FolderSave_Dto = "";

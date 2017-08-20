@@ -33,7 +33,7 @@ namespace WF_3Layer03
             Common.ReadSetting();
             new Task(() =>
             {
-                Thread.Sleep(1996);
+                Thread.Sleep(996);
                 this.Close();
             }).Start();
         }

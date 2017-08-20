@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -26,26 +26,49 @@ namespace WF_3Layer03
 
         private void _check()
         {
+            btnConnect.BackColor = btnDatabase.BackColor = btnSetting.BackColor = btnRun.BackColor = Color.Red;
             bool oke = false;
-            btnConnect.BackColor = Common.connection == null || Common.InfoServer == null || string.IsNullOrWhiteSpace(Common.InfoServer.NameServer) ? Color.Red : Color.LightGreen;
-            btnDatabase.BackColor = Common.connection == null || string.IsNullOrWhiteSpace(Common.InfoServer.Database) ? Color.Red : Color.LightGreen;
-            btnSetting.BackColor = Common.Setting == null ? Color.Red : Color.LightGreen;
-            oke = btnConnect.BackColor == Color.LightGreen && btnSetting.BackColor == Color.LightGreen && btnDatabase.BackColor == Color.LightGreen;
+            if (Common.connection != null)
+            {
+                SqlConnectionStringBuilder b = new SqlConnectionStringBuilder(Common.connection.ConnectionString);
+                btnConnect.BackColor = Color.LightGreen;
+                if (!string.IsNullOrWhiteSpace(b.InitialCatalog))
+                {
+                    btnDatabase.BackColor = Color.LightGreen;
+                    oke = true;
+                }
+            }
+            if (Common.Setting != null)
+            {
+                btnSetting.BackColor = Color.LightGreen;
+                oke = oke && true;
+            }
+
             btnRun.BackColor = oke ? Color.LightGreen : Color.Red;
-            btnRun.Visible = oke;
         }
 
         Form fOpen;
 
         void _open(Form f)
         {
-            if (this.fOpen != null) this.fOpen.Close();
+            _check();
+            if (this.fOpen != null)
+            {
+                this.fOpen.Close();
+                fOpen = null;
+            }
             this.fOpen = f;
             fOpen.TopLevel = false;
             grCode.Controls.Add(fOpen);
             fOpen.FormBorderStyle = FormBorderStyle.None;
             fOpen.Dock = DockStyle.Fill;
             fOpen.Show();
+            fOpen.FormClosing += FOpen_FormClosing;
+        }
+
+        private void FOpen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _check();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -67,19 +90,16 @@ namespace WF_3Layer03
         private void btnDatabase_Click(object sender, EventArgs e)
         {
             _open(new frmDatabase());
-            _check();
         }
 
         private void btnSetting_Click(object sender, EventArgs e)
         {
             _open(new frmSetting());
-            _check();
         }
 
         private void btnRun_Click(object sender, EventArgs e)
         {
             _open(new frmMain());
-            _check();
         }
     }
 }

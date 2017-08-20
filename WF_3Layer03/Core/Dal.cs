@@ -11,11 +11,13 @@ namespace Core
     {
         private readonly string cDto;
         private readonly Proc proc;
+        private readonly string dbEntity;
 
         public Dal(string nameTable, SqlConnection connection, Setting setting) : base(nameTable, connection, setting)
         {
             cDto = setting.GetClassDto(NameTable);
             proc = new Proc(NameTable, connection, setting);
+            dbEntity = new SqlConnectionStringBuilder(connection.ConnectionString).InitialCatalog + "Entities";
         }
 
         public override string GetCode()
@@ -28,7 +30,7 @@ using {Setting.Format_Basic.Namespace_Entity};
 
 namespace {Setting.GetNamespaceDal(NameTable)}
 {'{'}
-    public class {Setting.GetNamespaceDal(NameTable)}
+    public class {Setting.GetClassDal(NameTable)}
     {'{'}
         {Get_GetAll()}
         {Get_GetBy()}
@@ -42,6 +44,7 @@ namespace {Setting.GetNamespaceDal(NameTable)}
 
         private string Get_Update()
         {
+            if (!LstInfoTable.Any(q => q.isKey) || LstInfoTable.Count == LstInfoTable.Count(q => q.isKey)) return "";
             string passValue = "";
             bool isFirst = true;
             foreach (var item in LstInfoTable)
@@ -53,7 +56,7 @@ namespace {Setting.GetNamespaceDal(NameTable)}
             return $@"
 public bool {GetNameMethod(eMethod.Update)}({cDto} ob)
 {'{'}
-    return new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.Update)}({passValue})>0;
+    return new {dbEntity}().{proc.GetName(eMethod.Update)[0]}({passValue})>0;
 {'}'}
 ";
         }
@@ -68,7 +71,7 @@ public bool {GetNameMethod(eMethod.Update)}({cDto} ob)
         //                result += $@"
         //public bool {GetNameMethod(eMethod.DeleteBy)}{item.Name}({item.GetTypeCs()} {item.Name})
         //{'{'}
-        //    return new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.Delete)}({item.Name})>0;
+        //    return new {dbEntity}().{proc.GetName(eMethod.Delete)}({item.Name})>0;
         //{'}'}
         //";
         //            }
@@ -92,7 +95,7 @@ public bool {GetNameMethod(eMethod.Update)}({cDto} ob)
             return $@"
 public bool {GetNameMethod(eMethod.Delete)}({param})
 {'{'}
-    return new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.Delete)[0]}({value})>0;
+    return new {dbEntity}().{proc.GetName(eMethod.Delete)[0]}({value})>0;
 {'}'}
 ";
         }
@@ -111,7 +114,7 @@ public bool {GetNameMethod(eMethod.Delete)}({param})
             return $@"
 public bool {GetNameMethod(eMethod.Insert)}({cDto} ob)
 {'{'}
-    return new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.Insert)}({passValue})>0;
+    return new {dbEntity}().{proc.GetName(eMethod.Insert)[0]}({passValue})>0;
 {'}'}
 ";
         }
@@ -133,7 +136,7 @@ obj.{v.Name} = item.{item.Name};";
                 result += $@"
 public List<{cDto}> {GetNameMethod(eMethod.GetBy)}{item.Name}({item.GetTypeCs()} {item.Name})
 {'{'}
-    var list =  new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.GetBy)[i]}({item.Name});
+    var list =  new {dbEntity}().{proc.GetName(eMethod.GetBy)[i]}({item.Name});
     List<{cDto}> lst = new List<{cDto}>();
     foreach (var item in list)
     {'{'}
@@ -157,9 +160,9 @@ public List<{cDto}> {GetNameMethod(eMethod.GetBy)}{item.Name}({item.GetTypeCs()}
 obj.{item.Name} = item.{item.Name};";
             }
             return $@"
-public List<{cDto}> {GetNameMethod(eMethod.GetAll)}()
+public List<{cDto}> {GetNameMethod(eMethod.GetAll)[0]}()
 {'{'}
-    var list = new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.GetAll)}();
+    var list = new {dbEntity}().{proc.GetName(eMethod.GetAll)[0]}();
     List<{cDto}> lst = new List<{cDto}>();
     foreach (var item in list)
     {'{'}

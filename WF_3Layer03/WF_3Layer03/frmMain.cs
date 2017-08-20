@@ -111,5 +111,15 @@ namespace WF_3Layer03
             rtbLog.SelectionStart = rtbLog.Text.Length;
             rtbLog.ScrollToCaret();
         }
+
+        private void btnDeleteAllProc_Click(object sender, EventArgs e)
+        {
+            SqlConnectionStringBuilder b = new SqlConnectionStringBuilder(Common.connection.ConnectionString);
+            if(MessageBox.Show($"Bạn có muốn XÓA TẤT CẢ các STORE PROCEDURE của database {b.InitialCatalog}?","Cảnh báo", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                new SqlProvider().DropAllProc(b.InitialCatalog, Common.connection);
+                MessageBox.Show($"XÓA Thành công TẤT CẢ các STORE PROCEDURE của database {b.InitialCatalog}?", "Kết quả", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }
