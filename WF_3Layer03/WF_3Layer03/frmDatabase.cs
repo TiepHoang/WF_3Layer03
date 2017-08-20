@@ -22,7 +22,6 @@ namespace WF_3Layer03
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Yes;
             this.Close();
         }
 
@@ -32,26 +31,30 @@ namespace WF_3Layer03
             o.Database = cmbDatabase.Text;
             Common.SaveInfoServer(o);
             this.Hide();
-            if (new frmSetting().ShowDialog() == DialogResult.Yes)
-            {
-                this.Show();
-            }
-            else this.Close();
+            new frmSetting().ShowDialog();
+            this.Show();
         }
 
         private void cmbDatabase_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (isEndLoad)
             {
-                Common.ChaneConnection(new InfoServer()
+                try
                 {
-                    Database = cmbDatabase.Text,
-                    Username = Common.InfoServer.Username,
-                    Password = Common.InfoServer.Password,
-                    UseAccount = Common.InfoServer.UseAccount,
-                    NameServer = Common.InfoServer.NameServer,
-                });
-                cmbTable.DataSource = new SqlDatabaseContext(Common.connection).GetTable();
+                    Common.ChaneConnection(new InfoServer()
+                    {
+                        Database = cmbDatabase.Text,
+                        Username = Common.InfoServer.Username,
+                        Password = Common.InfoServer.Password,
+                        UseAccount = Common.InfoServer.UseAccount,
+                        NameServer = Common.InfoServer.NameServer,
+                    });
+                    cmbTable.DataSource = new SqlDatabaseContext(Common.connection).GetTable();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                }
             }
         }
 

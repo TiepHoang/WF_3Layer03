@@ -106,7 +106,7 @@ namespace WF_3Layer03
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Yes;
+            this.Close();
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -134,14 +134,8 @@ namespace WF_3Layer03
             };
             Common.SaveSetting();
             this.Hide();
-            if (new frmMain().ShowDialog() == DialogResult.Yes)
-            {
-                this.Show();
-            }
-            else
-            {
-                this.Close();
-            }
+            new frmMain().ShowDialog();
+            this.Show();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)

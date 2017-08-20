@@ -68,16 +68,9 @@ namespace WF_3Layer03
                         Common.AddListServer(cmbServer.Text);
                     }
                     this.Cursor = Cursors.Default;
-
                     this.Hide();
-                    if (new frmDatabase().ShowDialog() == DialogResult.Yes)
-                    {
-                        this.Show();
-                    }
-                    else
-                    {
-                        this.Close();
-                    }
+                    new frmDatabase().ShowDialog();
+                    this.Show();
                 }
                 catch (Exception ex)
                 {
