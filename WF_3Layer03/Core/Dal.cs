@@ -9,8 +9,13 @@ namespace Core
 {
     public class Dal : Bussiness
     {
+        private readonly string cDto;
+        private readonly Proc proc;
+
         public Dal(string nameTable, SqlConnection connection, Setting setting) : base(nameTable, connection, setting)
         {
+            cDto = setting.GetClassDto(NameTable);
+            proc = new Proc(NameTable, connection, setting);
         }
 
         public override string GetCode()
@@ -29,46 +34,146 @@ namespace {Setting.GetNamespaceBus(NameTable)}
         {Get_GetBy()}
         {Get_Insert()}
         {Get_Delete()}
-        {Get_DeleteBy()}
         {Get_Update()}
     {'}'}
 {'}'}
 ";
         }
 
-        private object Get_Update()
+        private string Get_Update()
         {
-            throw new NotImplementedException();
+            string passValue = "";
+            bool isFirst = true;
+            foreach (var item in LstInfoTable)
+            {
+                string s = isFirst ? "" : ",";
+                passValue += $@"{s} ob.{item.Name} ";
+                isFirst = false;
+            }
+            return $@"
+public bool {GetNameMethod(eMethod.Update)}({cDto} ob)
+{'{'}
+    return new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.Update)}({passValue})>0;
+{'}'}
+";
         }
 
-        private object Get_DeleteBy()
+//        private string Get_DeleteBy()
+//        {
+//            var ls = LstInfoTable.Where(q => q.isKey).ToList();
+//            if (ls.Count < 2) return string.Empty;
+//            string result = "";
+//            foreach (var item in ls)
+//            {
+//                result += $@"
+//public bool {GetNameMethod(eMethod.DeleteBy)}{item.Name}({item.GetTypeCs()} {item.Name})
+//{'{'}
+//    return new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.Delete)}({item.Name})>0;
+//{'}'}
+//";
+//            }
+//            return result;
+//        }
+
+        private string Get_Delete()
         {
-            throw new NotImplementedException();
+            var ls = LstInfoTable.Where(q => q.isKey).ToList();
+            string param = "";
+            string value = "";
+            bool isFirst = true;
+            string s = "";
+            foreach (var item in ls)
+            {
+                s = isFirst ? "" : ",";
+                param += $"{s} {item.GetTypeCs()} {item.Name}";
+                value += $"{s} {item.Name}";
+                isFirst = false;
+            }
+            return $@"
+public bool {GetNameMethod(eMethod.Delete)}({param})
+{'{'}
+    return new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.Delete)}({value})>0;
+{'}'}
+";
         }
 
-        private object Get_Delete()
+        private string Get_Insert()
         {
-            throw new NotImplementedException();
+            string passValue = "";
+            bool isFirst = true;
+            var ls = LstInfoTable.Where(q => !q.isIdentity).ToList();
+            foreach (var item in ls)
+            {
+                string s = isFirst ? "" : ",";
+                passValue += $@"{s} ob.{item.Name} ";
+                isFirst = false;
+            }
+            return $@"
+public bool {GetNameMethod(eMethod.Insert)}({cDto} ob)
+{'{'}
+    return new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.Insert)}({passValue})>0;
+{'}'}
+";
         }
 
-        private object Get_Insert()
+        private string Get_GetBy()
         {
-            throw new NotImplementedException();
+            var ls = LstInfoTable.Where(q => q.isKey).ToList();
+            if (ls.Count < 2) return string.Empty;
+            string result = "";
+            foreach (var item in ls)
+            {
+                string setValue = "";
+                foreach (var v in LstInfoTable)
+                {
+                    setValue = $@"
+obj.{v.Name} = item.{item.Name};";
+                }
+                result += $@"
+public List<{cDto}> {GetNameMethod(eMethod.GetBy)}{item.Name}({item.GetTypeCs()} {item.Name})
+{'{'}
+    var list =  new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.GetBy)}({item.Name});
+    List<{cDto}> lst = new List<{cDto}>();
+    foreach (var item in list)
+    {'{'}
+        var obj = new {cDto}();
+        {setValue}
+        lst.Add(obj);
+    {'}'}
+    return lst;
+{'}'}
+";
+            }
+            return result;
         }
 
-        private object Get_GetBy()
+        private string Get_GetAll()
         {
-            throw new NotImplementedException();
-        }
-
-        private object Get_GetAll()
-        {
-            throw new NotImplementedException();
+            string passValue = "";
+            foreach (var item in LstInfoTable)
+            {
+                passValue += $@"
+obj.{item.Name} = item.{item.Name};";
+            }
+            return $@"
+public List<{cDto}> {GetNameMethod(eMethod.GetAll)}()
+{'{'}
+    var list = new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.GetAll)}();
+    List<{cDto}> lst = new List<{cDto}>();
+    foreach (var item in list)
+    {'{'}
+        var obj = new {cDto}();
+        {passValue}
+        lst.Add(obj);
+    {'}'}
+    return lst;
+{'}'}
+";
         }
 
         public override string GetNameClass()
         {
-            return string.Format(Setting.Format_Basic.Format_class_DAL, NameTable);
+            return Setting.GetClassDal(NameTable);
         }
 
         public override string GetNameMethod(eMethod method)

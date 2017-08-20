@@ -12,7 +12,8 @@ namespace Core
         public List<InfoTableObject> LstInfoTable { get; protected set; }
         public string NameTable { get; protected set; }
         public Setting Setting { get; protected set; }
-        public Dictionary<string,string> Map { get; protected set; }
+        public string Table { get; protected set; }
+        public SqlConnection Connection{ get; protected set; }
 
         public enum eMethod
         {
@@ -20,16 +21,16 @@ namespace Core
             Insert,
             Delete,
             Update,
-            GetBy,
-            DeleteBy
+            GetBy
         }
 
         public Bussiness(string nameTable, SqlConnection connection, Setting setting)
         {
-            NameTable = NameTable;
+            Connection = connection;
+            Table = nameTable;
             Setting = setting;
             LstInfoTable = new SqlDatabaseContext(connection).GetInfoTable(nameTable);
-            Map = new Dictionary<string, string>();
+            NameTable = setting.GetNameTable(nameTable);
         }
 
         public abstract ResultRunCode Run();

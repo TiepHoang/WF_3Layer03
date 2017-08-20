@@ -23,7 +23,7 @@ using {Setting.Format_Basic.Namespace_Entity};
 
 namespace {Setting.GetNamespaceBus(NameTable)}
 {'{'}
-    public class {5}{6}
+    public class {Setting.GetClassDto(NameTable)}
     {'{'}
         {GetFied()}
     {'}'}

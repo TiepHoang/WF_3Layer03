@@ -9,9 +9,13 @@ namespace Core
 {
     public class Bus : Bussiness
     {
+        private readonly string cDto;
+        private readonly string cDal;
+
         public Bus(string nameTable, SqlConnection connection, Setting setting) : base(nameTable, connection, setting)
         {
-
+            cDto = Setting.GetClassDto(NameTable);
+            cDal = Setting.GetClassDal(NameTable);
         }
 
         public override string GetCode()
@@ -23,52 +27,116 @@ using System;
 using System.Collections.Generic;
 namespace {Setting.GetNamespaceBus(NameTable)}
 {'{'}
-    public class {5}{6}
+    public class {Setting.GetClassBus(NameTable)}
     {'{'}
         {Get_GetAll()}
         {Get_GetBy()}
         {Get_Insert()}
         {Get_Delete()}
-        {Get_DeleteBy()}
         {Get_Update()}
     {'}'}
 {'}'}
 ";
         }
 
-        private object Get_GetAll()
+        private string Get_GetAll()
         {
-            throw new NotImplementedException();
+            return $@"
+public List<{cDto}> {GetNameMethod(eMethod.GetAll)}()
+{'{'}
+    return new {cDal}().{GetNameMethod(eMethod.GetAll)}();
+{'}'}
+";
         }
 
-        private object Get_GetBy()
+        private string Get_GetBy()
         {
-            throw new NotImplementedException();
+            if (LstInfoTable.Count(q => q.isKey) < 2) return string.Empty;
+            var lstKey = LstInfoTable.Where(q => q.isKey).ToList();
+            string param = null;
+            string value = null;
+            string result = "";
+            foreach (var item in lstKey)
+            {
+                value = item.Name;
+                param = $"{item.GetTypeCs()} {item.Name}";
+                result += $@"
+public List<{cDto}> {GetNameMethod(eMethod.GetBy)}{item.Name}({param})
+{'{'}
+    return new {cDal}().{GetNameMethod(eMethod.GetBy)}{item.Name}({value});
+{'}'}
+";
+            }
+            return result;
         }
 
-        private object Get_Insert()
+        private string Get_Insert()
         {
-            throw new NotImplementedException();
+            return $@"
+public bool {GetNameMethod(eMethod.Insert)}({cDto} ob)
+{'{'}
+    return new {cDal}().{GetNameMethod(eMethod.Insert)}(ob);
+{'}'}
+";
         }
 
-        private object Get_Delete()
+        private string Get_Delete()
         {
-            throw new NotImplementedException();
+            if (!LstInfoTable.Any(q => q.isKey)) return string.Empty;
+            var lstKey = LstInfoTable.Where(q => q.isKey).ToList();
+            string param = null;
+            string value = null;
+            bool isFirst = true;
+            foreach (var item in lstKey)
+            {
+                string s = isFirst ? "" : ",";
+                value += s + item.Name;
+                param += $"{s}{item.GetTypeCs()} {item.Name}";
+                isFirst = false;
+            }
+            return $@"
+public bool {GetNameMethod(eMethod.Delete)}({param})
+{'{'}
+    return new {cDal}().{GetNameMethod(eMethod.Delete)}({value});
+{'}'}
+";
         }
 
-        private object Get_DeleteBy()
-        {
-            throw new NotImplementedException();
-        }
+//        private string Get_DeleteBy()
+//        {
+//            if (LstInfoTable.Count(q => q.isKey) < 2) return string.Empty;
+//            var lstKey = LstInfoTable.Where(q => q.isKey).ToList();
+//            string param = null;
+//            string value = null;
+//            string result = "";
+//            foreach (var item in lstKey)
+//            {
+//                value = item.Name;
+//                param = $"{item.GetTypeCs()} {item.Name}";
+//                result += $@"
+//public bool {GetNameMethod(eMethod.DeleteBy)}{item.Name}({param})
+//{'{'}
+//    return new {cDal}().{GetNameMethod(eMethod.DeleteBy)}{item.Name}({value});
+//{'}'}
+//";
+//            }
+//            return result;
+//        }
 
-        private object Get_Update()
+        private string Get_Update()
         {
-            throw new NotImplementedException();
+            if (!LstInfoTable.Any(q => q.isKey)) return string.Empty;
+            return $@"
+public bool Update({cDto} ob)
+{'{'}
+    return new {cDal}().Update(ob);
+{'}'}
+";
         }
 
         public override string GetNameClass()
         {
-            return string.Format(Setting.Format_Basic.Format_class_BUS, NameTable);
+            return Setting.GetClassBus(NameTable);
         }
 
         public override string GetNameMethod(eMethod method)

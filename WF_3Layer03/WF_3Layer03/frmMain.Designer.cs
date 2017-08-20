@@ -158,6 +158,7 @@
             this.btnRun.TabIndex = 3;
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // groupBox2
             // 
@@ -194,6 +195,7 @@
             // 
             // fpnCode
             // 
+            this.fpnCode.AutoScroll = true;
             this.fpnCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fpnCode.Location = new System.Drawing.Point(3, 16);
             this.fpnCode.Name = "fpnCode";

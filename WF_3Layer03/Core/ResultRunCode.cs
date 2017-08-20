@@ -23,5 +23,10 @@ namespace Core
             Status = eStatus.NotRun;
             MessageError = "";
         }
+
+        public override string ToString()
+        {
+            return Status.ToString() + " " + MessageError.ToString();
+        }
     }
 }
