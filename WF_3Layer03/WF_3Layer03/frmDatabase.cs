@@ -20,19 +20,12 @@ namespace WF_3Layer03
             InitializeComponent();
         }
 
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void btnNext_Click(object sender, EventArgs e)
         {
             var o = Common.InfoServer;
             o.Database = cmbDatabase.Text;
             Common.SaveInfoServer(o);
-            this.Hide();
-            new frmSetting().ShowDialog();
-            this.Show();
+            this.Close();
         }
 
         private void cmbDatabase_SelectedIndexChanged(object sender, EventArgs e)

@@ -40,14 +40,14 @@ namespace Core
 
         public int ExecuteQuery(string query, SqlConnection connection)
         {
-            int k = 0;
-            connection.Open();
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {
+                int k = 0;
+                if (connection.State != ConnectionState.Open) connection.Open();
                 k = cmd.ExecuteNonQuery();
-                connection.Close();
+                if (connection.State != ConnectionState.Closed) connection.Close();
+                return k;
             }
-            return k;
         }
     }
 }

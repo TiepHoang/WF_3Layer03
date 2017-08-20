@@ -33,8 +33,7 @@
             this.cbDto = new System.Windows.Forms.CheckBox();
             this.cbBus = new System.Windows.Forms.CheckBox();
             this.cbDal = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.btnBack = new System.Windows.Forms.Button();
+            this.txtDatabase = new System.Windows.Forms.TextBox();
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -52,14 +51,13 @@
             this.groupBox1.Controls.Add(this.cbDto);
             this.groupBox1.Controls.Add(this.cbBus);
             this.groupBox1.Controls.Add(this.cbDal);
-            this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Controls.Add(this.btnBack);
+            this.groupBox1.Controls.Add(this.txtDatabase);
             this.groupBox1.Controls.Add(this.btnLoad);
             this.groupBox1.Controls.Add(this.btnRun);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(880, 47);
+            this.groupBox1.Size = new System.Drawing.Size(880, 51);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Option";
@@ -69,10 +67,9 @@
             this.cbProc.AutoSize = true;
             this.cbProc.Checked = true;
             this.cbProc.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbProc.Dock = System.Windows.Forms.DockStyle.Left;
-            this.cbProc.Location = new System.Drawing.Point(296, 16);
+            this.cbProc.Location = new System.Drawing.Point(340, 21);
             this.cbProc.Name = "cbProc";
-            this.cbProc.Size = new System.Drawing.Size(48, 28);
+            this.cbProc.Size = new System.Drawing.Size(48, 17);
             this.cbProc.TabIndex = 6;
             this.cbProc.Text = "Proc";
             this.cbProc.UseVisualStyleBackColor = true;
@@ -82,10 +79,9 @@
             this.cbDto.AutoSize = true;
             this.cbDto.Checked = true;
             this.cbDto.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbDto.Dock = System.Windows.Forms.DockStyle.Left;
-            this.cbDto.Location = new System.Drawing.Point(253, 16);
+            this.cbDto.Location = new System.Drawing.Point(291, 21);
             this.cbDto.Name = "cbDto";
-            this.cbDto.Size = new System.Drawing.Size(43, 28);
+            this.cbDto.Size = new System.Drawing.Size(43, 17);
             this.cbDto.TabIndex = 7;
             this.cbDto.Text = "Dto";
             this.cbDto.UseVisualStyleBackColor = true;
@@ -95,11 +91,10 @@
             this.cbBus.AutoSize = true;
             this.cbBus.Checked = true;
             this.cbBus.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbBus.Dock = System.Windows.Forms.DockStyle.Left;
             this.cbBus.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cbBus.Location = new System.Drawing.Point(209, 16);
+            this.cbBus.Location = new System.Drawing.Point(241, 21);
             this.cbBus.Name = "cbBus";
-            this.cbBus.Size = new System.Drawing.Size(44, 28);
+            this.cbBus.Size = new System.Drawing.Size(44, 17);
             this.cbBus.TabIndex = 8;
             this.cbBus.Text = "Bus";
             this.cbBus.UseVisualStyleBackColor = true;
@@ -109,55 +104,45 @@
             this.cbDal.AutoSize = true;
             this.cbDal.Checked = true;
             this.cbDal.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbDal.Dock = System.Windows.Forms.DockStyle.Left;
-            this.cbDal.Location = new System.Drawing.Point(167, 16);
+            this.cbDal.Location = new System.Drawing.Point(193, 22);
             this.cbDal.Name = "cbDal";
-            this.cbDal.Size = new System.Drawing.Size(42, 28);
+            this.cbDal.Size = new System.Drawing.Size(42, 17);
             this.cbDal.TabIndex = 9;
             this.cbDal.Text = "Dal";
             this.cbDal.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // txtDatabase
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox1.Location = new System.Drawing.Point(3, 16);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(164, 20);
-            this.textBox1.TabIndex = 5;
-            this.textBox1.Text = "Database";
-            // 
-            // btnBack
-            // 
-            this.btnBack.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnBack.Location = new System.Drawing.Point(652, 16);
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(75, 28);
-            this.btnBack.TabIndex = 4;
-            this.btnBack.Text = "Back";
-            this.btnBack.UseVisualStyleBackColor = true;
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            this.txtDatabase.Location = new System.Drawing.Point(12, 19);
+            this.txtDatabase.Name = "txtDatabase";
+            this.txtDatabase.ReadOnly = true;
+            this.txtDatabase.Size = new System.Drawing.Size(164, 20);
+            this.txtDatabase.TabIndex = 5;
+            this.txtDatabase.Text = "Database";
             // 
             // btnLoad
             // 
+            this.btnLoad.BackColor = System.Drawing.Color.MediumTurquoise;
             this.btnLoad.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnLoad.Location = new System.Drawing.Point(727, 16);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(75, 28);
+            this.btnLoad.Size = new System.Drawing.Size(75, 32);
             this.btnLoad.TabIndex = 2;
             this.btnLoad.Text = "Load";
-            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.UseVisualStyleBackColor = false;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
             // btnRun
             // 
+            this.btnRun.BackColor = System.Drawing.Color.MediumAquamarine;
             this.btnRun.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnRun.Location = new System.Drawing.Point(802, 16);
             this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(75, 28);
+            this.btnRun.Size = new System.Drawing.Size(75, 32);
             this.btnRun.TabIndex = 3;
             this.btnRun.Text = "Run";
-            this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.UseVisualStyleBackColor = false;
+            this.btnRun.Visible = false;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // groupBox2
@@ -186,9 +171,9 @@
             // 
             this.groupBox3.Controls.Add(this.fpnCode);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(0, 47);
+            this.groupBox3.Location = new System.Drawing.Point(0, 51);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(880, 331);
+            this.groupBox3.Size = new System.Drawing.Size(880, 327);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Code";
@@ -199,7 +184,7 @@
             this.fpnCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fpnCode.Location = new System.Drawing.Point(3, 16);
             this.fpnCode.Name = "fpnCode";
-            this.fpnCode.Size = new System.Drawing.Size(874, 312);
+            this.fpnCode.Size = new System.Drawing.Size(874, 308);
             this.fpnCode.TabIndex = 0;
             // 
             // frmMain
@@ -233,11 +218,10 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RichTextBox rtbLog;
         private System.Windows.Forms.FlowLayoutPanel fpnCode;
-        private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.CheckBox cbProc;
         private System.Windows.Forms.CheckBox cbDto;
         private System.Windows.Forms.CheckBox cbBus;
         private System.Windows.Forms.CheckBox cbDal;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtDatabase;
     }
 }

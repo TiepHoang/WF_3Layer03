@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>setting.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -58,6 +61,12 @@
     </Compile>
     <Compile Include="frmConnect.Designer.cs">
       <DependentUpon>frmConnect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmController.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmController.Designer.cs">
+      <DependentUpon>frmController.cs</DependentUpon>
     </Compile>
     <Compile Include="frmDatabase.cs">
       <SubType>Form</SubType>
@@ -99,6 +108,9 @@
     </Compile>
     <EmbeddedResource Include="frmConnect.resx">
       <DependentUpon>frmConnect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmController.resx">
+      <DependentUpon>frmController.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDatabase.resx">
       <DependentUpon>frmDatabase.cs</DependentUpon>
@@ -145,6 +157,9 @@
       <Project>{5f974fc7-2be5-4a6b-8e51-8d00e57398f5}</Project>
       <Name>Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="setting.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

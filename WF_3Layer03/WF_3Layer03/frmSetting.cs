@@ -133,9 +133,7 @@ namespace WF_3Layer03
                 Replace_Table = hashtable
             };
             Common.SaveSetting();
-            this.Hide();
-            new frmMain().ShowDialog();
-            this.Show();
+            this.Close();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)

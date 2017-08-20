@@ -26,9 +26,9 @@ using System.Collections.Generic;
 using {Setting.GetNamespaceDto(NameTable)};
 using {Setting.Format_Basic.Namespace_Entity};
 
-namespace {Setting.GetNamespaceBus(NameTable)}
+namespace {Setting.GetNamespaceDal(NameTable)}
 {'{'}
-    public class {5}{6}
+    public class {Setting.GetNamespaceDal(NameTable)}
     {'{'}
         {Get_GetAll()}
         {Get_GetBy()}
@@ -58,22 +58,22 @@ public bool {GetNameMethod(eMethod.Update)}({cDto} ob)
 ";
         }
 
-//        private string Get_DeleteBy()
-//        {
-//            var ls = LstInfoTable.Where(q => q.isKey).ToList();
-//            if (ls.Count < 2) return string.Empty;
-//            string result = "";
-//            foreach (var item in ls)
-//            {
-//                result += $@"
-//public bool {GetNameMethod(eMethod.DeleteBy)}{item.Name}({item.GetTypeCs()} {item.Name})
-//{'{'}
-//    return new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.Delete)}({item.Name})>0;
-//{'}'}
-//";
-//            }
-//            return result;
-//        }
+        //        private string Get_DeleteBy()
+        //        {
+        //            var ls = LstInfoTable.Where(q => q.isKey).ToList();
+        //            if (ls.Count < 2) return string.Empty;
+        //            string result = "";
+        //            foreach (var item in ls)
+        //            {
+        //                result += $@"
+        //public bool {GetNameMethod(eMethod.DeleteBy)}{item.Name}({item.GetTypeCs()} {item.Name})
+        //{'{'}
+        //    return new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.Delete)}({item.Name})>0;
+        //{'}'}
+        //";
+        //            }
+        //            return result;
+        //        }
 
         private string Get_Delete()
         {
@@ -92,7 +92,7 @@ public bool {GetNameMethod(eMethod.Update)}({cDto} ob)
             return $@"
 public bool {GetNameMethod(eMethod.Delete)}({param})
 {'{'}
-    return new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.Delete)}({value})>0;
+    return new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.Delete)[0]}({value})>0;
 {'}'}
 ";
         }
@@ -121,8 +121,9 @@ public bool {GetNameMethod(eMethod.Insert)}({cDto} ob)
             var ls = LstInfoTable.Where(q => q.isKey).ToList();
             if (ls.Count < 2) return string.Empty;
             string result = "";
-            foreach (var item in ls)
+            for (int i = 0; i < ls.Count; i++)
             {
+                var item = ls[i];
                 string setValue = "";
                 foreach (var v in LstInfoTable)
                 {
@@ -132,7 +133,7 @@ obj.{v.Name} = item.{item.Name};";
                 result += $@"
 public List<{cDto}> {GetNameMethod(eMethod.GetBy)}{item.Name}({item.GetTypeCs()} {item.Name})
 {'{'}
-    var list =  new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.GetBy)}({item.Name});
+    var list =  new {Setting.Format_Basic.Namespace_Entity}().{proc.GetName(eMethod.GetBy)[i]}({item.Name});
     List<{cDto}> lst = new List<{cDto}>();
     foreach (var item in list)
     {'{'}

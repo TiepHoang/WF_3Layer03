@@ -14,10 +14,12 @@ namespace Core
         public Proc(string nameTable, SqlConnection connection, Setting setting) : base(nameTable, connection, setting)
         {
             Map = new Dictionary<string, string>();
+            GetCode();
         }
 
         public override string GetCode()
         {
+            Map = new Dictionary<string, string>();
             return $@"
 {GetAll()}
 {GetInsert()}
@@ -64,10 +66,10 @@ namespace Core
 ;CREATE PROC {lsName[i]}
 {param}
 AS BEGIN
-    SELECT * FROM {Table} WHERE {lsKey[i].Name} = @{lsKey[i].Name}
+    SELECT * FROM [{Table}] WHERE [{lsKey[i].Name}] = @{lsKey[i].Name}
 END;
 ";
-                Map.Add(GetName(eMethod.GetBy)[0], rs);
+                Map.Add(GetName(eMethod.GetBy)[i], rs);
                 r += rs;
             }
             return r;
@@ -78,24 +80,28 @@ END;
             var lsKey = LstInfoTable.Where(q => q.isKey).ToList();
             if (lsKey.Count < 1) return "";
             string param = "";
-            string value = "";
+            string where = "";
             string s = "";
-            bool isFirst = true;
             string len = "";
             foreach (var item in lsKey)
             {
                 len = string.IsNullOrWhiteSpace(item.Length) ? "" : $"({item.Length})";
-                s = isFirst ? "" : ",";
+                s = string.IsNullOrWhiteSpace(param) ? " " : " , ";
                 param += $"{s} @{item.Name} {item.Type}{len}";
-                value += $"{s}{item.Name} = @{item.Name}";
+
+                s = string.IsNullOrWhiteSpace(where) ? " " : "AND";
+                where += $" {s} [{item.Name}] = @{item.Name} ";
+
             }
-            return $@"
+            string r = $@"
 ;CREATE PROC {GetName(eMethod.Delete)[0]}
 {param}
 AS BEGIN
-    DELETE {Table} WHERE {value}
+    DELETE [{Table}] WHERE {where}
 END;
 ";
+            Map.Add(GetName(eMethod.Delete)[0], r);
+            return r;
         }
 
         private string GetUpdate()
@@ -114,19 +120,26 @@ END;
                 s = string.IsNullOrWhiteSpace(param) ? "" : ",";
                 param += $"{s} @{item.Name} {item.Type}{len}";
 
-                s = string.IsNullOrWhiteSpace(value) ? "" : ",";
-                value += $"{s}{item.Name} = @{item.Name}";
-
-                s = string.IsNullOrWhiteSpace(where) ? "" : ",";
-                where += $"{s}{item.Name} = @{item.Name}";
+                if (item.isKey)
+                {
+                    s = string.IsNullOrWhiteSpace(where) ? "" : " AND ";
+                    where += $" {s} [{item.Name}] = @{item.Name}";
+                }
+                else
+                {
+                    s = string.IsNullOrWhiteSpace(value) ? "" : ",";
+                    value += $"{s} [{item.Name}] = @{item.Name}";
+                }
             }
-            return $@"
+            string r = $@"
 ;CREATE PROC {GetName(eMethod.Update)[0]}
 {param}
 AS BEGIN
-    UPDATE {Table} SET {value} WHERE {where}
+    UPDATE [{Table}] SET {value} WHERE {where}
 END;
 ";
+            Map.Add(GetName(eMethod.Update)[0], r);
+            return r;
         }
 
         private string GetInsert()
@@ -150,16 +163,18 @@ END;
                     value += $"{s} @{item.Name}";
 
                     s = string.IsNullOrWhiteSpace(column) ? "" : ",";
-                    column += $"{s}{item.Name}";
+                    column += $" {s} [{item.Name}]";
                 }
             }
-            return $@"
-;CREATE PROC {GetName(eMethod.Update)[0]}
+            string r = $@"
+;CREATE PROC {GetName(eMethod.Insert)[0]}
 {param}
 AS BEGIN
-    INSERT INTO {Table}({column}) VALUES({value})
+    INSERT INTO [{Table}]({column}) VALUES({value})
 END;
 ";
+            Map.Add(GetName(eMethod.Insert)[0], r);
+            return r;
         }
 
         private string GetAll()
@@ -167,7 +182,7 @@ END;
             string r = $@"
 ;CREATE PROC {GetName(eMethod.GetAll)[0]}
 AS BEGIN
-    SELECT * FROM {Table}
+    SELECT * FROM [{Table}]
 END;
 ";
             Map.Add(GetName(eMethod.GetAll)[0], r);

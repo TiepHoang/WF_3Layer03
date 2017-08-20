@@ -30,5 +30,30 @@ namespace WF_3Layer03
         {
             this.Close();
         }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            var f = new FolderBrowserDialog();
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                bussiness.Save(f.SelectedPath);
+                MessageBox.Show("Save in: " + f.SelectedPath, "Kết quả", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(bussiness.Run().ToString(), "Kết quả", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnInfoTable_Click(object sender, EventArgs e)
+        {
+            rtbCode.Text = string.Join("\r\n", bussiness.LstInfoTable);
+        }
+
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+            rtbCode.Text = bussiness.GetCode();
+        }
     }
 }

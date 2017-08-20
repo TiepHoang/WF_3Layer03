@@ -24,17 +24,6 @@ namespace WF_3Layer03
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://fb.com/tiep.hoang.dev");
-            Next();
-        }
-
-        private void Next()
-        {
-            this.Hide();
-            if (new frmConnect().ShowDialog() == DialogResult.Yes)
-            {
-                this.Show();
-            }
-            else this.Close();
         }
 
         private void frmWellcome_Load(object sender, EventArgs e)
@@ -44,8 +33,8 @@ namespace WF_3Layer03
             Common.ReadSetting();
             new Task(() =>
             {
-                Thread.Sleep(1234);
-                Next();
+                Thread.Sleep(1996);
+                this.Close();
             }).Start();
         }
     }

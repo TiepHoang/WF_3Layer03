@@ -47,7 +47,6 @@ namespace WF_3Layer03
                 try
                 {
                     SqlConnection con = new SqlConnection(sConnect);
-                    this.Cursor = Cursors.WaitCursor;
                     con.Open();
                     con.Close();
                     var info = new InfoServer()
@@ -67,14 +66,10 @@ namespace WF_3Layer03
                     {
                         Common.AddListServer(cmbServer.Text);
                     }
-                    this.Cursor = Cursors.Default;
-                    this.Hide();
-                    new frmDatabase().ShowDialog();
-                    this.Show();
+                    this.Close();
                 }
                 catch (Exception ex)
                 {
-                    this.Cursor = Cursors.Default;
                     MessageBox.Show("Error: " + ex.Message, "Lỗi", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                 }
             }

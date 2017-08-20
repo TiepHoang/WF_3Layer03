@@ -29,10 +29,12 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnRun = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnReload = new System.Windows.Forms.Button();
+            this.btnInfoTable = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnRun = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rtbCode = new System.Windows.Forms.RichTextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -40,6 +42,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnReload);
+            this.groupBox1.Controls.Add(this.btnInfoTable);
             this.groupBox1.Controls.Add(this.btnExit);
             this.groupBox1.Controls.Add(this.btnSave);
             this.groupBox1.Controls.Add(this.btnRun);
@@ -51,36 +55,27 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thao tác";
             // 
-            // groupBox2
+            // btnReload
             // 
-            this.groupBox2.Controls.Add(this.rtbCode);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(0, 0);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(673, 382);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Code";
+            this.btnReload.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnReload.Location = new System.Drawing.Point(411, 16);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(102, 38);
+            this.btnReload.TabIndex = 4;
+            this.btnReload.Text = "Reload";
+            this.btnReload.UseVisualStyleBackColor = true;
+            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
-            // btnRun
+            // btnInfoTable
             // 
-            this.btnRun.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnRun.Location = new System.Drawing.Point(3, 16);
-            this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(102, 38);
-            this.btnRun.TabIndex = 0;
-            this.btnRun.Text = "Run";
-            this.btnRun.UseVisualStyleBackColor = true;
-            // 
-            // btnSave
-            // 
-            this.btnSave.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnSave.Location = new System.Drawing.Point(105, 16);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(102, 38);
-            this.btnSave.TabIndex = 1;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnInfoTable.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnInfoTable.Location = new System.Drawing.Point(309, 16);
+            this.btnInfoTable.Name = "btnInfoTable";
+            this.btnInfoTable.Size = new System.Drawing.Size(102, 38);
+            this.btnInfoTable.TabIndex = 3;
+            this.btnInfoTable.Text = "Table";
+            this.btnInfoTable.UseVisualStyleBackColor = true;
+            this.btnInfoTable.Click += new System.EventHandler(this.btnInfoTable_Click);
             // 
             // btnExit
             // 
@@ -92,6 +87,39 @@
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnSave.Location = new System.Drawing.Point(105, 16);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(102, 38);
+            this.btnSave.TabIndex = 1;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnRun
+            // 
+            this.btnRun.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnRun.Location = new System.Drawing.Point(3, 16);
+            this.btnRun.Name = "btnRun";
+            this.btnRun.Size = new System.Drawing.Size(102, 38);
+            this.btnRun.TabIndex = 0;
+            this.btnRun.Text = "Run";
+            this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.rtbCode);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(0, 0);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(673, 382);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Code";
             // 
             // rtbCode
             // 
@@ -127,5 +155,7 @@
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.RichTextBox rtbCode;
+        private System.Windows.Forms.Button btnInfoTable;
+        private System.Windows.Forms.Button btnReload;
     }
 }

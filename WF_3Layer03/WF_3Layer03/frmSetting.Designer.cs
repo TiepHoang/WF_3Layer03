@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnBack = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -44,10 +43,12 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.txtEntity = new System.Windows.Forms.TextBox();
             this.txtNamespace_Dto = new System.Windows.Forms.TextBox();
             this.txtNamespace_Dal = new System.Windows.Forms.TextBox();
             this.txtNamespace_Bus = new System.Windows.Forms.TextBox();
             this.lblNamespaceDto = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblNamespaceDal = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -82,8 +83,6 @@
             this.lblTable = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.label17 = new System.Windows.Forms.Label();
-            this.txtEntity = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -93,34 +92,23 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnBack);
             this.panel1.Controls.Add(this.btnNext);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 446);
+            this.panel1.Location = new System.Drawing.Point(0, 481);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(863, 43);
             this.panel1.TabIndex = 3;
             // 
-            // btnBack
-            // 
-            this.btnBack.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnBack.Location = new System.Drawing.Point(0, 0);
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(119, 43);
-            this.btnBack.TabIndex = 0;
-            this.btnBack.Text = "Back";
-            this.btnBack.UseVisualStyleBackColor = true;
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
-            // 
             // btnNext
             // 
-            this.btnNext.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnNext.Location = new System.Drawing.Point(750, 0);
+            this.btnNext.BackColor = System.Drawing.Color.MediumAquamarine;
+            this.btnNext.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnNext.Location = new System.Drawing.Point(0, 0);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(113, 43);
             this.btnNext.TabIndex = 1;
-            this.btnNext.Text = "Next";
-            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Text = "Save";
+            this.btnNext.UseVisualStyleBackColor = false;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // groupBox1
@@ -267,6 +255,15 @@
             this.label11.TabIndex = 0;
             this.label11.Text = "Bus";
             // 
+            // txtEntity
+            // 
+            this.txtEntity.Location = new System.Drawing.Point(453, 144);
+            this.txtEntity.Name = "txtEntity";
+            this.txtEntity.Size = new System.Drawing.Size(208, 20);
+            this.txtEntity.TabIndex = 12;
+            this.txtEntity.Text = "Entity";
+            this.txtEntity.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNamespace_Dto_KeyUp);
+            // 
             // txtNamespace_Dto
             // 
             this.txtNamespace_Dto.Location = new System.Drawing.Point(453, 107);
@@ -302,6 +299,15 @@
             this.lblNamespaceDto.Size = new System.Drawing.Size(90, 13);
             this.lblNamespaceDto.TabIndex = 9;
             this.lblNamespaceDto.Text = "Namespace DTO";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(352, 147);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(93, 13);
+            this.label17.TabIndex = 9;
+            this.label17.Text = "Namespace Entity";
             // 
             // label3
             // 
@@ -404,7 +410,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(0, 220);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(863, 226);
+            this.groupBox3.Size = new System.Drawing.Size(863, 261);
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "FORMAT-NAME";
@@ -622,29 +628,11 @@
             this.label5.TabIndex = 12;
             this.label5.Text = "Fomat BUS";
             // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(352, 147);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(93, 13);
-            this.label17.TabIndex = 9;
-            this.label17.Text = "Namespace Entity";
-            // 
-            // txtEntity
-            // 
-            this.txtEntity.Location = new System.Drawing.Point(453, 144);
-            this.txtEntity.Name = "txtEntity";
-            this.txtEntity.Size = new System.Drawing.Size(208, 20);
-            this.txtEntity.TabIndex = 12;
-            this.txtEntity.Text = "Entity";
-            this.txtEntity.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNamespace_Dto_KeyUp);
-            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(863, 489);
+            this.ClientSize = new System.Drawing.Size(863, 524);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -668,7 +656,6 @@
 
         #endregion
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblDababase;

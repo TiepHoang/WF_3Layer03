@@ -46,5 +46,10 @@ namespace Core
             }
             return s;
         }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}     \t\tType: {Type}      \tLength: {Length}      \tKey: {isKey}       \tIsIdentity: {isIdentity}";
+        }
     }
 }

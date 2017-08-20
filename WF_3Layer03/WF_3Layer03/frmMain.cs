@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -18,11 +18,6 @@ namespace WF_3Layer03
         public frmMain()
         {
             InitializeComponent();
-        }
-
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Yes;
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -45,10 +40,14 @@ namespace WF_3Layer03
                 cbDto.Enabled = false;
                 cbDto.Checked = false;
             }
+            SqlConnectionStringBuilder buid = new SqlConnectionStringBuilder(Common.connection.ConnectionString);
+            txtDatabase.Text = buid.InitialCatalog;
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
+            SqlConnectionStringBuilder buid = new SqlConnectionStringBuilder(Common.connection.ConnectionString);
+            txtDatabase.Text = buid.InitialCatalog;
             fpnCode.Controls.Clear();
             var lstTable = new SqlDatabaseContext(Common.connection).GetTable();
             foreach (var item in lstTable)
@@ -85,6 +84,7 @@ namespace WF_3Layer03
                     pn.Controls.Add(uc);
                 }
             }
+            btnRun.Visible = true;
         }
 
         private void btnRun_Click(object sender, EventArgs e)
@@ -97,7 +97,7 @@ namespace WF_3Layer03
 
         private void _log(ResultRunCode resultRunCode)
         {
-            bool error = resultRunCode.Status == ResultRunCode.eStatus.Success ? true : false;
+            bool error = resultRunCode.Status == ResultRunCode.eStatus.Error;
             string message = error ? resultRunCode.MessageError : "Success";
             _log(message, error);
         }

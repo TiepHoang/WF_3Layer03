@@ -29,6 +29,7 @@ namespace WF_3Layer03
             };
             this.Bussiness = Bussiness;
             _reload();
+            this.toolTip1.SetToolTip(this, ResultRun.ToString());
         }
 
         private void _reload()
@@ -42,12 +43,13 @@ namespace WF_3Layer03
             {
                 cbRun.Checked = true;
             }
-            BackColor = cbRun.Checked ? Color.LawnGreen : Color.Azure;
+            _loadColor();
         }
 
         private void cbRun_CheckedChanged(object sender, EventArgs e)
         {
-            BackColor = cbRun.Checked ? Color.LawnGreen : Color.OrangeRed;
+            if (!cbRun.Checked) ResultRun.Status = ResultRunCode.eStatus.NotRun;
+            _loadColor();
         }
 
         public ResultRunCode Run()
@@ -56,10 +58,17 @@ namespace WF_3Layer03
             {
                 ResultRun = Bussiness.Run();
             }
+            _loadColor();
+            this.toolTip1.SetToolTip(this, ResultRun.ToString());
+            return ResultRun;
+        }
+
+        private void _loadColor()
+        {
             switch (ResultRun.Status)
             {
                 case ResultRunCode.eStatus.NotRun:
-                    BackColor = Color.OrangeRed;
+                    this.BackColor = cbRun.Checked ? Color.LightGreen : Color.Tan;
                     break;
                 case ResultRunCode.eStatus.Success:
                     BackColor = Color.Green;
@@ -68,10 +77,10 @@ namespace WF_3Layer03
                     BackColor = Color.Red;
                     break;
                 default:
-                    BackColor = Color.DimGray;
+                    BackColor = Color.OrangeRed;
                     break;
             }
-            return ResultRun;
+
         }
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -103,7 +112,7 @@ namespace WF_3Layer03
             else
             {
                 cbRun.Checked = !cbRun.Checked;
-                BackColor = cbRun.Checked ? Color.LawnGreen : Color.Azure;
+                _loadColor();
             }
         }
 
