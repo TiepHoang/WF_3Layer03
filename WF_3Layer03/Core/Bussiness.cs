@@ -9,11 +9,12 @@ namespace Core
 {
     public abstract class Bussiness : IAction
     {
-        public List<InfoTableObject> LstInfoTable { get; private set; }
+        public List<InfoColumnObject> LstInfoTable { get; private set; }
         public string NameTable { get; private set; }
         public Setting Setting { get; private set; }
-        public string Table { get; private set; }
+        public string sTable { get; private set; }
         public SqlConnection Connection{ get; private set; }
+        public TableObject Table { get; set; }
 
         public enum eMethod
         {
@@ -27,10 +28,11 @@ namespace Core
         public Bussiness(string nameTable, SqlConnection connection, Setting setting)
         {
             Connection = connection;
-            Table = nameTable;
+            sTable = nameTable;
             Setting = setting;
             LstInfoTable = new SqlDatabaseContext(connection).GetInfoTable(nameTable);
             NameTable = setting.GetNameTable(nameTable);
+            Table = new TableObject(sTable, connection);
         }
 
         public abstract ResultRunCode Run();

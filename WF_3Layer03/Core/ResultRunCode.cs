@@ -16,17 +16,17 @@ namespace Core
         }
 
         public eStatus Status { get; set; }
-        public string MessageError { get; set; }
+        public string Message { get; set; }
 
         public ResultRunCode()
         {
             Status = eStatus.NotRun;
-            MessageError = "";
+            Message = "";
         }
 
         public override string ToString()
         {
-            return Status.ToString() + " " + MessageError.ToString();
+            return Status.ToString() + " " + Message.ToString();
         }
     }
 }

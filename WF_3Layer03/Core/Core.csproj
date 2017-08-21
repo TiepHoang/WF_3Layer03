@@ -47,7 +47,7 @@
     <Compile Include="Dto.cs" />
     <Compile Include="IAction.cs" />
     <Compile Include="InfoServer.cs" />
-    <Compile Include="InfoTableObject.cs" />
+    <Compile Include="InfoColumnObject.cs" />
     <Compile Include="Proc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultRunCode.cs" />
@@ -55,6 +55,7 @@
     <Compile Include="Setting.cs" />
     <Compile Include="SqlDatabaseContext.cs" />
     <Compile Include="SqlProvider.cs" />
+    <Compile Include="TableObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

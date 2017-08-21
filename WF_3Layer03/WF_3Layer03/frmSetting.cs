@@ -67,7 +67,7 @@ namespace WF_3Layer03
             {
                 Common.Setting = new Setting();
             }
-            txtTable.Text = new SqlDatabaseContext(Common.connection).GetTable().FirstOrDefault(q => !q.Contains("sys"));
+            txtTable.Text = new SqlDatabaseContext(Common.connection).GetTable().Aggregate("", (m, c) => !m.Contains("sys") && m.Length > c.Length ? m : c);
             Table = txtTable.Text;
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(Common.connection.ConnectionString);
             txtDatabase.Text = builder.InitialCatalog;

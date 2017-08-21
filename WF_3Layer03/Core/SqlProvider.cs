@@ -56,10 +56,12 @@ namespace Core
  where routine_type = 'PROCEDURE' AND SPECIFIC_NAME NOT like 'sp_%diagram%'", connection);
         }
 
-        public void DropAllProc(string nameDatabase, SqlConnection connection)
+        public bool DropAllProc(SqlConnection connection)
         {
+            SqlConnectionStringBuilder b = new SqlConnectionStringBuilder(connection.ConnectionString);
+            if (string.IsNullOrWhiteSpace(b.InitialCatalog)) return false;
             ExecuteQuery($@"declare @procName varchar(500)
-declare cur cursor for select SPECIFIC_NAME from {nameDatabase}.information_schema.routines 
+declare cur cursor for select SPECIFIC_NAME from {b.InitialCatalog}.information_schema.routines 
 	where routine_type = 'PROCEDURE' AND SPECIFIC_NAME NOT like 'sp_%diagram%'
 open cur
 fetch next from cur into @procName
@@ -71,6 +73,27 @@ end
 close cur
 deallocate cur
 ", connection);
+            return true;
+        }
+
+        public List<InfoColumnObject> GetTableJoin(string nameTable, SqlConnection connection)
+        {
+            var dt = GetData($@"select replace(CONSTRAINT_NAME,'FK_'+TABLE_NAME+'_','') as NameTableJoin ,COLUMN_NAME as KeyJoin  from INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME ='{nameTable}' 
+and CONSTRAINT_NAME like 'FK_%'", connection);
+            var lstTable = new List<InfoColumnObject>();
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                foreach (DataRow item in dt.Rows)
+                {
+                    lstTable.Add(new InfoColumnObject()
+                    {
+                        isFK = true,
+                        NameTableJoin = item["NameTableJoin"].ToString(),
+                        Name = item["KeyJoin"].ToString()
+                    });
+                }
+            }
+            return lstTable;
         }
     }
 }

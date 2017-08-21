@@ -50,6 +50,8 @@ namespace WF_3Layer03
             txtDatabase.Text = buid.InitialCatalog;
             fpnCode.Controls.Clear();
             var lstTable = new SqlDatabaseContext(Common.connection).GetTable();
+            lstUc = new List<ucBussiness>();
+
             foreach (var item in lstTable)
             {
                 FlowLayoutPanel pn = new FlowLayoutPanel();
@@ -57,7 +59,9 @@ namespace WF_3Layer03
                 pn.Width = fpnCode.Width;
                 pn.Height = 39;
                 var lbl = new Label() { Text = Common.Setting.GetNameTable(item) };
+                toolTip1.SetToolTip(lbl, Common.Setting.GetNameTable(item));
                 lbl.Click += Lbl_Click;
+                lbl.BackColor = Color.Thistle;
                 pn.Controls.Add(lbl);
 
                 if (cbBus.Checked)
@@ -94,7 +98,7 @@ namespace WF_3Layer03
             var parent = (sender as Control).Parent;
             foreach (Control item in parent.Controls)
             {
-                if(item is ucBussiness)
+                if (item is ucBussiness)
                 {
                     var uc = item as ucBussiness;
                     uc.Selected = !uc.Selected;
@@ -104,17 +108,27 @@ namespace WF_3Layer03
 
         private void btnRun_Click(object sender, EventArgs e)
         {
+            var lstError = new List<string>();
             foreach (var item in lstUc)
             {
-                _log(item.Run());
+                var r = item.Run();
+                if (r.Status == ResultRunCode.eStatus.Error)
+                {
+                    lstError.Add(r.ToString());
+                }
+                _log(r);
             }
+            _log($"Có {lstError.Count} Lỗi", lstError.Count > 0);
+            if (lstError.Count > 0)
+            {
+                _log(string.Join("\r\t", lstError), true);
+            }
+            MessageBox.Show($"Hoàn thành", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void _log(ResultRunCode resultRunCode)
         {
-            bool error = resultRunCode.Status == ResultRunCode.eStatus.Error;
-            string message = error ? resultRunCode.MessageError : "Success";
-            _log(message, error);
+            _log(resultRunCode.Message, resultRunCode.Status == ResultRunCode.eStatus.Error);
         }
 
         void _log(string message, bool error)
@@ -130,10 +144,24 @@ namespace WF_3Layer03
         private void btnDeleteAllProc_Click(object sender, EventArgs e)
         {
             SqlConnectionStringBuilder b = new SqlConnectionStringBuilder(Common.connection.ConnectionString);
-            if(MessageBox.Show($"Bạn có muốn XÓA TẤT CẢ các STORE PROCEDURE của database {b.InitialCatalog}?","Cảnh báo", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show($"Bạn có muốn XÓA TẤT CẢ các STORE PROCEDURE của database {b.InitialCatalog}?", "Cảnh báo", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                new SqlProvider().DropAllProc(b.InitialCatalog, Common.connection);
-                MessageBox.Show($"XÓA Thành công TẤT CẢ các STORE PROCEDURE của database {b.InitialCatalog}?", "Kết quả", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                    if (new SqlProvider().DropAllProc(Common.connection))
+                    {
+                        MessageBox.Show($"XÓA Thành công ALL các STORE PROCEDURE của database {b.InitialCatalog}?", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"XÓA Thất bại TẤT CẢ các STORE PROCEDURE của database {b.InitialCatalog}?", "Thất bại", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
         }
     }

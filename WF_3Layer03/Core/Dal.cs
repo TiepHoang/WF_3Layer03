@@ -16,7 +16,7 @@ namespace Core
         public Dal(string nameTable, SqlConnection connection, Setting setting) : base(nameTable, connection, setting)
         {
             cDto = setting.GetClassDto(NameTable);
-            proc = new Proc(Table, connection, setting);
+            proc = new Proc(sTable, connection, setting);
             dbEntity = new SqlConnectionStringBuilder(connection.ConnectionString).InitialCatalog + "Entities";
         }
 
@@ -44,7 +44,7 @@ namespace {Setting.GetNamespaceDal(NameTable)}
 
         private string Get_Update()
         {
-            if (!LstInfoTable.Any(q => q.isKey) || LstInfoTable.Count == LstInfoTable.Count(q => q.isKey)) return "";
+            if (!LstInfoTable.Any(q => q.isPK) || LstInfoTable.Count == LstInfoTable.Count(q => q.isPK)) return "";
             string passValue = "";
             bool isFirst = true;
             foreach (var item in LstInfoTable)
@@ -80,7 +80,7 @@ public bool {GetNameMethod(eMethod.Update)}({cDto} ob)
 
         private string Get_Delete()
         {
-            var ls = LstInfoTable.Where(q => q.isKey).ToList();
+            var ls = LstInfoTable.Where(q => q.isPK).ToList();
             string param = "";
             string value = "";
             bool isFirst = true;
@@ -121,8 +121,8 @@ public bool {GetNameMethod(eMethod.Insert)}({cDto} ob)
 
         private string Get_GetBy()
         {
-            var ls = LstInfoTable.Where(q => q.isKey).ToList();
-            if (ls.Count < 2) return string.Empty;
+            var ls = LstInfoTable.Where(q => q.isPK).ToList();
+            if (ls.Count < 1) return string.Empty;
             string result = "";
             for (int i = 0; i < ls.Count; i++)
             {
@@ -132,6 +132,27 @@ public bool {GetNameMethod(eMethod.Insert)}({cDto} ob)
                 {
                     setValue = $@"
 obj.{v.Name} = item.{item.Name};";
+                }
+
+                foreach (var fk in Table.lstFK)
+                {
+                    var tblJoin = new TableObject(fk.NameTableJoin, Connection);
+                    string sDto = Setting.GetClassDto(tblJoin.Name);
+                    string stableJoin = $"_{Setting.GetNameTable(tblJoin.Name)}Join";
+                    string passValueJoin = "";
+                    for (int j = 0; i < Table.lstColumns.Count; j++)
+                    {
+                        var co = Table.lstColumns[i];
+                        string cm = j == Table.lstColumns.Count - 1 ? "" : ",";
+                        passValueJoin += $@"
+        {co.Name} = item.{co.Name}{stableJoin}{cm}";
+                    }
+                    setValue += $@"
+obj.{sDto}Join = new {sDto}()
+{'{'}
+    {passValueJoin}
+{'}'}
+";
                 }
                 result += $@"
 public List<{cDto}> {GetNameMethod(eMethod.GetBy)}{item.Name}({item.GetTypeCs()} {item.Name})
@@ -159,8 +180,28 @@ public List<{cDto}> {GetNameMethod(eMethod.GetBy)}{item.Name}({item.GetTypeCs()}
                 passValue += $@"
 obj.{item.Name} = item.{item.Name};";
             }
+            foreach (var item in Table.lstFK)
+            {
+                var tblJoin = new TableObject(item.NameTableJoin, Connection);
+                string sDto = Setting.GetClassDto(tblJoin.Name);
+                string stableJoin = $"_{Setting.GetNameTable(tblJoin.Name)}Join";
+                string passValueJoin = "";
+                for (int i = 0; i < Table.lstColumns.Count; i++)
+                {
+                    var co = Table.lstColumns[i];
+                    string cm = i == Table.lstColumns.Count - 1 ? "" : ",";
+                    passValueJoin += $@"
+        {co.Name} = item.{co.Name}{stableJoin}{cm}";
+                }
+                passValue += $@"
+obj.{sDto}Join = new {sDto}()
+{'{'}
+    {passValueJoin}
+{'}'}
+";
+            }
             return $@"
-public List<{cDto}> {GetNameMethod(eMethod.GetAll)[0]}()
+public List<{cDto}> {GetNameMethod(eMethod.GetAll)}()
 {'{'}
     var list = new {dbEntity}().{proc.GetName(eMethod.GetAll)[0]}();
     List<{cDto}> lst = new List<{cDto}>();
@@ -190,7 +231,8 @@ public List<{cDto}> {GetNameMethod(eMethod.GetAll)[0]}()
             Save(Setting.Format_Basic.FolderSave_Dal);
             return new ResultRunCode()
             {
-                Status = ResultRunCode.eStatus.Success
+                Status = ResultRunCode.eStatus.Success,
+                Message = $"{GetNameClass()} : Saved in {Setting.Format_Basic.FolderSave_Dal}"
             };
         }
     }

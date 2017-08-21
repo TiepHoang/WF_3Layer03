@@ -47,23 +47,23 @@ namespace Core
             return lst;
         }
 
-        public List<InfoTableObject> GetInfoTable(string nameTable)
+        public List<InfoColumnObject> GetInfoTable(string nameTable)
         {
             var dt = new SqlProvider().GetData($@"select COLUMN_NAME , DATA_TYPE , CHARACTER_MAXIMUM_LENGTH ,  COLUMNPROPERTY(object_id(TABLE_SCHEMA+'.'+TABLE_NAME), COLUMN_NAME, 'IsIdentity') as IsIdentity
                                                         from INFORMATION_SCHEMA.COLUMNS
                                                         where TABLE_NAME = N'{nameTable}'", Connection);
             if (dt == null || dt.Rows.Count <= 0) return null;
-            List<InfoTableObject> lst = new List<InfoTableObject>();
+            List<InfoColumnObject> lst = new List<InfoColumnObject>();
             var ListKey = GetKeyOfTable(nameTable);
             foreach (DataRow item in dt.Rows)
             {
                 int d = 0;
-                var ob = new InfoTableObject();
+                var ob = new InfoColumnObject();
                 ob.Name = item["COLUMN_NAME"].ToString();
                 ob.Type = item["DATA_TYPE"].ToString();
                 ob.Length = int.TryParse(item["CHARACTER_MAXIMUM_LENGTH"].ToString(), out d) ? d == -1 ? "MAX" : d.ToString() : null;
                 ob.isIdentity = item["IsIdentity"].ToString().Equals("1");
-                ob.isKey = ListKey != null && ListKey.Any(q => q.Equals(ob.Name));
+                ob.isPK = ListKey != null && ListKey.Any(q => q.Equals(ob.Name));
                 lst.Add(ob);
             }
             return lst;

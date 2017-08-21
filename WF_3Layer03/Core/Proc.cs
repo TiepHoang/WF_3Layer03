@@ -54,7 +54,7 @@ namespace Core
 
         private string GetBy()
         {
-            var lsKey = LstInfoTable.Where(q => q.isKey).ToList();
+            var lsKey = LstInfoTable.Where(q => q.isPK).ToList();
             if (lsKey.Count < 1) return "";
             var lsName = GetName(eMethod.GetBy);
             string r = "";
@@ -62,11 +62,46 @@ namespace Core
             {
                 string len = string.IsNullOrWhiteSpace(lsKey[i].Length) ? "" : $"({lsKey[i].Length})";
                 string param = $"@{lsKey[i].Name.Replace(' ', '_')} {lsKey[i].Type}{len}";
+                string col = "";
+                string join = "";
+                string where = $" WHERE [{NameTable}].[{lsKey[i].Name}] = @{lsKey[i].Name.Replace(' ', '_')} ";
+                //columns select
+                foreach (var item in Table.lstColumns)
+                {
+                    if (item.Type.Equals("bit") && item.Name.ToLower().Contains("delete"))
+                    {
+                        where += $" AND [{NameTable}].[{item.Name}] = 0 ";
+                        continue;
+                    }
+                    string s = string.IsNullOrWhiteSpace(col) ? "" : ",";
+                    col += $@"
+{s}[{NameTable}].[{item.Name}]";
+                }
+                //column join
+                foreach (var item in Table.lstFK)
+                {
+                    var tblJoin = new TableObject(item.NameTableJoin, Connection);
+                    string sTbl = Setting.GetNameTable(tblJoin.Name) + "Join";
+                    foreach (var co in tblJoin.lstColumns)
+                    {
+                        if (co.isPK) continue;
+
+                        col += $@"
+,[{sTbl}].[{co.Name}] as [{co.Name}_{sTbl}]";
+
+                    }
+                    join += $@"
+join [{tblJoin.Name}] as [{sTbl}] on [{NameTable}].[{item.Name}] = [{sTbl}].[{tblJoin.lstColumns.First(q => q.isPK).Name}]";
+                }
                 string rs = $@"
 ;CREATE PROC {lsName[i]}
 {param}
 AS BEGIN
-    SELECT * FROM [{Table}] WHERE [{lsKey[i].Name}] = @{lsKey[i].Name.Replace(' ', '_')}
+    SELECT 
+    {col} 
+    FROM [{sTable}] as [{NameTable}] 
+    {join} 
+    {where}
 END;
 ";
                 Map.Add(GetName(eMethod.GetBy)[i], rs);
@@ -77,7 +112,7 @@ END;
 
         private string GetDelete()
         {
-            var lsKey = LstInfoTable.Where(q => q.isKey).ToList();
+            var lsKey = LstInfoTable.Where(q => q.isPK).ToList();
             if (lsKey.Count < 1) return "";
             string param = "";
             string where = "";
@@ -103,7 +138,7 @@ END;
 ;CREATE PROC {GetName(eMethod.Delete)[0]}
 {param}
 AS BEGIN
-    UPDATE [{Table}] SET [{cDelete.Name}] = 1 WHERE {where}
+    UPDATE [{sTable}] SET [{cDelete.Name}] = 1 WHERE {where}
 END;";
             }
             else
@@ -112,7 +147,7 @@ END;";
 ;CREATE PROC {GetName(eMethod.Delete)[0]}
 {param}
 AS BEGIN
-    DELETE [{Table}] WHERE {where}
+    DELETE [{sTable}] WHERE {where}
 END;
 ";
             }
@@ -122,7 +157,7 @@ END;
 
         private string GetUpdate()
         {
-            var lsKey = LstInfoTable.Where(q => q.isKey).ToList();
+            var lsKey = LstInfoTable.Where(q => q.isPK).ToList();
             if (lsKey.Count < 1 || LstInfoTable.Count == lsKey.Count) return "";
             string param = "";
             string value = "";
@@ -136,7 +171,7 @@ END;
                 s = string.IsNullOrWhiteSpace(param) ? "" : ",";
                 param += $"{s} @{item.Name.Replace(' ', '_')} {item.Type}{len}";
 
-                if (item.isKey)
+                if (item.isPK)
                 {
                     s = string.IsNullOrWhiteSpace(where) ? "" : " AND ";
                     where += $" {s} [{item.Name}] = @{item.Name}";
@@ -151,7 +186,7 @@ END;
 ;CREATE PROC {GetName(eMethod.Update)[0]}
 {param}
 AS BEGIN
-    UPDATE [{Table}] SET {value} WHERE {where}
+    UPDATE [{sTable}] SET {value} WHERE {where}
 END;
 ";
             Map.Add(GetName(eMethod.Update)[0], r);
@@ -160,7 +195,7 @@ END;
 
         private string GetInsert()
         {
-            var lsKey = LstInfoTable.Where(q => q.isKey).ToList();
+            var lsKey = LstInfoTable.Where(q => q.isPK).ToList();
             if (lsKey.Count < 1) return "";
             string param = "";
             string value = "";
@@ -186,7 +221,7 @@ END;
 ;CREATE PROC {GetName(eMethod.Insert)[0]}
 {param}
 AS BEGIN
-    INSERT INTO [{Table}]({column}) VALUES({value})
+    INSERT INTO [{sTable}]({column}) VALUES({value})
 END;
 ";
             Map.Add(GetName(eMethod.Insert)[0], r);
@@ -198,23 +233,52 @@ END;
             string col = "";
             string r = "";
             string where = "";
-            foreach (var item in LstInfoTable)
+            string join = "";
+
+            //columns select
+            foreach (var item in Table.lstColumns)
             {
-                if (item.Type.Equals("bit") && item.Name.ToLower().Contains("delete")) continue;
+                if (item.Type.Equals("bit") && item.Name.ToLower().Contains("delete"))
+                {
+                    continue;
+                }
                 string s = string.IsNullOrWhiteSpace(col) ? "" : ",";
                 col += $@"
 {s}[{NameTable}].[{item.Name}]";
             }
 
+            //columns join
+            foreach (var item in Table.lstFK)
+            {
+                var tblJoin = new TableObject(item.NameTableJoin, Connection);
+                string sTbl = Setting.GetNameTable(tblJoin.Name)+"Join";
+
+                foreach (var co in tblJoin.lstColumns)
+                {
+                    if (co.isPK) continue;
+
+                    col += $@"
+,[{sTbl}].[{co.Name}] as [{co.Name}_{sTbl}]";
+
+                }
+                join += $@"
+join [{tblJoin.Name}] as [{sTbl}] on [{NameTable}].[{item.Name}] = [{sTbl}].[{tblJoin.lstColumns.First(q => q.isPK).Name}]";
+            }
+
+            //where
             var cDelete = LstInfoTable.FirstOrDefault(q => q.Type.ToLower().Equals("bit") && q.Name.ToLower().Contains("delete"));
             if (cDelete != null)
             {
-                where = $" WHERE [{cDelete.Name}] = 0 ";
+                where += $@"
+WHERE [{NameTable}].[{cDelete.Name}] = 0 ";
             }
+
             r = $@"
 ;CREATE PROC {GetName(eMethod.GetAll)[0]}
 AS BEGIN
-    SELECT {col} FROM [{Table}] as [{NameTable}] {where}
+    SELECT {col} FROM [{sTable}] as [{NameTable}] 
+    {join} 
+    {where}
 END;
 ";
             Map.Add(GetName(eMethod.GetAll)[0], r);
@@ -236,19 +300,19 @@ END;
             ResultRunCode r = new ResultRunCode()
             {
                 Status = ResultRunCode.eStatus.Success,
-                MessageError = ""
+                Message = ""
             };
             foreach (var item in Map)
             {
                 try
                 {
                     new SqlProvider().ExecuteQuery(item.Value, Connection);
+                    r.Message = $"{item.Key} : {r.Status.ToString()}";
                 }
                 catch (Exception ex)
                 {
                     r.Status = ResultRunCode.eStatus.Error;
-                    r.MessageError += $@"
-{item.Key} : {ex.Message}";
+                    r.Message = $"{item.Key} : {ex.Message}";
                 }
             }
             return r;
@@ -272,7 +336,7 @@ END;
                     lst.Add($"{Setting.GetNameProc(NameTable)}_{method.ToString()}");
                     break;
                 case Bussiness.eMethod.GetBy:
-                    var ls = LstInfoTable.Where(q => q.isKey).ToList();
+                    var ls = LstInfoTable.Where(q => q.isPK).ToList();
                     if (ls.Count > 0)
                     {
                         foreach (var item in ls)

@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnDeleteAllProc = new System.Windows.Forms.Button();
             this.cbProc = new System.Windows.Forms.CheckBox();
             this.cbDto = new System.Windows.Forms.CheckBox();
             this.cbBus = new System.Windows.Forms.CheckBox();
@@ -40,7 +42,7 @@
             this.rtbLog = new System.Windows.Forms.RichTextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.fpnCode = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnDeleteAllProc = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -63,6 +65,18 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Option";
+            // 
+            // btnDeleteAllProc
+            // 
+            this.btnDeleteAllProc.BackColor = System.Drawing.Color.OrangeRed;
+            this.btnDeleteAllProc.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnDeleteAllProc.Location = new System.Drawing.Point(344, 16);
+            this.btnDeleteAllProc.Name = "btnDeleteAllProc";
+            this.btnDeleteAllProc.Size = new System.Drawing.Size(75, 32);
+            this.btnDeleteAllProc.TabIndex = 10;
+            this.btnDeleteAllProc.Text = "Del Proc";
+            this.btnDeleteAllProc.UseVisualStyleBackColor = false;
+            this.btnDeleteAllProc.Click += new System.EventHandler(this.btnDeleteAllProc_Click);
             // 
             // cbProc
             // 
@@ -194,18 +208,6 @@
             this.fpnCode.Size = new System.Drawing.Size(874, 308);
             this.fpnCode.TabIndex = 0;
             // 
-            // btnDeleteAllProc
-            // 
-            this.btnDeleteAllProc.BackColor = System.Drawing.Color.OrangeRed;
-            this.btnDeleteAllProc.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnDeleteAllProc.Location = new System.Drawing.Point(344, 16);
-            this.btnDeleteAllProc.Name = "btnDeleteAllProc";
-            this.btnDeleteAllProc.Size = new System.Drawing.Size(75, 32);
-            this.btnDeleteAllProc.TabIndex = 10;
-            this.btnDeleteAllProc.Text = "Del Proc";
-            this.btnDeleteAllProc.UseVisualStyleBackColor = false;
-            this.btnDeleteAllProc.Click += new System.EventHandler(this.btnDeleteAllProc_Click);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -243,5 +245,6 @@
         private System.Windows.Forms.CheckBox cbDal;
         private System.Windows.Forms.TextBox txtDatabase;
         private System.Windows.Forms.Button btnDeleteAllProc;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

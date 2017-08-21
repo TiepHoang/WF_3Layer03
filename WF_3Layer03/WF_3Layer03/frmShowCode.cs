@@ -48,7 +48,7 @@ namespace WF_3Layer03
 
         private void btnInfoTable_Click(object sender, EventArgs e)
         {
-            rtbCode.Text = string.Join("\r\n", bussiness.LstInfoTable);
+            rtbCode.Text = string.Join("\r\n", bussiness.Table.lstColumns);
         }
 
         private void btnReload_Click(object sender, EventArgs e)

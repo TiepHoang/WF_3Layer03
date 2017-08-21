@@ -89,6 +89,8 @@
             this.txtName.TabIndex = 3;
             this.txtName.Text = "label1";
             this.txtName.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtName_MouseClick);
+            this.txtName.MouseEnter += new System.EventHandler(this.txtName_MouseEnter);
+            this.txtName.MouseLeave += new System.EventHandler(this.txtName_MouseLeave);
             // 
             // ucBussiness
             // 

@@ -37,6 +37,13 @@ namespace {Setting.GetNamespaceDto(NameTable)}
                 s += $@"
 public {item.GetTypeCs()} {item.Name} {'{'} get; set; {'}'}";
             }
+            foreach (var item in Table.lstFK)
+            {
+                var tblJoin = new TableObject(item.NameTableJoin, Connection);
+                string sDto = Setting.GetClassDto(tblJoin.Name);
+                s += $@"
+public {sDto} {sDto}Join {'{'} get; set; {'}'}";
+            }
             return s;
         }
 
@@ -55,7 +62,8 @@ public {item.GetTypeCs()} {item.Name} {'{'} get; set; {'}'}";
             Save(Setting.Format_Basic.FolderSave_Dto);
             return new ResultRunCode()
             {
-                Status = ResultRunCode.eStatus.Success
+                Status = ResultRunCode.eStatus.Success,
+                Message = $"{GetNameClass()} : Saved in {Setting.Format_Basic.FolderSave_Dto}"
             };
         }
     }

@@ -43,7 +43,8 @@ namespace WF_3Layer03
             InitializeComponent();
             ResultRun = new ResultRunCode()
             {
-                Status = ResultRunCode.eStatus.NotRun
+                Status = ResultRunCode.eStatus.NotRun,
+                Message = $"{Bussiness.GetNameClass()} : Not run"
             };
             Selected = true;
             this.Bussiness = Bussiness;
@@ -140,5 +141,14 @@ namespace WF_3Layer03
             _click(e);
         }
 
+        private void txtName_MouseEnter(object sender, EventArgs e)
+        {
+            this.Width = cbRun.Width + txtName.Width + 50;
+        }
+
+        private void txtName_MouseLeave(object sender, EventArgs e)
+        {
+            this.Width = 200;
+        }
     }
 }

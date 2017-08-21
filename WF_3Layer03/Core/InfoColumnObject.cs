@@ -7,13 +7,20 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public class InfoTableObject
+    public class InfoColumnObject
     {
         public string Name { get; set; }
         public string Type { get; set; }
         public string Length { get; set; }
-        public bool isKey { get; set; }
+        public bool isPK { get; set; }
         public bool isIdentity { get; set; }
+        public bool isFK { get; set; }
+        public string NameTableJoin { get; set; }
+
+        public InfoColumnObject()
+        {
+            isFK = false;
+        }
 
         public string GetTypeCs()
         {
@@ -43,7 +50,7 @@ namespace Core
                     s = "string";
                     break;
             }
-            if (!(s.Equals("string") || isIdentity || isKey))
+            if (!(s.Equals("string") || isIdentity || isPK))
             {
                 s += "?";
             }
@@ -52,7 +59,7 @@ namespace Core
 
         public override string ToString()
         {
-            return $"Name: {Name}     \t\tType: {Type}      \t\tLength: {Length}      \tKey: {isKey}       \tIsIdentity: {isIdentity}";
+            return $"Name: {Name}     \tType: {Type}      \tLength: {Length}      \tPK: {isPK}     \tIsIdentity: {isIdentity}      \tFK: {isFK}    \tNameTableJoin: {NameTableJoin}";
         }
     }
 }
