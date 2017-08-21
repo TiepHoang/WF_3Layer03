@@ -37,7 +37,7 @@ namespace WF_3Layer03
                 lblFormatDto.Text = Common.Setting.GetClassDto(table);
 
                 lblFormatProc.Text = Common.Setting.GetNameProc(table);
-                lblResultTable.Text = Table;
+                txtResultTable.Text = Table;
             }
         }
 
@@ -70,8 +70,8 @@ namespace WF_3Layer03
             {
                 Common.Setting = new Setting();
             }
-            lblTable.Text = new SqlDatabaseContext(Common.connection).GetTable().FirstOrDefault(q => !q.Contains("sys"));
-            Table = lblTable.Text;
+            txtTable.Text = new SqlDatabaseContext(Common.connection).GetTable().FirstOrDefault(q => !q.Contains("sys"));
+            Table = txtTable.Text;
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(Common.connection.ConnectionString);
             txtDatabase.Text = builder.InitialCatalog;
             txtServer.Text = builder.DataSource;
@@ -150,7 +150,7 @@ namespace WF_3Layer03
                 {
                     listView.Items.Add(new ListViewItem(new string[] { item, Common.Setting.Replace_Table[item].ToString() }));
                 }
-                Table = Common.Setting.GetNameTable(lblTable.Text);
+                Table = Common.Setting.GetNameTable(txtTable.Text);
                 txtNew.Clear();
                 txtOld.Clear();
                 txtNew.ReadOnly = true;
@@ -277,7 +277,7 @@ namespace WF_3Layer03
                             listView.Items[item.Index].Remove();
                         }
                     }
-                    Table = Common.Setting.GetNameTable(lblTable.Text);
+                    Table = Common.Setting.GetNameTable(txtTable.Text);
                     loadListView();
                 }
                 catch (Exception ex)

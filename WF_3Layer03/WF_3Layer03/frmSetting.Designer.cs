@@ -77,12 +77,12 @@
             this.label7 = new System.Windows.Forms.Label();
             this.lblFormatDal = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.lblResultTable = new System.Windows.Forms.Label();
             this.lblFormatBus = new System.Windows.Forms.Label();
             this.lbl = new System.Windows.Forms.Label();
-            this.lblTable = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.txtResultTable = new System.Windows.Forms.TextBox();
+            this.txtTable = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -387,6 +387,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.txtTable);
+            this.groupBox3.Controls.Add(this.txtResultTable);
             this.groupBox3.Controls.Add(this.listView);
             this.groupBox3.Controls.Add(this.btnAdd);
             this.groupBox3.Controls.Add(this.txtNew);
@@ -406,10 +408,8 @@
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.lblFormatDal);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.lblResultTable);
             this.groupBox3.Controls.Add(this.lblFormatBus);
             this.groupBox3.Controls.Add(this.lbl);
-            this.groupBox3.Controls.Add(this.lblTable);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(0, 220);
@@ -587,15 +587,6 @@
             this.label6.TabIndex = 10;
             this.label6.Text = "Fomat DAL";
             // 
-            // lblResultTable
-            // 
-            this.lblResultTable.AutoSize = true;
-            this.lblResultTable.Location = new System.Drawing.Point(460, 69);
-            this.lblResultTable.Name = "lblResultTable";
-            this.lblResultTable.Size = new System.Drawing.Size(34, 13);
-            this.lblResultTable.TabIndex = 11;
-            this.lblResultTable.Text = "Table";
-            // 
             // lblFormatBus
             // 
             this.lblFormatBus.AutoSize = true;
@@ -614,15 +605,6 @@
             this.lbl.TabIndex = 12;
             this.lbl.Text = "CustomTable";
             // 
-            // lblTable
-            // 
-            this.lblTable.AutoSize = true;
-            this.lblTable.Location = new System.Drawing.Point(541, 16);
-            this.lblTable.Name = "lblTable";
-            this.lblTable.Size = new System.Drawing.Size(34, 13);
-            this.lblTable.TabIndex = 12;
-            this.lblTable.Text = "Table";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -631,6 +613,22 @@
             this.label5.Size = new System.Drawing.Size(61, 13);
             this.label5.TabIndex = 12;
             this.label5.Text = "Fomat BUS";
+            // 
+            // txtResultTable
+            // 
+            this.txtResultTable.Location = new System.Drawing.Point(460, 66);
+            this.txtResultTable.Name = "txtResultTable";
+            this.txtResultTable.ReadOnly = true;
+            this.txtResultTable.Size = new System.Drawing.Size(211, 20);
+            this.txtResultTable.TabIndex = 25;
+            // 
+            // txtTable
+            // 
+            this.txtTable.Location = new System.Drawing.Point(460, 13);
+            this.txtTable.Name = "txtTable";
+            this.txtTable.ReadOnly = true;
+            this.txtTable.Size = new System.Drawing.Size(211, 20);
+            this.txtTable.TabIndex = 25;
             // 
             // frmSetting
             // 
@@ -682,13 +680,11 @@
         private System.Windows.Forms.Label lblFormatBus;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtDatabase;
-        private System.Windows.Forms.Label lblTable;
         private System.Windows.Forms.TextBox txtNew;
         private System.Windows.Forms.TextBox txtOld;
         private System.Windows.Forms.Label lbl;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label lblResultTable;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtServer;
         private System.Windows.Forms.ListView listView;
@@ -714,5 +710,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.TextBox txtEntity;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox txtResultTable;
+        private System.Windows.Forms.TextBox txtTable;
     }
 }
