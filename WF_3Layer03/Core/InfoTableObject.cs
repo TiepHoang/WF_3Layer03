@@ -52,7 +52,7 @@ namespace Core
 
         public override string ToString()
         {
-            return $"Name: {Name}     \t\t\tType: {Type}      \t\tLength: {Length}      \tKey: {isKey}       \tIsIdentity: {isIdentity}";
+            return $"Name: {Name}     \t\tType: {Type}      \t\tLength: {Length}      \tKey: {isKey}       \tIsIdentity: {isIdentity}";
         }
     }
 }

@@ -211,7 +211,7 @@ namespace WF_3Layer03
             try
             {
                 Common.Setting.Format_Basic.Format_PROC = txtFomat_Proc.Text;
-                lblFormatProc.Text = Common.Setting.GetNameProc(Table);
+                lblFormatProc.Text = Common.Setting.GetNameProc(txtTable.Text);
 
             }
             catch (Exception ex)

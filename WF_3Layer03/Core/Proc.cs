@@ -55,18 +55,18 @@ namespace Core
         private string GetBy()
         {
             var lsKey = LstInfoTable.Where(q => q.isKey).ToList();
-            if (lsKey.Count < 2) return "";
+            if (lsKey.Count < 1) return "";
             var lsName = GetName(eMethod.GetBy);
             string r = "";
             for (int i = 0; i < lsKey.Count; i++)
             {
                 string len = string.IsNullOrWhiteSpace(lsKey[i].Length) ? "" : $"({lsKey[i].Length})";
-                string param = $"@{lsKey[i].Name} {lsKey[i].Type}{len}";
+                string param = $"@{lsKey[i].Name.Replace(' ', '_')} {lsKey[i].Type}{len}";
                 string rs = $@"
 ;CREATE PROC {lsName[i]}
 {param}
 AS BEGIN
-    SELECT * FROM [{Table}] WHERE [{lsKey[i].Name}] = @{lsKey[i].Name}
+    SELECT * FROM [{Table}] WHERE [{lsKey[i].Name}] = @{lsKey[i].Name.Replace(' ', '_')}
 END;
 ";
                 Map.Add(GetName(eMethod.GetBy)[i], rs);
@@ -87,10 +87,10 @@ END;
             {
                 len = string.IsNullOrWhiteSpace(item.Length) ? "" : $"({item.Length})";
                 s = string.IsNullOrWhiteSpace(param) ? " " : " , ";
-                param += $"{s} @{item.Name} {item.Type}{len}";
+                param += $"{s} @{item.Name.Replace(' ', '_')} {item.Type}{len}";
 
                 s = string.IsNullOrWhiteSpace(where) ? " " : "AND";
-                where += $" {s} [{item.Name}] = @{item.Name} ";
+                where += $" {s} [{item.Name}] = @{item.Name.Replace(' ', '_')} ";
 
             }
             string r = $@"
@@ -118,7 +118,7 @@ END;
                 len = string.IsNullOrWhiteSpace(item.Length) ? "" : $"({item.Length})";
 
                 s = string.IsNullOrWhiteSpace(param) ? "" : ",";
-                param += $"{s} @{item.Name} {item.Type}{len}";
+                param += $"{s} @{item.Name.Replace(' ', '_')} {item.Type}{len}";
 
                 if (item.isKey)
                 {
@@ -128,7 +128,7 @@ END;
                 else
                 {
                     s = string.IsNullOrWhiteSpace(value) ? "" : ",";
-                    value += $"{s} [{item.Name}] = @{item.Name}";
+                    value += $"{s} [{item.Name}] = @{item.Name.Replace(' ', '_')}";
                 }
             }
             string r = $@"
@@ -157,10 +157,10 @@ END;
                 {
                     len = string.IsNullOrWhiteSpace(item.Length) ? "" : $"({item.Length})";
                     s = string.IsNullOrWhiteSpace(param) ? "" : ",";
-                    param += $"{s} @{item.Name} {item.Type}{len}";
+                    param += $"{s} @{item.Name.Replace(' ', '_')} {item.Type}{len}";
 
                     s = string.IsNullOrWhiteSpace(value) ? "" : ",";
-                    value += $"{s} @{item.Name}";
+                    value += $"{s} @{item.Name.Replace(' ', '_')}";
 
                     s = string.IsNullOrWhiteSpace(column) ? "" : ",";
                     column += $" {s} [{item.Name}]";
@@ -179,10 +179,17 @@ END;
 
         private string GetAll()
         {
+            string col = "";
+            foreach (var item in LstInfoTable)
+            {
+                string s = string.IsNullOrWhiteSpace(col) ? "" : ",";
+                col += $@"
+{s}{NameTable}.[{item.Name}]";
+            }
             string r = $@"
 ;CREATE PROC {GetName(eMethod.GetAll)[0]}
 AS BEGIN
-    SELECT * FROM [{Table}]
+    SELECT {col} FROM [{Table}]
 END;
 ";
             Map.Add(GetName(eMethod.GetAll)[0], r);
@@ -241,7 +248,7 @@ END;
                     break;
                 case Bussiness.eMethod.GetBy:
                     var ls = LstInfoTable.Where(q => q.isKey).ToList();
-                    if (ls.Count > 1)
+                    if (ls.Count > 0)
                     {
                         foreach (var item in ls)
                         {
