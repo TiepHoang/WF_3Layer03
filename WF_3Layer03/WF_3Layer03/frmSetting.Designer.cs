@@ -58,6 +58,8 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txtTable = new System.Windows.Forms.TextBox();
+            this.txtResultTable = new System.Windows.Forms.TextBox();
             this.listView = new System.Windows.Forms.ListView();
             this.btnAdd = new System.Windows.Forms.Button();
             this.txtNew = new System.Windows.Forms.TextBox();
@@ -81,8 +83,6 @@
             this.lbl = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.txtResultTable = new System.Windows.Forms.TextBox();
-            this.txtTable = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -419,6 +419,22 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "FORMAT-NAME";
             // 
+            // txtTable
+            // 
+            this.txtTable.Location = new System.Drawing.Point(424, 13);
+            this.txtTable.Name = "txtTable";
+            this.txtTable.ReadOnly = true;
+            this.txtTable.Size = new System.Drawing.Size(268, 20);
+            this.txtTable.TabIndex = 25;
+            // 
+            // txtResultTable
+            // 
+            this.txtResultTable.Location = new System.Drawing.Point(424, 66);
+            this.txtResultTable.Name = "txtResultTable";
+            this.txtResultTable.ReadOnly = true;
+            this.txtResultTable.Size = new System.Drawing.Size(268, 20);
+            this.txtResultTable.TabIndex = 25;
+            // 
             // listView
             // 
             this.listView.CheckBoxes = true;
@@ -432,6 +448,7 @@
             // 
             // btnAdd
             // 
+            this.btnAdd.Enabled = false;
             this.btnAdd.Location = new System.Drawing.Point(703, 40);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(35, 23);
@@ -444,6 +461,7 @@
             // 
             this.txtNew.Location = new System.Drawing.Point(561, 42);
             this.txtNew.Name = "txtNew";
+            this.txtNew.ReadOnly = true;
             this.txtNew.Size = new System.Drawing.Size(131, 20);
             this.txtNew.TabIndex = 21;
             this.txtNew.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNew_KeyUp);
@@ -486,7 +504,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(433, 69);
+            this.label14.Location = new System.Drawing.Point(397, 69);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(21, 13);
             this.label14.TabIndex = 20;
@@ -613,22 +631,6 @@
             this.label5.Size = new System.Drawing.Size(61, 13);
             this.label5.TabIndex = 12;
             this.label5.Text = "Fomat BUS";
-            // 
-            // txtResultTable
-            // 
-            this.txtResultTable.Location = new System.Drawing.Point(460, 66);
-            this.txtResultTable.Name = "txtResultTable";
-            this.txtResultTable.ReadOnly = true;
-            this.txtResultTable.Size = new System.Drawing.Size(211, 20);
-            this.txtResultTable.TabIndex = 25;
-            // 
-            // txtTable
-            // 
-            this.txtTable.Location = new System.Drawing.Point(460, 13);
-            this.txtTable.Name = "txtTable";
-            this.txtTable.ReadOnly = true;
-            this.txtTable.Size = new System.Drawing.Size(211, 20);
-            this.txtTable.TabIndex = 25;
             // 
             // frmSetting
             // 

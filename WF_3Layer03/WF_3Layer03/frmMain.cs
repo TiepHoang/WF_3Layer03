@@ -56,7 +56,9 @@ namespace WF_3Layer03
                 fpnCode.Controls.Add(pn);
                 pn.Width = fpnCode.Width;
                 pn.Height = 39;
-                pn.Controls.Add(new Label() { Text = item });
+                var lbl = new Label() { Text = Common.Setting.GetNameTable(item) };
+                lbl.Click += Lbl_Click;
+                pn.Controls.Add(lbl);
 
                 if (cbBus.Checked)
                 {
@@ -85,6 +87,19 @@ namespace WF_3Layer03
                 }
             }
             btnRun.Visible = true;
+        }
+
+        private void Lbl_Click(object sender, EventArgs e)
+        {
+            var parent = (sender as Control).Parent;
+            foreach (Control item in parent.Controls)
+            {
+                if(item is ucBussiness)
+                {
+                    var uc = item as ucBussiness;
+                    uc.Selected = !uc.Selected;
+                }
+            }
         }
 
         private void btnRun_Click(object sender, EventArgs e)

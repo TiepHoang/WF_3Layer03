@@ -9,11 +9,11 @@ namespace Core
 {
     public abstract class Bussiness : IAction
     {
-        public List<InfoTableObject> LstInfoTable { get; protected set; }
-        public string NameTable { get; protected set; }
-        public Setting Setting { get; protected set; }
-        public string Table { get; protected set; }
-        public SqlConnection Connection{ get; protected set; }
+        public List<InfoTableObject> LstInfoTable { get; private set; }
+        public string NameTable { get; private set; }
+        public Setting Setting { get; private set; }
+        public string Table { get; private set; }
+        public SqlConnection Connection{ get; private set; }
 
         public enum eMethod
         {

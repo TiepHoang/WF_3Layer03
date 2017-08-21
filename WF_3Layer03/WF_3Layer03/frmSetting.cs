@@ -41,12 +41,9 @@ namespace WF_3Layer03
             }
         }
 
-        Hashtable hashtable;
-
         public frmSetting()
         {
             InitializeComponent();
-            hashtable = new Hashtable();
         }
 
         bool getFolderSave()
@@ -77,6 +74,7 @@ namespace WF_3Layer03
             txtServer.Text = builder.DataSource;
 
             loadListView();
+
         }
 
         private void _loadSetting()
@@ -118,23 +116,19 @@ namespace WF_3Layer03
             if (string.IsNullOrWhiteSpace(txtFolderBus.Text) || string.IsNullOrWhiteSpace(txtFolderDal.Text) || string.IsNullOrWhiteSpace(txtFolderDto.Text) ||
                 string.IsNullOrWhiteSpace(txtNamespace_Bus.Text) || string.IsNullOrWhiteSpace(txtNamespace_Dal.Text) || string.IsNullOrWhiteSpace(txtNamespace_Dto.Text))
                 if (MessageBox.Show("Bạn không nhập đủ tên hoặc không hợp lệ namespace, folder save code! Bỏ qua?", "Chú ý", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            Common.Setting = new Setting()
+            Common.Setting.Format_Basic = new Setting.Basic()
             {
-                Format_Basic = new Setting.Basic()
-                {
-                    Format_class_BUS = txtFomat_Bus.Text,
-                    Format_class_DAL = txtFomat_Dal.Text,
-                    Format_class_DTO = txtFomat_Dto.Text,
-                    Format_PROC = txtFomat_Proc.Text,
-                    Format_NameSpace_BUS = txtNamespace_Bus.Text,
-                    Format_NameSpace_DAL = txtNamespace_Dal.Text,
-                    Format_NameSpace_DTO = txtNamespace_Dto.Text,
-                    FolderSave_Bus = txtFolderBus.Text,
-                    FolderSave_Dal = txtFolderDal.Text,
-                    FolderSave_Dto = txtFolderDto.Text,
-                    Namespace_Entity = txtEntity.Text
-                },
-                Replace_Table = hashtable
+                Format_class_BUS = txtFomat_Bus.Text,
+                Format_class_DAL = txtFomat_Dal.Text,
+                Format_class_DTO = txtFomat_Dto.Text,
+                Format_PROC = txtFomat_Proc.Text,
+                Format_NameSpace_BUS = txtNamespace_Bus.Text,
+                Format_NameSpace_DAL = txtNamespace_Dal.Text,
+                Format_NameSpace_DTO = txtNamespace_Dto.Text,
+                FolderSave_Bus = txtFolderBus.Text,
+                FolderSave_Dal = txtFolderDal.Text,
+                FolderSave_Dto = txtFolderDto.Text,
+                Namespace_Entity = txtEntity.Text
             };
             Common.SaveSetting();
             this.Close();
@@ -338,7 +332,7 @@ namespace WF_3Layer03
             int length = a1.Length;
             for (int i = 0; i < length; i++)
             {
-                if (a1[i] != a2[i]) break;
+                if (a2.Length <= i || a1[i] != a2[i]) break;
                 r += a1[i] + '\\';
             }
 

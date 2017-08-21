@@ -20,7 +20,7 @@ namespace WF_3Layer03
         private void frmController_Load(object sender, EventArgs e)
         {
             new frmWellcome().ShowDialog();
-            new frmConnect().ShowDialog();
+            if (Common.InfoServer != null) Common.ChaneConnection(Common.InfoServer);
             _check();
         }
 

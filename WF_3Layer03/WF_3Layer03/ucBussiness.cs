@@ -18,6 +18,24 @@ namespace WF_3Layer03
         public ResultRunCode ResultRun { get; private set; }
         public Bussiness Bussiness { get; set; }
 
+        public bool Selected
+        {
+            get
+            {
+                return selected;
+            }
+
+            set
+            {
+                selected = value;
+                cbRun.Checked = selected;
+                if (!cbRun.Checked) ResultRun.Status = ResultRunCode.eStatus.NotRun;
+                _loadColor();
+            }
+        }
+
+        bool selected;
+
         #endregion
 
         public ucBussiness(Bussiness Bussiness)
@@ -27,6 +45,7 @@ namespace WF_3Layer03
             {
                 Status = ResultRunCode.eStatus.NotRun
             };
+            Selected = true;
             this.Bussiness = Bussiness;
             _reload();
             this.toolTip1.SetToolTip(this, ResultRun.ToString());
@@ -120,5 +139,6 @@ namespace WF_3Layer03
         {
             _click(e);
         }
+
     }
 }

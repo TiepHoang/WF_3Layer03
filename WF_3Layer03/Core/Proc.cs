@@ -83,6 +83,7 @@ END;
             string where = "";
             string s = "";
             string len = "";
+            string r = "";
             foreach (var item in lsKey)
             {
                 len = string.IsNullOrWhiteSpace(item.Length) ? "" : $"({item.Length})";
@@ -93,13 +94,28 @@ END;
                 where += $" {s} [{item.Name}] = @{item.Name.Replace(' ', '_')} ";
 
             }
-            string r = $@"
+
+            //delete if table have column "delete"
+            var cDelete = LstInfoTable.FirstOrDefault(q => q.Type.ToLower().Equals("bit") && q.Name.ToLower().Contains("delete"));
+            if (cDelete != null)
+            {
+                r = $@"
+;CREATE PROC {GetName(eMethod.Delete)[0]}
+{param}
+AS BEGIN
+    UPDATE [{Table}] SET [{cDelete.Name}] = 1 WHERE {where}
+END;";
+            }
+            else
+            {
+                r = $@"
 ;CREATE PROC {GetName(eMethod.Delete)[0]}
 {param}
 AS BEGIN
     DELETE [{Table}] WHERE {where}
 END;
 ";
+            }
             Map.Add(GetName(eMethod.Delete)[0], r);
             return r;
         }
@@ -180,16 +196,25 @@ END;
         private string GetAll()
         {
             string col = "";
+            string r = "";
+            string where = "";
             foreach (var item in LstInfoTable)
             {
+                if (item.Type.Equals("bit") && item.Name.ToLower().Contains("delete")) continue;
                 string s = string.IsNullOrWhiteSpace(col) ? "" : ",";
                 col += $@"
-{s}{NameTable}.[{item.Name}]";
+{s}[{NameTable}].[{item.Name}]";
             }
-            string r = $@"
+
+            var cDelete = LstInfoTable.FirstOrDefault(q => q.Type.ToLower().Equals("bit") && q.Name.ToLower().Contains("delete"));
+            if (cDelete != null)
+            {
+                where = $" WHERE [{cDelete.Name}] = 0 ";
+            }
+            r = $@"
 ;CREATE PROC {GetName(eMethod.GetAll)[0]}
 AS BEGIN
-    SELECT {col} FROM [{Table}]
+    SELECT {col} FROM [{Table}] as [{NameTable}] {where}
 END;
 ";
             Map.Add(GetName(eMethod.GetAll)[0], r);

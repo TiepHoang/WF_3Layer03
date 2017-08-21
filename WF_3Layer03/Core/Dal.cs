@@ -16,7 +16,7 @@ namespace Core
         public Dal(string nameTable, SqlConnection connection, Setting setting) : base(nameTable, connection, setting)
         {
             cDto = setting.GetClassDto(NameTable);
-            proc = new Proc(NameTable, connection, setting);
+            proc = new Proc(Table, connection, setting);
             dbEntity = new SqlConnectionStringBuilder(connection.ConnectionString).InitialCatalog + "Entities";
         }
 
