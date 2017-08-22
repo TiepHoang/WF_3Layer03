@@ -148,13 +148,15 @@ obj.{v.Name.Replace(' ', '_')} = item.{v.Name.Replace(' ', '_')} {checkBool} ;";
                         string checkBool = co.GetTypeCs() == typeof(bool).ToString() ? "== true" : "";
                         string checkFK = stableJoin;
                         string checkNullable = "";
+                        string nameEntty = co.Name.Replace(' ', '_');
                         if (co.isPK)
                         {
                             checkFK = "";
                             checkNullable = $"({co.GetTypeCs()})";
+                            nameEntty = fk.Name.Replace(' ', '_');
                         }
                         passValueJoin += $@"
-        {co.Name.Replace(' ', '_')} = {checkNullable} item.{co.Name.Replace(' ', '_')}{checkFK} {checkBool} {cm}";
+        {co.Name.Replace(' ', '_')} = {checkNullable} item.{nameEntty}{checkFK} {checkBool} {cm}";
                     }
                     setValue += $@"
 obj.{sDto}Join = new {sDto}()
@@ -190,26 +192,28 @@ public List<{cDto}> {GetNameMethod(eMethod.GetBy)}{itemKey.Name}({itemKey.GetTyp
                 passValue += $@"
 obj.{item.Name.Replace(' ', '_')} = item.{item.Name.Replace(' ', '_')} {checkBool} ;";
             }
-            foreach (var item in Table.lstFK)
+            foreach (var itemFK in Table.lstFK)
             {
-                var tblJoin = new TableObject(item.NameTableJoin, Connection);
+                var tblJoin = new TableObject(itemFK.NameTableJoin, Connection);
                 string sDto = Setting.GetClassDto(tblJoin.Name);
-                string stableJoin = item.isPK ? "" : $"_{Setting.GetNameTable(tblJoin.Name)}Join";
+                string stableJoin = itemFK.isPK ? "" : $"_{Setting.GetNameTable(tblJoin.Name)}Join";
                 string passValueJoin = "";
                 for (int i = 0; i < tblJoin.lstColumns.Count; i++)
                 {
                     var co = tblJoin.lstColumns[i];
-                    string cm = i == Table.lstColumns.Count - 1 ? "" : ",";
+                    string cm = i == tblJoin.lstColumns.Count - 1 ? "" : ",";
                     string checkBool = co.GetTypeCs() == typeof(bool).ToString() ? "== true" : "";
                     string checkFK = stableJoin;
                     string checkNullable = "";
+                    string nameEntty = co.Name.Replace(' ', '_');
                     if (co.isPK)
                     {
                         checkFK = "";
                         checkNullable = $"({co.GetTypeCs()})";
+                        nameEntty = itemFK.Name.Replace(' ', '_');
                     }
                     passValueJoin += $@"
-        {co.Name.Replace(' ', '_')} = {checkNullable}item.{co.Name.Replace(' ', '_')}{checkFK} {checkBool} {cm}";
+        {co.Name.Replace(' ', '_')} = {checkNullable}item.{nameEntty}{checkFK} {checkBool} {cm}";
                 }
                 passValue += $@"
 obj.{sDto}Join = new {sDto}()
