@@ -50,7 +50,7 @@ namespace {Setting.GetNamespaceDal(NameTable)}
             foreach (var item in LstInfoTable)
             {
                 string s = isFirst ? "" : ",";
-                passValue += $@"{s} ob.{item.Name} ";
+                passValue += $@"{s} ob.{item.Name.Replace(' ' ,'_')} ";
                 isFirst = false;
             }
             return $@"
@@ -108,7 +108,7 @@ public bool {GetNameMethod(eMethod.Delete)}({param})
             foreach (var item in ls)
             {
                 string s = isFirst ? "" : ",";
-                passValue += $@"{s} ob.{item.Name} ";
+                passValue += $@"{s} ob.{item.Name.Replace(' ', '_')} ";
                 isFirst = false;
             }
             return $@"
@@ -121,17 +121,18 @@ public bool {GetNameMethod(eMethod.Insert)}({cDto} ob)
 
         private string Get_GetBy()
         {
-            var ls = LstInfoTable.Where(q => q.isPK).ToList();
-            if (ls.Count < 1) return string.Empty;
+            var lsKey = LstInfoTable.Where(q => q.isPK).ToList();
+            if (lsKey.Count < 1) return string.Empty;
             string result = "";
-            for (int i = 0; i < ls.Count; i++)
+            for (int i = 0; i < lsKey.Count; i++)
             {
-                var item = ls[i];
+                var itemKey = lsKey[i];
                 string setValue = "";
                 foreach (var v in LstInfoTable)
                 {
-                    setValue = $@"
-obj.{v.Name} = item.{item.Name};";
+                    string checkBool = v.GetTypeCs() == typeof(bool).ToString() ? "== true" : "";
+                    setValue += $@"
+obj.{v.Name.Replace(' ', '_')} = item.{v.Name.Replace(' ', '_')} {checkBool} ;";
                 }
 
                 foreach (var fk in Table.lstFK)
@@ -140,24 +141,32 @@ obj.{v.Name} = item.{item.Name};";
                     string sDto = Setting.GetClassDto(tblJoin.Name);
                     string stableJoin = $"_{Setting.GetNameTable(tblJoin.Name)}Join";
                     string passValueJoin = "";
-                    for (int j = 0; i < Table.lstColumns.Count; j++)
+                    for (int j = 0; j < tblJoin.lstColumns.Count; j++)
                     {
-                        var co = Table.lstColumns[i];
-                        string cm = j == Table.lstColumns.Count - 1 ? "" : ",";
+                        var co = tblJoin.lstColumns[j];
+                        string cm = j == tblJoin.lstColumns.Count - 1 ? "" : ",";
+                        string checkBool = co.GetTypeCs() == typeof(bool).ToString() ? "== true" : "";
+                        string checkFK = stableJoin;
+                        string checkNullable = "";
+                        if (co.isPK)
+                        {
+                            checkFK = "";
+                            checkNullable = $"({co.GetTypeCs()})";
+                        }
                         passValueJoin += $@"
-        {co.Name} = item.{co.Name}{stableJoin}{cm}";
+        {co.Name.Replace(' ', '_')} = {checkNullable} item.{co.Name.Replace(' ', '_')}{checkFK} {checkBool} {cm}";
                     }
                     setValue += $@"
 obj.{sDto}Join = new {sDto}()
 {'{'}
     {passValueJoin}
-{'}'}
+{'}'};
 ";
                 }
                 result += $@"
-public List<{cDto}> {GetNameMethod(eMethod.GetBy)}{item.Name}({item.GetTypeCs()} {item.Name})
+public List<{cDto}> {GetNameMethod(eMethod.GetBy)}{itemKey.Name}({itemKey.GetTypeCs()} {itemKey.Name})
 {'{'}
-    var list =  new {dbEntity}().{proc.GetName(eMethod.GetBy)[i]}({item.Name});
+    var list =  new {dbEntity}().{proc.GetName(eMethod.GetBy)[i]}({itemKey.Name});
     List<{cDto}> lst = new List<{cDto}>();
     foreach (var item in list)
     {'{'}
@@ -177,27 +186,36 @@ public List<{cDto}> {GetNameMethod(eMethod.GetBy)}{item.Name}({item.GetTypeCs()}
             string passValue = "";
             foreach (var item in LstInfoTable)
             {
+                string checkBool = item.GetTypeCs() == typeof(bool).ToString() ? "== true" : "";
                 passValue += $@"
-obj.{item.Name} = item.{item.Name};";
+obj.{item.Name.Replace(' ', '_')} = item.{item.Name.Replace(' ', '_')} {checkBool} ;";
             }
             foreach (var item in Table.lstFK)
             {
                 var tblJoin = new TableObject(item.NameTableJoin, Connection);
                 string sDto = Setting.GetClassDto(tblJoin.Name);
-                string stableJoin = $"_{Setting.GetNameTable(tblJoin.Name)}Join";
+                string stableJoin = item.isPK ? "" : $"_{Setting.GetNameTable(tblJoin.Name)}Join";
                 string passValueJoin = "";
-                for (int i = 0; i < Table.lstColumns.Count; i++)
+                for (int i = 0; i < tblJoin.lstColumns.Count; i++)
                 {
-                    var co = Table.lstColumns[i];
+                    var co = tblJoin.lstColumns[i];
                     string cm = i == Table.lstColumns.Count - 1 ? "" : ",";
+                    string checkBool = co.GetTypeCs() == typeof(bool).ToString() ? "== true" : "";
+                    string checkFK = stableJoin;
+                    string checkNullable = "";
+                    if (co.isPK)
+                    {
+                        checkFK = "";
+                        checkNullable = $"({co.GetTypeCs()})";
+                    }
                     passValueJoin += $@"
-        {co.Name} = item.{co.Name}{stableJoin}{cm}";
+        {co.Name.Replace(' ', '_')} = {checkNullable}item.{co.Name.Replace(' ', '_')}{checkFK} {checkBool} {cm}";
                 }
                 passValue += $@"
 obj.{sDto}Join = new {sDto}()
 {'{'}
     {passValueJoin}
-{'}'}
+{'}'};
 ";
             }
             return $@"

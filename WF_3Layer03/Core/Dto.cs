@@ -35,7 +35,7 @@ namespace {Setting.GetNamespaceDto(NameTable)}
             foreach (var item in LstInfoTable)
             {
                 s += $@"
-public {item.GetTypeCs()} {item.Name} {'{'} get; set; {'}'}";
+public {item.GetTypeCs()} {item.Name.Replace(' ', '_')} {'{'} get; set; {'}'}";
             }
             foreach (var item in Table.lstFK)
             {

@@ -66,7 +66,7 @@ namespace Core
                 ob.isPK = ListKey != null && ListKey.Any(q => q.Equals(ob.Name));
                 lst.Add(ob);
             }
-            return lst;
+            return lst.OrderBy(q=>q.Name).ToList();
         }
 
         public List<string> GetKeyOfTable(string nameTable)

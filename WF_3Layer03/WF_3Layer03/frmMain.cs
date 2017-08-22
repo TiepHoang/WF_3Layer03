@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Core;
+using System.IO;
 
 namespace WF_3Layer03
 {
@@ -163,6 +164,31 @@ namespace WF_3Layer03
                 }
 
             }
+        }
+
+        private void btnDeleteFile_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show($"Bạn có muốn xóa tất cả file và fordel trong thư mục", "Chú ý", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            string r = "";
+            if (cbBus.Checked)
+            {
+                var arrFile = Directory.GetFiles(Common.Setting.Format_Basic.FolderSave_Bus);
+                Array.ForEach(arrFile, File.Delete);
+                r += $"/r/n{Common.Setting.Format_Basic.Format_NameSpace_BUS}: Xóa {arrFile.Length} File in folder {Common.Setting.Format_Basic.FolderSave_Bus}";
+            }
+            if (cbDal.Checked)
+            {
+                var arrFile = Directory.GetFiles(Common.Setting.Format_Basic.FolderSave_Dal);
+                Array.ForEach(arrFile, File.Delete);
+                r += $"/r/n{Common.Setting.Format_Basic.FolderSave_Dal}: Xóa {arrFile.Length} File in folder {Common.Setting.Format_Basic.FolderSave_Dal}";
+            }
+            if (cbDto.Checked)
+            {
+                var arrFile = Directory.GetFiles(Common.Setting.Format_Basic.FolderSave_Dto);
+                Array.ForEach(arrFile, File.Delete);
+                r += $"/r/n{Common.Setting.Format_Basic.FolderSave_Dto}: Xóa {arrFile.Length} File in folder {Common.Setting.Format_Basic.FolderSave_Dto}";
+            }
+            MessageBox.Show(r, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

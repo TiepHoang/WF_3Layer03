@@ -50,7 +50,7 @@ namespace Core
                     s = "string";
                     break;
             }
-            if (!(s.Equals("string") || isIdentity || isPK))
+            if (!(s.Equals("string") || s.Equals(typeof(bool).ToString()) || isPK))
             {
                 s += "?";
             }

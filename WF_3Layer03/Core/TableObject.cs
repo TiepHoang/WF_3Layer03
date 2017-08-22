@@ -22,6 +22,7 @@ namespace Core
             lstFK = new SqlProvider().GetTableJoin(Name, connection);
             if (lstFK.Count > 0)
             {
+                lstFK.OrderBy(q => q.Name).ToList();
                 foreach (var item in lstFK)
                 {
                     var col = lstColumns.First(q => q.Name.Equals(item.Name));

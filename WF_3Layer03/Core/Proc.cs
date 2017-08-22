@@ -71,11 +71,18 @@ namespace Core
                     if (item.Type.Equals("bit") && item.Name.ToLower().Contains("delete"))
                     {
                         where += $" AND [{NameTable}].[{item.Name}] = 0 ";
-                        continue;
                     }
                     string s = string.IsNullOrWhiteSpace(col) ? "" : ",";
-                    col += $@"
+                    if (item.Name.Any(c => c == ' '))
+                    {
+                        col += $@"
+{s}[{NameTable}].[{item.Name}] as [{item.Name.Replace(' ', '_')}]";
+                    }
+                    else
+                    {
+                        col += $@"
 {s}[{NameTable}].[{item.Name}]";
+                    }
                 }
                 //column join
                 foreach (var item in Table.lstFK)
@@ -85,10 +92,8 @@ namespace Core
                     foreach (var co in tblJoin.lstColumns)
                     {
                         if (co.isPK) continue;
-
                         col += $@"
-,[{sTbl}].[{co.Name}] as [{co.Name}_{sTbl}]";
-
+,[{sTbl}].[{co.Name}] as [{co.Name.Replace(' ', '_')}_{sTbl}]";
                     }
                     join += $@"
 join [{tblJoin.Name}] as [{sTbl}] on [{NameTable}].[{item.Name}] = [{sTbl}].[{tblJoin.lstColumns.First(q => q.isPK).Name}]";
@@ -238,10 +243,6 @@ END;
             //columns select
             foreach (var item in Table.lstColumns)
             {
-                if (item.Type.Equals("bit") && item.Name.ToLower().Contains("delete"))
-                {
-                    continue;
-                }
                 string s = string.IsNullOrWhiteSpace(col) ? "" : ",";
                 col += $@"
 {s}[{NameTable}].[{item.Name}]";
@@ -251,7 +252,7 @@ END;
             foreach (var item in Table.lstFK)
             {
                 var tblJoin = new TableObject(item.NameTableJoin, Connection);
-                string sTbl = Setting.GetNameTable(tblJoin.Name)+"Join";
+                string sTbl = Setting.GetNameTable(tblJoin.Name) + "Join";
 
                 foreach (var co in tblJoin.lstColumns)
                 {

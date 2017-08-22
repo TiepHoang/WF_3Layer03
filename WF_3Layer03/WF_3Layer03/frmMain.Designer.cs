@@ -43,6 +43,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.fpnCode = new System.Windows.Forms.FlowLayoutPanel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnDeleteFile = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -50,6 +51,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnDeleteFile);
             this.groupBox1.Controls.Add(this.btnDeleteAllProc);
             this.groupBox1.Controls.Add(this.cbProc);
             this.groupBox1.Controls.Add(this.cbDto);
@@ -208,6 +210,18 @@
             this.fpnCode.Size = new System.Drawing.Size(874, 308);
             this.fpnCode.TabIndex = 0;
             // 
+            // btnDeleteFile
+            // 
+            this.btnDeleteFile.BackColor = System.Drawing.Color.OrangeRed;
+            this.btnDeleteFile.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnDeleteFile.Location = new System.Drawing.Point(419, 16);
+            this.btnDeleteFile.Name = "btnDeleteFile";
+            this.btnDeleteFile.Size = new System.Drawing.Size(75, 32);
+            this.btnDeleteFile.TabIndex = 11;
+            this.btnDeleteFile.Text = "Del File";
+            this.btnDeleteFile.UseVisualStyleBackColor = false;
+            this.btnDeleteFile.Click += new System.EventHandler(this.btnDeleteFile_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -246,5 +260,6 @@
         private System.Windows.Forms.TextBox txtDatabase;
         private System.Windows.Forms.Button btnDeleteAllProc;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnDeleteFile;
     }
 }
