@@ -61,7 +61,7 @@ public List<{cDto}> {GetNameMethod(eMethod.GetAll)}()
                 value = item.Name;
                 param = $"{item.GetTypeCs()} {item.Name}";
                 result += $@"
-public List<{cDto}> {GetNameMethod(eMethod.GetBy)}{item.Name}({param})
+public {cDto} {GetNameMethod(eMethod.GetBy)}{item.Name}({param})
 {'{'}
     return new {cDal}().{GetNameMethod(eMethod.GetBy)}{item.Name}({value});
 {'}'}

@@ -50,7 +50,7 @@ namespace {Setting.GetNamespaceDal(NameTable)}
             foreach (var item in LstInfoTable)
             {
                 string s = isFirst ? "" : ",";
-                passValue += $@"{s} ob.{item.Name.Replace(' ' ,'_')} ";
+                passValue += $@"{s} ob.{item.Name.Replace(' ', '_')} ";
                 isFirst = false;
             }
             return $@"
@@ -166,17 +166,16 @@ obj.{sDto}Join = new {sDto}()
 ";
                 }
                 result += $@"
-public List<{cDto}> {GetNameMethod(eMethod.GetBy)}{itemKey.Name}({itemKey.GetTypeCs()} {itemKey.Name})
+public {cDto} {GetNameMethod(eMethod.GetBy)}{itemKey.Name}({itemKey.GetTypeCs()} {itemKey.Name})
 {'{'}
     var list =  new {dbEntity}().{proc.GetName(eMethod.GetBy)[i]}({itemKey.Name});
-    List<{cDto}> lst = new List<{cDto}>();
     foreach (var item in list)
     {'{'}
         var obj = new {cDto}();
         {setValue}
-        lst.Add(obj);
+        return obj;
     {'}'}
-    return lst;
+    return null;
 {'}'}
 ";
             }

@@ -83,14 +83,24 @@ and CONSTRAINT_NAME like 'FK_%'", connection);
             var lstTable = new List<InfoColumnObject>();
             if (dt != null && dt.Rows.Count > 0)
             {
+                var allTable = new SqlDatabaseContext(connection).GetTable();
                 foreach (DataRow item in dt.Rows)
                 {
-                    lstTable.Add(new InfoColumnObject()
+                    var tbl = new InfoColumnObject()
                     {
                         isFK = true,
                         NameTableJoin = item["NameTableJoin"].ToString(),
                         Name = item["KeyJoin"].ToString()
-                    });
+                    };
+                    int k = 0;
+                    while (tbl.NameTableJoin.Length > 0 && !allTable.Any(q => q.Equals(tbl.NameTableJoin)))
+                    {
+                        if (int.TryParse(tbl.NameTableJoin[tbl.NameTableJoin.Length - 1].ToString(), out k))
+                        {
+                            tbl.NameTableJoin = tbl.NameTableJoin.Remove(tbl.NameTableJoin.Length - 1, 1);
+                        }
+                    }
+                    lstTable.Add(tbl);
                 }
             }
             return lstTable;
