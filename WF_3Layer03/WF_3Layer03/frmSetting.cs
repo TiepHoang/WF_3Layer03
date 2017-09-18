@@ -446,7 +446,8 @@ namespace WF_3Layer03
             if (a3.Length < 1) a3 = txtFolderBus.Text.Split('\\');
             if (a1.Length < 1 || a2.Length < 1) return selectedPath;
             List<string> lst = new List<string>();
-            for (int i = 0; i < a1.Length; i++)
+            int min = a1.Length < a2.Length ? a1.Length : a2.Length;
+            for (int i = 0; i < min; i++)
             {
                 if (a1[i] != a2[i]) break;
                 lst.Add(a1[i]);
