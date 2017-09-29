@@ -44,7 +44,7 @@ namespace {Setting.GetNamespaceDal(NameTable)}
 
         private string Get_Update()
         {
-            if (!LstInfoTable.Any(q => q.isPK) || LstInfoTable.Count == LstInfoTable.Count(q => q.isPK)) return "";
+            if (!LstInfoTable.Any(q => q.IsPK) || LstInfoTable.Count == LstInfoTable.Count(q => q.IsPK)) return "";
             string passValue = "";
             bool isFirst = true;
             foreach (var item in LstInfoTable)
@@ -80,7 +80,7 @@ public bool {GetNameMethod(eMethod.Update)}({cDto} ob)
 
         private string Get_Delete()
         {
-            var ls = LstInfoTable.Where(q => q.isPK).ToList();
+            var ls = LstInfoTable.Where(q => q.IsPK).ToList();
             string param = "";
             string value = "";
             bool isFirst = true;
@@ -104,7 +104,7 @@ public bool {GetNameMethod(eMethod.Delete)}({param})
         {
             string passValue = "";
             bool isFirst = true;
-            var ls = LstInfoTable.Where(q => !q.isIdentity).ToList();
+            var ls = LstInfoTable.Where(q => !q.IsIdentity).ToList();
             foreach (var item in ls)
             {
                 string s = isFirst ? "" : ",";
@@ -121,7 +121,7 @@ public bool {GetNameMethod(eMethod.Insert)}({cDto} ob)
 
         private string Get_GetBy()
         {
-            var lsKey = LstInfoTable.Where(q => q.isPK).ToList();
+            var lsKey = LstInfoTable.Where(q => q.IsPK).ToList();
             if (lsKey.Count < 1) return string.Empty;
             string result = "";
             for (int i = 0; i < lsKey.Count; i++)
@@ -149,7 +149,7 @@ obj.{v.Name.Replace(' ', '_')} = item.{v.Name.Replace(' ', '_')} {checkBool} ;";
                         string checkFK = stableJoin;
                         string checkNullable = "";
                         string nameEntty = co.Name.Replace(' ', '_');
-                        if (co.isPK)
+                        if (co.IsPK)
                         {
                             checkFK = "";
                             checkNullable = $"({co.GetTypeCs()})";
@@ -195,7 +195,7 @@ obj.{item.Name.Replace(' ', '_')} = item.{item.Name.Replace(' ', '_')} {checkBoo
             {
                 var tblJoin = new TableObject(itemFK.NameTableJoin, Connection);
                 string sDto = Setting.GetClassDto(tblJoin.Name);
-                string stableJoin = itemFK.isPK ? "" : $"_{Setting.GetNameTable(tblJoin.Name)}Join";
+                string stableJoin = itemFK.IsPK ? "" : $"_{Setting.GetNameTable(tblJoin.Name)}Join";
                 string passValueJoin = "";
                 for (int i = 0; i < tblJoin.lstColumns.Count; i++)
                 {
@@ -205,7 +205,7 @@ obj.{item.Name.Replace(' ', '_')} = item.{item.Name.Replace(' ', '_')} {checkBoo
                     string checkFK = stableJoin;
                     string checkNullable = "";
                     string nameEntty = co.Name.Replace(' ', '_');
-                    if (co.isPK)
+                    if (co.IsPK)
                     {
                         checkFK = "";
                         checkNullable = $"({co.GetTypeCs()})";

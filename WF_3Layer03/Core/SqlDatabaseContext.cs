@@ -62,8 +62,8 @@ namespace Core
                 ob.Name = item["COLUMN_NAME"].ToString();
                 ob.Type = item["DATA_TYPE"].ToString();
                 ob.Length = int.TryParse(item["CHARACTER_MAXIMUM_LENGTH"].ToString(), out d) ? d == -1 ? "MAX" : d.ToString() : null;
-                ob.isIdentity = item["IsIdentity"].ToString().Equals("1");
-                ob.isPK = ListKey != null && ListKey.Any(q => q.Equals(ob.Name));
+                ob.IsIdentity = item["IsIdentity"].ToString().Equals("1");
+                ob.IsPK = ListKey != null && ListKey.Any(q => q.Equals(ob.Name));
                 lst.Add(ob);
             }
             return lst.OrderBy(q=>q.Name).ToList();

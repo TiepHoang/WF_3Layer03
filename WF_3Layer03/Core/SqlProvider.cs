@@ -88,7 +88,7 @@ and CONSTRAINT_NAME like 'FK_%'", connection);
                 {
                     var tbl = new InfoColumnObject()
                     {
-                        isFK = true,
+                        IsFK = true,
                         NameTableJoin = item["NameTableJoin"].ToString(),
                         Name = item["KeyJoin"].ToString()
                     };

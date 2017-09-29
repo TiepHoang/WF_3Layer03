@@ -51,8 +51,8 @@ public List<{cDto}> {GetNameMethod(eMethod.GetAll)}()
 
         private string Get_GetBy()
         {
-            if (LstInfoTable.Count(q => q.isPK) < 1) return string.Empty;
-            var lstKey = LstInfoTable.Where(q => q.isPK).ToList();
+            if (LstInfoTable.Count(q => q.IsPK) < 1) return string.Empty;
+            var lstKey = LstInfoTable.Where(q => q.IsPK).ToList();
             string param = null;
             string value = null;
             string result = "";
@@ -82,8 +82,8 @@ public bool {GetNameMethod(eMethod.Insert)}({cDto} ob)
 
         private string Get_Delete()
         {
-            if (!LstInfoTable.Any(q => q.isPK)) return string.Empty;
-            var lstKey = LstInfoTable.Where(q => q.isPK).ToList();
+            if (!LstInfoTable.Any(q => q.IsPK)) return string.Empty;
+            var lstKey = LstInfoTable.Where(q => q.IsPK).ToList();
             string param = null;
             string value = null;
             bool isFirst = true;
@@ -125,7 +125,7 @@ public bool {GetNameMethod(eMethod.Delete)}({param})
 
         private string Get_Update()
         {
-            if (!LstInfoTable.Any(q => q.isPK) || LstInfoTable.Count == LstInfoTable.Count(q => q.isPK)) return string.Empty;
+            if (!LstInfoTable.Any(q => q.IsPK) || LstInfoTable.Count == LstInfoTable.Count(q => q.IsPK)) return string.Empty;
             return $@"
 public bool Update({cDto} ob)
 {'{'}

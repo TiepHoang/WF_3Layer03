@@ -19,6 +19,7 @@ namespace WF_3Layer03
         public frmMain()
         {
             InitializeComponent();
+            IsCheckAll = true;
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -190,5 +191,18 @@ namespace WF_3Layer03
             }
             MessageBox.Show(r, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+
+        public bool IsCheckAll { get; set; }
+
+        private void btnToggle_Click(object sender, EventArgs e)
+        {
+            IsCheckAll = !IsCheckAll;
+            foreach (var item in lstUc)
+            {
+                item.Selected = IsCheckAll;
+            }
+        }
+
     }
 }

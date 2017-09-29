@@ -12,14 +12,14 @@ namespace Core
         public string Name { get; set; }
         public string Type { get; set; }
         public string Length { get; set; }
-        public bool isPK { get; set; }
-        public bool isIdentity { get; set; }
-        public bool isFK { get; set; }
+        public bool IsPK { get; set; }
+        public bool IsIdentity { get; set; }
+        public bool IsFK { get; set; }
         public string NameTableJoin { get; set; }
 
         public InfoColumnObject()
         {
-            isFK = false;
+            IsFK = false;
         }
 
         public string GetTypeCs()
@@ -46,11 +46,14 @@ namespace Core
                 case "datetime":
                     s = typeof(DateTime).ToString();
                     break;
+                case "tityint":
+                    s = typeof(byte).ToString();
+                    break;
                 default:
                     s = "string";
                     break;
             }
-            if (!(s.Equals("string") || s.Equals(typeof(bool).ToString()) || isPK))
+            if (!(s.Equals("string") || s.Equals(typeof(bool).ToString()) || IsPK))
             {
                 s += "?";
             }
@@ -59,7 +62,7 @@ namespace Core
 
         public override string ToString()
         {
-            return $"Name: {Name}     \tType: {Type}      \tLength: {Length}      \tPK: {isPK}     \tIsIdentity: {isIdentity}      \tFK: {isFK}    \tNameTableJoin: {NameTableJoin}";
+            return $"Name: {Name}     \tType: {Type}      \tLength: {Length}      \tPK: {IsPK}     \tIsIdentity: {IsIdentity}      \tFK: {IsFK}    \tNameTableJoin: {NameTableJoin}";
         }
     }
 }

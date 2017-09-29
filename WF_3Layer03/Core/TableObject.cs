@@ -26,7 +26,7 @@ namespace Core
                 foreach (var item in lstFK)
                 {
                     var col = lstColumns.First(q => q.Name.Equals(item.Name));
-                    col.isFK = item.isFK;
+                    col.IsFK = item.IsFK;
                     col.NameTableJoin = item.NameTableJoin;
                 }
             }

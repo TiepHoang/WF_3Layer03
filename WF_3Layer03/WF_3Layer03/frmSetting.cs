@@ -50,7 +50,7 @@ namespace WF_3Layer03
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                Properties.Settings.Default.LastPath = folderBrowserDialog1.SelectedPath;
+                //Properties.Settings.Default.LastPath = folderBrowserDialog1.SelectedPath;
                 Properties.Settings.Default.Save();
                 return true;
             }

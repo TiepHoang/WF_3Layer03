@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnDeleteFile = new System.Windows.Forms.Button();
             this.btnDeleteAllProc = new System.Windows.Forms.Button();
             this.cbProc = new System.Windows.Forms.CheckBox();
             this.cbDto = new System.Windows.Forms.CheckBox();
@@ -43,7 +44,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.fpnCode = new System.Windows.Forms.FlowLayoutPanel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnDeleteFile = new System.Windows.Forms.Button();
+            this.btnToggle = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -51,6 +52,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnToggle);
             this.groupBox1.Controls.Add(this.btnDeleteFile);
             this.groupBox1.Controls.Add(this.btnDeleteAllProc);
             this.groupBox1.Controls.Add(this.cbProc);
@@ -67,6 +69,18 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Option";
+            // 
+            // btnDeleteFile
+            // 
+            this.btnDeleteFile.BackColor = System.Drawing.Color.OrangeRed;
+            this.btnDeleteFile.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnDeleteFile.Location = new System.Drawing.Point(419, 16);
+            this.btnDeleteFile.Name = "btnDeleteFile";
+            this.btnDeleteFile.Size = new System.Drawing.Size(75, 32);
+            this.btnDeleteFile.TabIndex = 11;
+            this.btnDeleteFile.Text = "Del File";
+            this.btnDeleteFile.UseVisualStyleBackColor = false;
+            this.btnDeleteFile.Click += new System.EventHandler(this.btnDeleteFile_Click);
             // 
             // btnDeleteAllProc
             // 
@@ -210,17 +224,17 @@
             this.fpnCode.Size = new System.Drawing.Size(874, 308);
             this.fpnCode.TabIndex = 0;
             // 
-            // btnDeleteFile
+            // btnToggle
             // 
-            this.btnDeleteFile.BackColor = System.Drawing.Color.OrangeRed;
-            this.btnDeleteFile.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnDeleteFile.Location = new System.Drawing.Point(419, 16);
-            this.btnDeleteFile.Name = "btnDeleteFile";
-            this.btnDeleteFile.Size = new System.Drawing.Size(75, 32);
-            this.btnDeleteFile.TabIndex = 11;
-            this.btnDeleteFile.Text = "Del File";
-            this.btnDeleteFile.UseVisualStyleBackColor = false;
-            this.btnDeleteFile.Click += new System.EventHandler(this.btnDeleteFile_Click);
+            this.btnToggle.BackColor = System.Drawing.Color.LimeGreen;
+            this.btnToggle.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnToggle.Location = new System.Drawing.Point(494, 16);
+            this.btnToggle.Name = "btnToggle";
+            this.btnToggle.Size = new System.Drawing.Size(75, 32);
+            this.btnToggle.TabIndex = 12;
+            this.btnToggle.Text = "Toggle";
+            this.btnToggle.UseVisualStyleBackColor = false;
+            this.btnToggle.Click += new System.EventHandler(this.btnToggle_Click);
             // 
             // frmMain
             // 
@@ -261,5 +275,6 @@
         private System.Windows.Forms.Button btnDeleteAllProc;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnDeleteFile;
+        private System.Windows.Forms.Button btnToggle;
     }
 }

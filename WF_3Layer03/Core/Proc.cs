@@ -54,7 +54,7 @@ namespace Core
 
         private string GetBy()
         {
-            var lsKey = LstInfoTable.Where(q => q.isPK).ToList();
+            var lsKey = LstInfoTable.Where(q => q.IsPK).ToList();
             if (lsKey.Count < 1) return "";
             var lsName = GetName(eMethod.GetBy);
             string r = "";
@@ -91,12 +91,12 @@ namespace Core
                     string sTbl = Setting.GetNameTable(tblJoin.Name) + "Join";
                     foreach (var co in tblJoin.lstColumns)
                     {
-                        if (co.isPK) continue;
+                        if (co.IsPK) continue;
                         col += $@"
 ,[{sTbl}].[{co.Name}] as [{co.Name.Replace(' ', '_')}_{sTbl}]";
                     }
                     join += $@"
-join [{tblJoin.Name}] as [{sTbl}] on [{NameTable}].[{item.Name}] = [{sTbl}].[{tblJoin.lstColumns.First(q => q.isPK).Name}]";
+join [{tblJoin.Name}] as [{sTbl}] on [{NameTable}].[{item.Name}] = [{sTbl}].[{tblJoin.lstColumns.First(q => q.IsPK).Name}]";
                 }
                 string rs = $@"
 ;CREATE PROC {lsName[i]}
@@ -117,7 +117,7 @@ END;
 
         private string GetDelete()
         {
-            var lsKey = LstInfoTable.Where(q => q.isPK).ToList();
+            var lsKey = LstInfoTable.Where(q => q.IsPK).ToList();
             if (lsKey.Count < 1) return "";
             string param = "";
             string where = "";
@@ -162,7 +162,7 @@ END;
 
         private string GetUpdate()
         {
-            var lsKey = LstInfoTable.Where(q => q.isPK).ToList();
+            var lsKey = LstInfoTable.Where(q => q.IsPK).ToList();
             if (lsKey.Count < 1 || LstInfoTable.Count == lsKey.Count) return "";
             string param = "";
             string value = "";
@@ -176,7 +176,7 @@ END;
                 s = string.IsNullOrWhiteSpace(param) ? "" : ",";
                 param += $"{s} @{item.Name.Replace(' ', '_')} {item.Type}{len}";
 
-                if (item.isPK)
+                if (item.IsPK)
                 {
                     s = string.IsNullOrWhiteSpace(where) ? "" : " AND ";
                     where += $" {s} [{item.Name}] = @{item.Name}";
@@ -200,7 +200,7 @@ END;
 
         private string GetInsert()
         {
-            var lsKey = LstInfoTable.Where(q => q.isPK).ToList();
+            var lsKey = LstInfoTable.Where(q => q.IsPK).ToList();
             if (lsKey.Count < 1) return "";
             string param = "";
             string value = "";
@@ -209,7 +209,7 @@ END;
             string len = "";
             foreach (var item in LstInfoTable)
             {
-                if (!item.isIdentity)
+                if (!item.IsIdentity)
                 {
                     len = string.IsNullOrWhiteSpace(item.Length) ? "" : $"({item.Length})";
                     s = string.IsNullOrWhiteSpace(param) ? "" : ",";
@@ -256,14 +256,14 @@ END;
 
                 foreach (var co in tblJoin.lstColumns)
                 {
-                    if (co.isPK) continue;
+                    if (co.IsPK) continue;
 
                     col += $@"
 ,[{sTbl}].[{co.Name}] as [{co.Name}_{sTbl}]";
 
                 }
                 join += $@"
-join [{tblJoin.Name}] as [{sTbl}] on [{NameTable}].[{item.Name}] = [{sTbl}].[{tblJoin.lstColumns.First(q => q.isPK).Name}]";
+join [{tblJoin.Name}] as [{sTbl}] on [{NameTable}].[{item.Name}] = [{sTbl}].[{tblJoin.lstColumns.First(q => q.IsPK).Name}]";
             }
 
             //where
@@ -337,7 +337,7 @@ END;
                     lst.Add($"{Setting.GetNameProc(NameTable)}_{method.ToString()}");
                     break;
                 case Bussiness.eMethod.GetBy:
-                    var ls = LstInfoTable.Where(q => q.isPK).ToList();
+                    var ls = LstInfoTable.Where(q => q.IsPK).ToList();
                     if (ls.Count > 0)
                     {
                         foreach (var item in ls)
