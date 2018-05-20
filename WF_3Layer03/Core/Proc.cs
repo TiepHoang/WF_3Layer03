@@ -70,7 +70,7 @@ namespace Core
                 {
                     if (item.Type.Equals("bit") && item.Name.ToLower().Contains("delete"))
                     {
-                        where += $" AND [{NameTable}].[{item.Name}] = 0 ";
+                        where += $" AND [{NameTable}].[{item.Name}] <> 1 ";
                     }
                     string s = string.IsNullOrWhiteSpace(col) ? "" : ",";
                     if (item.Name.Any(c => c == ' '))
@@ -271,7 +271,7 @@ join [{tblJoin.Name}] as [{sTbl}] on [{NameTable}].[{item.Name}] = [{sTbl}].[{tb
             if (cDelete != null)
             {
                 where += $@"
-WHERE [{NameTable}].[{cDelete.Name}] = 0 ";
+WHERE [{NameTable}].[{cDelete.Name}] <> 1 ";
             }
 
             r = $@"

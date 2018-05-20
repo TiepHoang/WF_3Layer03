@@ -54,9 +54,9 @@ namespace {Setting.GetNamespaceDal(NameTable)}
                 isFirst = false;
             }
             return $@"
-public bool {GetNameMethod(eMethod.Update)}({cDto} ob)
+public int {GetNameMethod(eMethod.Update)}({cDto} ob)
 {'{'}
-    return new {dbEntity}().{proc.GetName(eMethod.Update)[0]}({passValue})>0;
+    return new {dbEntity}().{proc.GetName(eMethod.Update)[0]}({passValue});
 {'}'}
 ";
         }
@@ -85,17 +85,30 @@ public bool {GetNameMethod(eMethod.Update)}({cDto} ob)
             string value = "";
             bool isFirst = true;
             string s = "";
-            foreach (var item in ls)
+            if (ls.Count > 1)
             {
-                s = isFirst ? "" : ",";
-                param += $"{s} {item.GetTypeCs()} {item.Name}";
-                value += $"{s} {item.Name}";
-                isFirst = false;
+                foreach (var item in ls)
+                {
+                    s = isFirst ? "" : ",";
+                    param += $"{s} {item.GetTypeCs()} {item.Name}";
+                    value += $"{s} {item.Name}";
+                    isFirst = false;
+                }
+            }
+            else
+            {
+                foreach (var item in ls)
+                {
+                    s = isFirst ? "" : ",";
+                    param += $"{s} object {item.Name}";
+                    value += $"{s}({item.GetTypeCs()}) {item.Name}";
+                    isFirst = false;
+                }
             }
             return $@"
-public bool {GetNameMethod(eMethod.Delete)}({param})
+    public int {GetNameMethod(eMethod.Delete)}({param})
 {'{'}
-    return new {dbEntity}().{proc.GetName(eMethod.Delete)[0]}({value})>0;
+    return new {dbEntity}().{proc.GetName(eMethod.Delete)[0]}({value});
 {'}'}
 ";
         }
@@ -112,9 +125,9 @@ public bool {GetNameMethod(eMethod.Delete)}({param})
                 isFirst = false;
             }
             return $@"
-public bool {GetNameMethod(eMethod.Insert)}({cDto} ob)
+public int {GetNameMethod(eMethod.Insert)}({cDto} ob)
 {'{'}
-    return new {dbEntity}().{proc.GetName(eMethod.Insert)[0]}({passValue})>0;
+    return new {dbEntity}().{proc.GetName(eMethod.Insert)[0]}({passValue});
 {'}'}
 ";
         }
@@ -244,6 +257,7 @@ public List<{cDto}> {GetNameMethod(eMethod.GetAll)}()
 
         public override string GetNameMethod(eMethod method)
         {
+            if (method == eMethod.Insert) return "Add";
             return method.ToString();
         }
 

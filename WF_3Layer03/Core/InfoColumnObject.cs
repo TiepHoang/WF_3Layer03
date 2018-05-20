@@ -46,6 +46,9 @@ namespace Core
                 case "datetime":
                     s = typeof(DateTime).ToString();
                     break;
+                case "time":
+                    s = typeof(TimeSpan).ToString();
+                    break;
                 case "tityint":
                     s = typeof(byte).ToString();
                     break;

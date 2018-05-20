@@ -73,7 +73,7 @@ public {cDto} {GetNameMethod(eMethod.GetBy)}{item.Name}({param})
         private string Get_Insert()
         {
             return $@"
-public bool {GetNameMethod(eMethod.Insert)}({cDto} ob)
+public int {GetNameMethod(eMethod.Insert)}({cDto} ob)
 {'{'}
     return new {cDal}().{GetNameMethod(eMethod.Insert)}(ob);
 {'}'}
@@ -87,15 +87,28 @@ public bool {GetNameMethod(eMethod.Insert)}({cDto} ob)
             string param = null;
             string value = null;
             bool isFirst = true;
-            foreach (var item in lstKey)
+            if (lstKey.Count > 1)
             {
-                string s = isFirst ? "" : ",";
-                value += s + item.Name;
-                param += $"{s}{item.GetTypeCs()} {item.Name}";
-                isFirst = false;
+                foreach (var item in lstKey)
+                {
+                    string s = isFirst ? "" : ",";
+                    value += s + item.Name;
+                    param += $"{s}{item.GetTypeCs()} {item.Name}";
+                    isFirst = false;
+                }
+            }
+            else
+            {
+                foreach (var item in lstKey)
+                {
+                    string s = isFirst ? "" : ",";
+                    value += s + item.Name;
+                    param += $"object {item.Name}";
+                    isFirst = false;
+                }
             }
             return $@"
-public bool {GetNameMethod(eMethod.Delete)}({param})
+public int {GetNameMethod(eMethod.Delete)}({param})
 {'{'}
     return new {cDal}().{GetNameMethod(eMethod.Delete)}({value});
 {'}'}
@@ -127,7 +140,7 @@ public bool {GetNameMethod(eMethod.Delete)}({param})
         {
             if (!LstInfoTable.Any(q => q.IsPK) || LstInfoTable.Count == LstInfoTable.Count(q => q.IsPK)) return string.Empty;
             return $@"
-public bool Update({cDto} ob)
+public int Update({cDto} ob)
 {'{'}
     return new {cDal}().{GetNameMethod(eMethod.Update)}(ob);
 {'}'}
@@ -141,6 +154,7 @@ public bool Update({cDto} ob)
 
         public override string GetNameMethod(eMethod method)
         {
+            if (method == eMethod.Insert) return "Add";
             return method.ToString();
         }
 
